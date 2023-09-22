@@ -5,3 +5,7 @@
 M-x for Unity
 
 WIP
+
+## 📌 Dependencies
+
+- [FlxCs](https://github.com/jcs090218/FlxCs)
