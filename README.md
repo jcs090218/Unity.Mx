@@ -3,9 +3,11 @@
 [![.NET](https://img.shields.io/badge/.NET-2.0-blueviolet.svg)](https://docs.unity3d.com/2018.3/Documentation/Manual/ScriptingRuntimeUpgrade.html)
 
 # Meta X
-M-x for Unity
+> M-x for Unity
 
-WIP
+## 🔨 Usage
+
+Hit <kbd>Alt</kbd>+<kbd>x</kbd>!
 
 ## 📌 Dependencies
 
