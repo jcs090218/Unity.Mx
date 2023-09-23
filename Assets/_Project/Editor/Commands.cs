@@ -20,5 +20,11 @@ public class Commands : Mx
     {
 
     }
+
+    [Interactive]
+    private void TestSomeFunctionExterme()
+    {
+
+    }
 }
 #endif
