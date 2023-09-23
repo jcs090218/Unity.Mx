@@ -1,0 +1,18 @@
+#
+# Thank you for using `Package Exporter`. This is the generated
+# unityignore file.
+#
+# Package Name: Mx
+# Version: 0.1.0
+# Creation Date: 2023-09-23 00:46:34
+#
+# Package Link: https://github.com/jcs090218/PackageExporter
+# Author: Shen, Jen-Chieh
+# Email: jcs090218@gmail.com
+#
+
+# Ignore this plugin itself.
+PackageExporter
+
+# Ignore test project
+_Project
