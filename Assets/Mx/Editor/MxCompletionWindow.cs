@@ -178,7 +178,9 @@ namespace Mx
                         this.SendEvent(evt);
                     }
 
-                    if (String.IsNullOrEmpty(mSearchString) || input == InputType.Clear || input == InputType.Execute)
+                    if (String.IsNullOrEmpty(mSearchString) || 
+                        input == InputType.Clear ||
+                        mCommandsFilteredCount == 0)
                     {
                         EditorGUI.FocusTextInControl(FIND_SEARCH_FIELD_CTRL_NAME);
                     }
