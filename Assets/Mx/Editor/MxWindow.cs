@@ -6,6 +6,7 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 using FlxCs;
+using System.Drawing.Printing;
 
 namespace MetaX
 {
@@ -112,7 +113,7 @@ namespace MetaX
         private const float c_fButtonStartPosition = 24.0f;
         private const float c_fButtonHeight = 16.0f;
         private const float c_fSrollbarWidth = 15.0f;
-        private const float c_fFavoriteButtonWidth = 22.0f;
+        private const float mIconWidth = 20.0f;
         private const string c_sFavoriteStarFilled = " \u2605";
         private static readonly Color c_cHover = new Color32(38, 79, 120, 255);
         private static readonly Color c_cDefault = new Color32(46, 46, 46, 255);
@@ -273,25 +274,29 @@ namespace MetaX
             int iBase = bScrollbar ? Mathf.RoundToInt(mScrollBar / c_fButtonHeight) : 0;
             for (int i = iBase, j = 0, imax = Mathf.Min(iBase + iButtonCountCeil, mCommandsFilteredCount); i < imax; ++i, ++j)
             {
-                string sCommand = mCommandsFiltered[i];
+                string candidate = mCommandsFiltered[i];
+                InteractiveAttribute attr = GetAttribute(candidate);
+
                 bool bSelected = (i == mSelected);
 
                 Rect rect = new Rect(
-                    c_fFavoriteButtonWidth,
+                    mIconWidth,
                     c_fButtonStartPosition + j * c_fButtonHeight,
-                    rectPosition.width - (bScrollbar ? c_fSrollbarWidth : 0.0f) - c_fFavoriteButtonWidth,
+                    rectPosition.width - (bScrollbar ? c_fSrollbarWidth : 0.0f) - mIconWidth,
                     c_fButtonHeight - 1.0f
                 );
 
                 EditorGUI.DrawRect(rect, bSelected ? c_cHover : c_cDefault);
-                EditorGUI.indentLevel++;
 
                 float fIndentation = EditorGUI.IndentedRect(rect).x - rect.x;
                 m_guiStyleHover.fixedWidth = rect.width - fIndentation;
                 m_guiStyleDefault.fixedWidth = rect.width - fIndentation;
 
-                EditorGUI.LabelField(rect, sCommand, bSelected ? m_guiStyleHover : m_guiStyleDefault);
-                EditorGUI.indentLevel--;
+                EditorGUI.LabelField(rect, new GUIContent(candidate, null, attr.tooltip), bSelected ? m_guiStyleHover : m_guiStyleDefault);
+
+                Rect rectFavorite = new Rect(0.0f, c_fButtonStartPosition + j * c_fButtonHeight, mIconWidth, c_fButtonHeight - 1.0f);
+                EditorGUI.DrawRect(rectFavorite, bSelected ? c_cHover : c_cDefault);
+                EditorGUI.LabelField(rectFavorite, new GUIContent(attr.texture, attr.tooltip));
             }
 
             this.UpdateEventAfterDraw(Event.current, input, iBase, bScrollbar);
@@ -449,17 +454,22 @@ namespace MetaX
             }
         }
 
-        private void ExecuteCommand(string candidate)
+        private void ExecuteCommand(string name)
         {
-            MoveToFront(mHistory, candidate);
+            MoveToLast(mHistory, name);
             UpdateHistory();
 
-            MethodInfo method = mMethodsIndex[candidate];
+            MethodInfo method = GetMethod(name);
             method.Invoke(null, null);
 
-            //Debug.Log("" + method.Documentation().summary);
-
             this.Close();
+        }
+
+        private string FormName(MethodInfo info, bool full = false)
+        {
+            if (full)
+                return info.DeclaringType + "." + info.Name;
+            return info.Name;
         }
 
         private void RecreateCommandList()
@@ -467,26 +477,42 @@ namespace MetaX
             mCommands.Clear();
             mMethodsIndex.Clear();
 
-            var history = new List<string>();
+            HashSet<string> repeated = new();
 
             foreach (MethodInfo method in mMethods)
             {
-                string candidate = method.DeclaringType + "." + method.Name;
+                string name = FormName(method);
+                string nameFull = FormName(method, true);
 
-                mMethodsIndex.Add(candidate, method);
-
-                if (mHistory.Contains(candidate))
+                if (repeated.Contains(name))
                 {
-                    history.Add(candidate);
-                    continue;
+                    if (mMethodsIndex.ContainsKey(name))
+                    {
+                        MethodInfo temp = mMethodsIndex[name];
+
+                        mMethodsIndex.Remove(name);
+                        mCommands.Remove(name);
+
+                        //string _name = FormName(temp);
+                        string _nameFull = FormName(temp, true);
+
+                        mMethodsIndex.Add(_nameFull, temp);
+                        mCommands.Add(_nameFull);
+                    }
+
+                    name = nameFull;
+                }
+                else
+                {
+                    repeated.Add(name);
                 }
 
-                mCommands.Add(candidate);
+                mMethodsIndex.Add(name, method);
+                mCommands.Add(name);
             }
 
-            history = history.OrderBy(d => mHistory.IndexOf(d)).ToList();
-
-            mCommands = history.Concat(mCommands).ToList();
+            // Sort history in the correct order!
+            mCommands = mCommands.OrderByDescending(d => mHistory.IndexOf(d)).ToList();
 
             RecreateFilteredList();
         }
@@ -540,17 +566,33 @@ namespace MetaX
             lst.Insert(0, obj);
         }
 
+        private static void MoveToLast<T>(List<T> lst, T obj)
+        {
+            lst.Remove(obj);
+            lst.Add(obj);
+        }
+
+        public MethodInfo GetMethod(string candidate)
+        {
+            return mMethodsIndex[candidate];
+        }
+
+        public InteractiveAttribute GetAttribute(string candidate)
+        {
+            return mMethodsIndex[candidate].GetCustomAttribute(typeof(InteractiveAttribute), false) as InteractiveAttribute;
+        }
+
         #region History
-        public static readonly string PK_HISTORY = MxUtil.FormKey("History");
+        public static readonly string PK_HISTORY = MxEditorUtil.FormKey("History");
 
         public static void UpdateHistory()
         {
-            MxUtil.SetList(PK_HISTORY, mHistory);
+            MxEditorUtil.SetList(PK_HISTORY, mHistory);
         }
 
         public static List<string> GetHistory()
         {
-            return MxUtil.GetList(PK_HISTORY);
+            return MxEditorUtil.GetList(PK_HISTORY);
         }
 
         public static void ClearHistory()

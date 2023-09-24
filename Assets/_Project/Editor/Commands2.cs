@@ -2,7 +2,7 @@
 using UnityEngine;
 using MetaX;
 
-public class Commands : Mx
+public class Commands2 : Mx
 {
     /* Variables */
 
@@ -16,24 +16,6 @@ public class Commands : Mx
     private static void Mx_Version()
     {
         Debug.Log("Mx " + VERSION);
-    }
-
-    [Interactive]
-    private static void TestPrivate()
-    {
-        Debug.Log("From test private");
-    }
-
-    [Interactive]
-    private static void TestPublic()
-    {
-
-    }
-
-    [Interactive]
-    private static void TestSomeFunctionExterme()
-    {
-
     }
 }
 #endif

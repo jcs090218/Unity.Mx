@@ -12,10 +12,9 @@ namespace MetaX
 
         /* Functions */
 
-        /// <summary>
-        /// Log Mx version.
-        /// </summary>
-        [Interactive]
+        [Interactive(
+            Icon: "Animation.Record", 
+            Tooltip: "Log Mx version.")]
         private static void Mx_Version()
         {
             Debug.Log("Mx " + VERSION);
