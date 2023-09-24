@@ -454,13 +454,11 @@ namespace MetaX
 
         private void ExecuteCommand(string candidate)
         {
-            MethodInfo method = mMethodsIndex[candidate];
-
-            method.Invoke(null, null);
-
             MoveToFront(HISTORY, candidate);
-
             UpdateHistory();
+
+            MethodInfo method = mMethodsIndex[candidate];
+            method.Invoke(null, null);
 
             //Debug.Log("" + method.Documentation().summary);
 
