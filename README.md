@@ -32,9 +32,11 @@ public class DummyCommands : Mx.Mx
 }
 ```
 
-You can see all complex examples in our source code, under
-[Assets/Mx/Editor/Commands](https://github.com/jcs090218/Unity.Mx/tree/master/Assets/Mx/Editor/Commands)!
+You can see all complex examples in our source code, under [Assets/Mx/Editor/Commands][]!
 
 ## 📌 Dependencies
 
 - [FlxCs](https://github.com/jcs090218/FlxCs)
+
+
+[Assets/Mx/Editor/Commands]: https://github.com/jcs090218/Unity.Mx/tree/master/Assets/Mx/Editor/Commands
