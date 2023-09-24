@@ -17,6 +17,8 @@ namespace Mx
 
         private const string DEFAULT_PROMPT = "M-x ";
 
+        public static bool INHIBIT_CLOSE = false;
+
 #if UNITY_2022_3_OR_NEWER
         private const string mToolbarSearchTextFieldStyleName = "ToolbarSearchTextField";
         private const string mToolbarSearchCancelButtonStyleName = "ToolbarSearchCancelButton";
@@ -107,6 +109,7 @@ namespace Mx
             OVERRIDE_COMMANDS = null;
             OVERRIDE_EXECUTE_COMMAND = null;
             REQUIRED_MATCH = true;
+            INHIBIT_CLOSE = false;
         }
 
         private void OnQuitting()
@@ -168,6 +171,7 @@ namespace Mx
                     MxEditorUtil.LabelField(prompt);
 
                     GUI.SetNextControlName(FIND_SEARCH_FIELD_CTRL_NAME);
+
                     mSearchString = EditorGUILayout.TextField(mSearchString, GUI.skin.FindStyle(mToolbarSearchTextFieldStyleName));
 
                     if (GUILayout.Button(string.Empty, GUI.skin.FindStyle(mToolbarSearchCancelButtonStyleName)) && mSearchString != string.Empty)
@@ -438,12 +442,11 @@ namespace Mx
         private void ExecuteCommand(string name)
         {
             if (IsCompletingRead())
-            {
                 ExecCommand_Completing(name);
-                return;
-            }
+            else
+                ExecCommand_Root(name);
 
-            ExecCommand_Root(name);
+            INHIBIT_CLOSE = false;
         }
 
         private void ExecCommand_Root(string name)
@@ -469,7 +472,8 @@ namespace Mx
             if (OVERRIDE_EXECUTE_COMMAND != null)
                 OVERRIDE_EXECUTE_COMMAND.Invoke(name);
 
-            this.Close();
+            if (!INHIBIT_CLOSE)
+                this.Close();
         }
 
         private string FormName(MethodInfo info, bool full = false)

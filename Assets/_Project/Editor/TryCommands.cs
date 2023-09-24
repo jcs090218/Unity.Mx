@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mx;
 
-public class Commands2 : Mx.Mx
+public class TryCommands : Mx.Mx
 {
     /* Variables */
 
@@ -11,7 +11,7 @@ public class Commands2 : Mx.Mx
 
     /* Functions */
 
-    public override bool Enable() { return false; }
+    public override bool Enable() { return true; }
 
     [Interactive(
         Icon: "Animation.Record",
@@ -46,9 +46,20 @@ public class Commands2 : Mx.Mx
         ReadString("Try read string: ",
         (answer) =>
         {
-            Debug.Log("Answer: " + answer);
+            Debug.Log("String: " + answer);
         });
+    }
 
+    [Interactive(
+        Icon: "d_PreMatCube",
+        Summary: "Try read number!")]
+    private static void _TryReadNumber()
+    {
+        ReadNumber("Try read number: ",
+        (answer) =>
+        {
+            Debug.Log("Number: " + answer);
+        });
     }
 }
 #endif

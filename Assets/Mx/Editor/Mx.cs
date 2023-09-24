@@ -17,7 +17,7 @@ namespace Mx
         /* Setter & Getter */
 
         /* Functions */
-        
+
         public virtual bool Enable() { return true; }
 
         public static void CompletionRead(
@@ -31,6 +31,24 @@ namespace Mx
             string prompt, CompletingReadCallback callback)
         {
             MxCompletionWindow.OverrideIt(prompt, null, callback, false);
+        }
+
+        public static void ReadNumber(
+            string prompt, CompletingReadCallback callback)
+        {
+            MxCompletionWindow.OverrideIt(prompt, null, (answer) =>
+                {
+                    float number;
+
+                    if (!float.TryParse(answer, out number))
+                    {
+                        MxCompletionWindow.INHIBIT_CLOSE = true;
+                        Debug.LogWarning("Invalid number: " + answer);
+                        return;
+                    }
+
+                    callback.Invoke(answer);
+                }, false);
         }
     }
 }

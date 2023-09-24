@@ -2,7 +2,7 @@
 using UnityEngine;
 using Mx;
 
-public class Commands : Mx.Mx
+public class TestCommands : Mx.Mx
 {
     /* Variables */
 
@@ -21,19 +21,19 @@ public class Commands : Mx.Mx
     }
 
     [Interactive]
-    private static void TestPrivate()
+    private static void _TestPrivate()
     {
         Debug.Log("From test private");
     }
 
     [Interactive]
-    private static void TestPublic()
+    private static void _TestPublic()
     {
 
     }
 
     [Interactive]
-    private static void TestSomeFunctionExterme()
+    private static void _TestSomeFunctionExterme()
     {
 
     }
