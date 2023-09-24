@@ -28,7 +28,7 @@ namespace MetaX
             "Clear the completion history")]
         private static void MxClearHistory()
         {
-            MxWindow.ClearHistory();
+            MxCompletionWindow.ClearHistory();
         }
 
         [Interactive("", "Clear the console logs")]

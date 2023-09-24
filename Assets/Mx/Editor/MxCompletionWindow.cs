@@ -6,15 +6,14 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 using FlxCs;
-using System.Drawing.Printing;
 
 namespace MetaX
 {
-    public class MxWindow : EditorWindow
+    public class MxCompletionWindow : EditorWindow
     {
         /* Variables */
 
-        public static MxWindow instance = null;
+        public static MxCompletionWindow instance = null;
 
         public static bool CYCLE = true;
 
@@ -76,10 +75,10 @@ namespace MetaX
 
         /* Functions */
 
-        [MenuItem("Tools/MetaX/Window &x", false, -1000)]
+        [MenuItem("Tools/Mx/Window/Completion &x", false, -1000)]
         public static void ShowWindow() 
         {
-            EditorWindow window = GetWindow<MxWindow>("MetaX");
+            EditorWindow window = GetWindow<MxCompletionWindow>("Mx Completion");
             Resolution res = Screen.currentResolution;
             int width = res.width * 50 / 100;
             int height = res.height * 25 / 100;

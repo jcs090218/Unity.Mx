@@ -22,12 +22,12 @@ namespace MetaX
 
         public static void CompletionRead(string prompt, List<string> candidates, CompletingReadCallback callback)
         {
-            MxWindow.OverrideIt(prompt, candidates, callback);
+            MxCompletionWindow.OverrideIt(prompt, candidates, callback);
         }
 
         public static void ReadString(string prompt, CompletingReadCallback callback)
         {
-            MxWindow.OverrideIt(prompt, null, callback);
+            MxCompletionWindow.OverrideIt(prompt, null, callback);
         }
     }
 }
