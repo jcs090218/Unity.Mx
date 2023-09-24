@@ -1,4 +1,5 @@
 #if UNITY_EDITOR
+using UnityEngine;
 using MetaX;
 
 public class Commands : Mx
@@ -10,19 +11,19 @@ public class Commands : Mx
     /* Functions */
 
     [Interactive]
-    private void TestPrivate()
+    private static void TestPrivate()
+    {
+        Debug.Log("From test private");
+    }
+
+    [Interactive]
+    private static void TestPublic()
     {
 
     }
 
     [Interactive]
-    private void TestPublic()
-    {
-
-    }
-
-    [Interactive]
-    private void TestSomeFunctionExterme()
+    private static void TestSomeFunctionExterme()
     {
 
     }

@@ -6,36 +6,45 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 using FlxCs;
-using UnityEngine.SocialPlatforms.Impl;
+using static PlasticPipe.PlasticProtocol.Messages.Serialization.ItemHandlerMessagesSerialization;
 
 namespace MetaX
 {
     public class MxWindow : EditorWindow
     {
         /* Variables */
-        
+
+        public const string NAME = "Mx";
+
         public static MxWindow instance = null;
 
+        public static bool CYCLE = true;
+
 #if UNITY_2022_3_OR_NEWER
-        private const string c_sToolbarSearchTextFieldStyleName = "ToolbarSearchTextField";
-        private const string c_sToolbarSearchCancelButtonStyleName = "ToolbarSearchCancelButton";
+        private const string mToolbarSearchTextFieldStyleName = "ToolbarSearchTextField";
+        private const string mToolbarSearchCancelButtonStyleName = "ToolbarSearchCancelButton";
 #else
-        private const string c_sToolbarSearchTextFieldStyleName = "ToolbarSeachTextField";
-        private const string c_sToolbarSearchCancelButtonStyleName = "ToolbarSeachCancelButton";
+        private const string mToolbarSearchTextFieldStyleName = "ToolbarSeachTextField";
+        private const string mToolbarSearchCancelButtonStyleName = "ToolbarSeachCancelButton";
 #endif
 
         private List<Mx> mTypes = null;
-
         private List<MethodInfo> mMethods = null;
+
+        private Dictionary<string, MethodInfo> mMethodsIndex = new();
+
+        private bool mFirstDraw = true;
 
         private string mSearchString = String.Empty;
         private int mSelected = 0;
-        private float m_fScrollBar = 0.0f;
+        private float mScrollBar = 0.0f;
 
         private int mCommandsFilteredCount = 0;
-        private List<string> mCommands = new List<string>();
-        private List<string> mCommandsFiltered = new List<string>();
-        private List<ToolUsage> mCommandsUsage = new List<ToolUsage>();
+        private List<string> mCommands = new();
+        private List<string> mCommandsFiltered = new();
+        private List<ToolUsage> mCommandsUsage = new();
+
+        public static List<string> HISTORY = null;
 
         private enum InputType
         {
@@ -108,8 +117,8 @@ namespace MetaX
         private const float c_fSrollbarWidth = 15.0f;
         private const float c_fFavoriteButtonWidth = 22.0f;
         private const string c_sFavoriteStarFilled = " \u2605";
-        private static readonly Color c_cHover = new Color32(95, 140, 226, 255);
-        private static readonly Color c_cDefault = new Color32(32, 32, 32, 255);
+        private static readonly Color c_cHover = new Color32(38, 79, 120, 255);
+        private static readonly Color c_cDefault = new Color32(46, 46, 46, 255);
         private static readonly Color c_cFavoriteText = new Color32(245, 150, 5, 255);
         private static readonly Color c_cNoFavoriteText = new Color32(92, 92, 92, 255);
         private static readonly Color c_cFavoriteBackground = new Color32(150, 75, 5, 255);
@@ -118,6 +127,8 @@ namespace MetaX
         private GUIStyle m_guiStyleDefault = new GUIStyle();
         private GUIStyle m_guiStyleFavorite = new GUIStyle();
         private GUIStyle m_guiStyleNoFavorite = new GUIStyle();
+
+        private static readonly Color mDefaultText = new Color(46, 46, 46);  // #2E2E2E
 
         /* Setter & Getter */
 
@@ -130,7 +141,17 @@ namespace MetaX
         {
             instance = this;
 
+            HISTORY = GetHistory();
+
+            EditorApplication.quitting += OnQuitting;
+
+            mFirstDraw = true;
             Refresh();
+        }
+
+        private void OnQuitting()
+        {
+            ClearHistory();
         }
 
         private void OnGUI()
@@ -139,9 +160,17 @@ namespace MetaX
 
             DrawSearchBar(input);
             DrawCandidates(input);
+
+            /* Initialize some UI components! */
+            {
+                m_guiStyleHover.normal.textColor = mDefaultText;
+                m_guiStyleDefault.normal.textColor = mDefaultText;
+            }
+
+            mFirstDraw = false;
         }
 
-        private void Refresh()
+        public void Refresh()
         {
             this.mTypes = GetMx();
             this.mMethods = GetMethods();
@@ -149,7 +178,7 @@ namespace MetaX
             RecreateCommandList();
         }
 
-        private bool HasCommand()
+        public bool HasCommand()
         {
             return this.mMethods.Count > 0;
         }
@@ -171,9 +200,8 @@ namespace MetaX
         /// </summary>
         private List<MethodInfo> GetMethods()
         {
-            var bindings = BindingFlags.Instance 
-                | BindingFlags.Static 
-                | BindingFlags.Public 
+            var bindings = BindingFlags.Static
+                | BindingFlags.Public
                 | BindingFlags.NonPublic;
 
             return mTypes.SelectMany(t => t.GetType().GetMethods(bindings))
@@ -187,12 +215,12 @@ namespace MetaX
             {
                 EditorGUILayout.BeginHorizontal();
                 {
-                    const string sFindSearchFieldControlName = "FindEditorToolsSearchField";
+                    const string findSearchFieldControlName = "FindEditorToolsSearchField";
 
-                    GUI.SetNextControlName(sFindSearchFieldControlName);
-                    mSearchString = EditorGUILayout.TextField(mSearchString, GUI.skin.FindStyle(c_sToolbarSearchTextFieldStyleName));
+                    GUI.SetNextControlName(findSearchFieldControlName);
+                    mSearchString = EditorGUILayout.TextField(mSearchString, GUI.skin.FindStyle(mToolbarSearchTextFieldStyleName));
 
-                    if (GUILayout.Button(string.Empty, GUI.skin.FindStyle(c_sToolbarSearchCancelButtonStyleName)) && mSearchString != string.Empty)
+                    if (GUILayout.Button(string.Empty, GUI.skin.FindStyle(mToolbarSearchCancelButtonStyleName)) && mSearchString != string.Empty)
                     {
                         Event evt = new Event();
                         evt.type = EventType.KeyDown;
@@ -200,9 +228,9 @@ namespace MetaX
                         this.SendEvent(evt);
                     }
 
-                    if (!HasCommand() || input == InputType.Clear)
+                    if (mFirstDraw || input == InputType.Clear)
                     {
-                        EditorGUI.FocusTextInControl(sFindSearchFieldControlName);
+                        EditorGUI.FocusTextInControl(findSearchFieldControlName);
                     }
                 }
                 EditorGUILayout.EndHorizontal();
@@ -231,21 +259,21 @@ namespace MetaX
 
             if (bScrollbar)
             {
-                m_fScrollBar = GUI.VerticalScrollbar(
+                mScrollBar = GUI.VerticalScrollbar(
                     new Rect(
                         rectPosition.width - c_fSrollbarWidth,
                         c_fButtonStartPosition,
                         c_fSrollbarWidth,
                         rectPosition.height - c_fButtonStartPosition
                     ),
-                    m_fScrollBar,
+                    mScrollBar,
                     iButtonCountFloor * c_fButtonHeight,
                     0.0f,
                     mCommandsFilteredCount * c_fButtonHeight
                 );
             }
 
-            int iBase = bScrollbar ? Mathf.RoundToInt(m_fScrollBar / c_fButtonHeight) : 0;
+            int iBase = bScrollbar ? Mathf.RoundToInt(mScrollBar / c_fButtonHeight) : 0;
             for (int i = iBase, j = 0, imax = Mathf.Min(iBase + iButtonCountCeil, mCommandsFilteredCount); i < imax; ++i, ++j)
             {
                 string sCommand = mCommandsFiltered[i];
@@ -279,43 +307,37 @@ namespace MetaX
 
             switch (evt.type)
             {
-
                 case EventType.KeyDown:
 
                     switch (evt.keyCode)
                     {
                         case KeyCode.Return:
-
                             evt.Use();
                             return InputType.Execute;
 
                         case KeyCode.DownArrow:
-
                             evt.Use();
                             return InputType.SelectionDown;
 
-
                         case KeyCode.UpArrow:
-
                             evt.Use();
                             return InputType.SelectionUp;
 
                         case KeyCode.Escape:
-
-                            if (mSearchString == string.Empty)
                             {
-                                evt.Use();
-                                this.Close();
-                                return InputType.Close;
-                            }
-                            else
-                            {
-                                return InputType.Clear;
+                                if (mSearchString == string.Empty)
+                                {
+                                    evt.Use();
+                                    this.Close();
+                                    return InputType.Close;
+                                }
+                                else
+                                {
+                                    return InputType.Clear;
+                                }
                             }
                     }
-
                     break;
-
                 default:
                     break;
             }
@@ -331,38 +353,55 @@ namespace MetaX
             switch (input)
             {
                 case InputType.Close:
-
                     return;
 
                 case InputType.Execute:
-
-                    if (mSelected < mCommandsFilteredCount)
                     {
-                        this.ExecuteCommand(mCommandsFiltered[mSelected]);
+                        if (mSelected < mCommandsFilteredCount)
+                        {
+                            this.ExecuteCommand(mCommandsFiltered[mSelected]);
+                        }
                     }
-
                     return;
 
                 case InputType.SelectionDown:
-
-                    mSelected = Mathf.Clamp(mSelected + 1, 0, mCommandsFilteredCount - 1);
-                    if (scrollbar)
                     {
-                        this.CheckScrollToSelected();
-                    }
-                    this.Repaint();
+                        ++mSelected;
 
+                        if (CYCLE)
+                        {
+                            if (mSelected >= mCommandsFilteredCount)
+                                mSelected = 0;
+                        }
+                        else
+                        {
+                            mSelected = Mathf.Clamp(mSelected, 0, mCommandsFilteredCount - 1);
+                        }
+
+                        if (scrollbar)
+                            this.CheckScrollToSelected();
+                        this.Repaint();
+                    }
                     return;
 
                 case InputType.SelectionUp:
-
-                    mSelected = Mathf.Clamp(mSelected - 1, 0, mCommandsFilteredCount - 1);
-                    if (scrollbar)
                     {
-                        this.CheckScrollToSelected();
-                    }
-                    this.Repaint();
+                        --mSelected;
 
+                        if (CYCLE)
+                        {
+                            if (mSelected < 0)
+                                mSelected = mCommandsFilteredCount - 1;
+                        }
+                        else
+                        {
+                            mSelected = Mathf.Clamp(mSelected, 0, mCommandsFilteredCount - 1);
+                        }
+
+                        if (scrollbar)
+                            this.CheckScrollToSelected();
+                        this.Repaint();
+                    }
                     return;
 
                 default:
@@ -372,23 +411,23 @@ namespace MetaX
             switch (evt.type)
             {
                 case EventType.MouseDown:
-
-                    int iIndex = currentBase + Mathf.FloorToInt((evt.mousePosition.y - c_fButtonStartPosition) / c_fButtonHeight);
-                    if (iIndex >= 0 && iIndex < mCommandsFilteredCount && (!scrollbar || evt.mousePosition.x < this.position.width - c_fSrollbarWidth))
                     {
-                        this.ExecuteCommand(mCommandsFiltered[iIndex]);
+                        int iIndex = currentBase + Mathf.FloorToInt((evt.mousePosition.y - c_fButtonStartPosition) / c_fButtonHeight);
+                        if (iIndex >= 0 && iIndex < mCommandsFilteredCount && (!scrollbar || evt.mousePosition.x < this.position.width - c_fSrollbarWidth))
+                        {
+                            this.ExecuteCommand(mCommandsFiltered[iIndex]);
+                        }
                     }
-
                     break;
 
                 case EventType.ScrollWheel:
-
-                    if (scrollbar)
                     {
-                        m_fScrollBar += evt.delta.y * c_fButtonHeight;
-                        this.Repaint();
+                        if (scrollbar)
+                        {
+                            mScrollBar += evt.delta.y * c_fButtonHeight;
+                            this.Repaint();
+                        }
                     }
-
                     break;
 
                 default:
@@ -400,22 +439,30 @@ namespace MetaX
         {
             float fButtonAreaHeight = this.position.height - c_fButtonStartPosition;
             float fButtonCount = fButtonAreaHeight / c_fButtonHeight;
-            int iBase = Mathf.RoundToInt(m_fScrollBar / c_fButtonHeight);
+            int iBase = Mathf.RoundToInt(mScrollBar / c_fButtonHeight);
             int iButtonCountFloor = Mathf.Min(Mathf.FloorToInt(fButtonCount), mCommandsFilteredCount);
 
             if (mSelected >= Mathf.Min(iBase + iButtonCountFloor, mCommandsFilteredCount))
             {
-                m_fScrollBar = c_fButtonHeight * (mSelected - iButtonCountFloor + 1);
+                mScrollBar = c_fButtonHeight * (mSelected - iButtonCountFloor + 1);
             }
             else if (mSelected < iBase)
             {
-                m_fScrollBar = c_fButtonHeight * mSelected;
+                mScrollBar = c_fButtonHeight * mSelected;
             }
         }
 
         private void ExecuteCommand(string candidate)
         {
-            Debug.Log("Execute: " + candidate);
+            MethodInfo method = mMethodsIndex[candidate];
+
+            method.Invoke(null, null);
+
+            MoveToFront(HISTORY, candidate);
+
+            UpdateHistory();
+
+            //Debug.Log("" + method.Documentation().summary);
 
             this.Close();
         }
@@ -423,11 +470,25 @@ namespace MetaX
         private void RecreateCommandList()
         {
             mCommands.Clear();
+            mMethodsIndex.Clear();
 
             foreach (MethodInfo method in mMethods)
             {
-                mCommands.Add(method.Name);
+                string candidate = method.DeclaringType + "." + method.Name;
+
+                mMethodsIndex.Add(candidate, method);
+
+                if (HISTORY.Contains(candidate))
+                {
+                    mCommands.Insert(0, candidate);
+                    Debug.Log("+ " + candidate);
+                    continue;
+                }
+
+                mCommands.Add(candidate);
             }
+
+            Debug.Log(mCommands[0]);
 
             RecreateFilteredList();
         }
@@ -472,6 +533,32 @@ namespace MetaX
 
             mCommandsFilteredCount = mCommandsFiltered.Count;
         }
+
+        private static void MoveToFront<T>(List<T> lst, T obj)
+        {
+            lst.Remove(obj);
+            lst.Insert(0, obj);
+        }
+
+        #region History
+        public static readonly string PK_HISTORY = MxUtil.FormKey("History");
+
+        public static void UpdateHistory()
+        {
+            MxUtil.SetList(PK_HISTORY, HISTORY);
+        }
+
+        public static List<string> GetHistory()
+        {
+            return MxUtil.GetList(PK_HISTORY);
+        }
+
+        public static void ClearHistory()
+        {
+            HISTORY.Clear();
+            UpdateHistory();
+        }
+        #endregion
     }
 }
 #endif

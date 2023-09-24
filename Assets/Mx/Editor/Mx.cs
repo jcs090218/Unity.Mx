@@ -1,4 +1,5 @@
 #if UNITY_EDITOR
+using System;
 using System.Collections.Generic;
 
 namespace MetaX
@@ -7,16 +8,18 @@ namespace MetaX
     {
         /* Variables */
 
+        public static readonly Version VERSION = new Version("0.1.0");
+
         /* Setter & Getter */
 
         /* Functions */
         
-        public string CompletionRead(string prompt, List<string> candidates)
+        public static string CompletionRead(string prompt, List<string> candidates)
         {
             return "";
         }
 
-        public string ReadString(string prompt)
+        public static string ReadString(string prompt)
         {
             return "";
         }

@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 using UnityEngine;
+using System.Reflection;
 
 namespace MetaX
 {
@@ -11,10 +12,34 @@ namespace MetaX
 
         /* Functions */
 
+        /// <summary>
+        /// Log Mx version.
+        /// </summary>
         [Interactive]
-        private void MetaX_Version()
+        private static void Mx_Version()
         {
-            Debug.Log("MetaX 0.1.0");
+            Debug.Log("Mx " + VERSION);
+        }
+
+        /// <summary>
+        /// Clear the console logs.
+        /// </summary>
+        [Interactive]
+        private static void ConsoleClear()
+        {
+            var assembly = Assembly.GetAssembly(typeof(UnityEditor.Editor));
+            var type = assembly.GetType("UnityEditor.LogEntries");
+            var method = type.GetMethod("Clear");
+            method.Invoke(new object(), null);
+        }
+
+        /// <summary>
+        /// Clear the history.
+        /// </summary>
+        [Interactive]
+        private static void ClearHistory()
+        {
+            MxWindow.ClearHistory();
         }
     }
 }
