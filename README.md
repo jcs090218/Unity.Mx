@@ -56,5 +56,9 @@ You can see all complex examples in our source code, under [Assets/Mx/Editor/Com
 
 - [FlxCs](https://github.com/jcs090218/FlxCs)
 
+## License
+
+[MIT]()
+
 
 [Assets/Mx/Editor/Commands]: https://github.com/jcs090218/Unity.Mx/tree/master/Assets/Mx/Editor/Commands
