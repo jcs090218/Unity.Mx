@@ -14,7 +14,7 @@ public class Commands : Mx
 
     [Interactive(
             Icon: "Animation.Record",
-            Tooltip: "Log Mx version.")]
+            Summary: "Log Mx version.")]
     private static void Mx_Version()
     {
         Debug.Log("Mx " + VERSION);

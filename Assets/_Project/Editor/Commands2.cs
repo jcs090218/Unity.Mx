@@ -15,7 +15,7 @@ public class Commands2 : Mx
 
     [Interactive(
             Icon: "Animation.Record",
-            Tooltip: "Log Mx version.")]
+            Summary: "Log Mx version.")]
     private static void Mx_Version()
     {
         Debug.Log("Mx " + VERSION);
@@ -23,7 +23,7 @@ public class Commands2 : Mx
 
     [Interactive(
             Icon: "d_PreMatCube",
-            Tooltip: "Try completing read!")]
+            Summary: "Try completing read!")]
     private static void TryCompletingRead()
     {
         CompletionRead("Try compleing read: ", new List<string>()
@@ -40,7 +40,7 @@ public class Commands2 : Mx
 
     [Interactive(
             Icon: "d_PreMatCube",
-            Tooltip: "Try read string!")]
+            Summary: "Try read string!")]
     private static void TryReadString()
     {
         ReadString("Try read string: ",

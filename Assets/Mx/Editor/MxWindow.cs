@@ -6,9 +6,6 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 using FlxCs;
-using System.Drawing.Printing;
-using static System.Collections.Specialized.BitVector32;
-using Unity.VisualScripting;
 
 namespace MetaX
 {
@@ -264,7 +261,7 @@ namespace MetaX
                     EditorGUI.LabelField(rIcon, new GUIContent(attr.texture, attr.tooltip));
 
                     var rTooltip = new Rect(tooltipWidth, y, tooltipDisplayWidth, height);
-                    EditorGUI.LabelField(rTooltip, attr.tooltip);
+                    EditorGUI.LabelField(rTooltip, attr.summary);
                 }
             }
 

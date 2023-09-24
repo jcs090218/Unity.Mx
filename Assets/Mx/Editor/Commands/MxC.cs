@@ -23,7 +23,8 @@ namespace MetaX
             Debug.Log("Mx " + VERSION);
         }
 
-        [Interactive("d_UnityEditor.AnimationWindow", 
+        [Interactive(
+            "d_UnityEditor.AnimationWindow", 
             "Clear the completion history")]
         private static void MxClearHistory()
         {
@@ -54,7 +55,9 @@ namespace MetaX
                 EnterPlayMode();
         }
 
-        [Interactive("d_FolderEmpty Icon", "Show data path in file browser")]
+        [Interactive(
+            "d_FolderEmpty Icon", 
+            "Show data path in file browser")]
         private static void FindDataPath()
         {
             CompletionRead("Data path: ", new List<string>()
@@ -80,7 +83,9 @@ namespace MetaX
             return paths.ToList();
         }
 
-        [Interactive("UnityLogo", "Open a scene")]
+        [Interactive(
+            "UnityLogo", 
+            "Open a scene")]
         private static void OpenScene()
         {
             CompletionRead("Scene name: ", GetScenes(),

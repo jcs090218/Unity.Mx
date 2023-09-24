@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using UnityEngine;
 
 namespace MetaX
@@ -12,12 +13,14 @@ namespace MetaX
 
         private string mIcon = null;
 
-        private string mTooltip = "";
+        private string mSummary = null;
+        private string mTooltip = null;
 
         /* Setter & Getter */
 
         public string Icon { get { return this.mIcon; } }
-        public string tooltip { get { return this.mTooltip; } }
+        public string summary { get { return this.mSummary; } }
+        public string tooltip { get { return mTooltip; } }
         public Texture texture
         {
             get
@@ -35,10 +38,13 @@ namespace MetaX
 
         /* Functions */
 
-        public InteractiveAttribute(string Icon = null, string Tooltip = null)
+        public InteractiveAttribute(string Icon = null, 
+            string Summary = null,
+            string Tooltip = null)
         {
-            this.mTooltip = Tooltip;
             this.mIcon = Icon;
+            this.mSummary = Summary;
+            this.mTooltip = Tooltip;
         }
     }
 }
