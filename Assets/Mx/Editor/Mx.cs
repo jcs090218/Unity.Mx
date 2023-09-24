@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 namespace MetaX
 {
+    public delegate void CompletingReadCallback(string answer);
+
     public class Mx
     {
         /* Variables */
@@ -15,14 +17,14 @@ namespace MetaX
 
         /* Functions */
         
-        public static string CompletionRead(string prompt, List<string> candidates)
+        public static void CompletionRead(string prompt, List<string> candidates, CompletingReadCallback callback)
         {
-            return "";
+            MxWindow.OverrideIt(prompt, candidates, callback);
         }
 
-        public static string ReadString(string prompt)
+        public static void ReadString(string prompt, CompletingReadCallback callback)
         {
-            return "";
+            MxWindow.OverrideIt(prompt, null, callback);
         }
     }
 }

@@ -7,6 +7,7 @@ using UnityEditor;
 using UnityEngine;
 using FlxCs;
 using System.Drawing.Printing;
+using static System.Collections.Specialized.BitVector32;
 
 namespace MetaX
 {
@@ -18,6 +19,8 @@ namespace MetaX
 
         public static bool CYCLE = true;
 
+        private const string DEFAULT_PROMPT = "M-x ";
+
 #if UNITY_2022_3_OR_NEWER
         private const string mToolbarSearchTextFieldStyleName = "ToolbarSearchTextField";
         private const string mToolbarSearchCancelButtonStyleName = "ToolbarSearchCancelButton";
@@ -26,12 +29,16 @@ namespace MetaX
         private const string mToolbarSearchCancelButtonStyleName = "ToolbarSeachCancelButton";
 #endif
 
+        private const string FIND_SEARCH_FIELD_CTRL_NAME = "FindEditorToolsSearchField";
+
+        public static string OVERRIDE_PROMPT = null;
+        public static List<string> OVERRIDE_COMMANDS = null;
+        public static CompletingReadCallback OVERRIDE_EXECUTE_COMMAND = null;
+
         private List<Mx> mTypes = null;
         private List<MethodInfo> mMethods = null;
 
         private Dictionary<string, MethodInfo> mMethodsIndex = new();
-
-        private bool mFirstDraw = true;
 
         private string mSearchString = String.Empty;
         private int mSelected = 0;
@@ -40,7 +47,6 @@ namespace MetaX
         private int mCommandsFilteredCount = 0;
         private List<string> mCommands = new();
         private List<string> mCommandsFiltered = new();
-        private List<ToolUsage> mCommandsUsage = new();
 
         private static List<string> mHistory = null;
 
@@ -114,17 +120,10 @@ namespace MetaX
         private const float c_fButtonHeight = 16.0f;
         private const float c_fSrollbarWidth = 15.0f;
         private const float mIconWidth = 20.0f;
-        private const string c_sFavoriteStarFilled = " \u2605";
         private static readonly Color c_cHover = new Color32(38, 79, 120, 255);
         private static readonly Color c_cDefault = new Color32(46, 46, 46, 255);
-        private static readonly Color c_cFavoriteText = new Color32(245, 150, 5, 255);
-        private static readonly Color c_cNoFavoriteText = new Color32(92, 92, 92, 255);
-        private static readonly Color c_cFavoriteBackground = new Color32(150, 75, 5, 255);
-        private static readonly Color c_cNoFavoriteBackground = new Color32(16, 16, 16, 255);
         private GUIStyle m_guiStyleHover = new GUIStyle();
         private GUIStyle m_guiStyleDefault = new GUIStyle();
-        private GUIStyle m_guiStyleFavorite = new GUIStyle();
-        private GUIStyle m_guiStyleNoFavorite = new GUIStyle();
 
         private static readonly Color mDefaultText = new Color(46, 46, 46);  // #2E2E2E
 
@@ -143,8 +142,20 @@ namespace MetaX
 
             EditorApplication.quitting += OnQuitting;
 
-            mFirstDraw = true;
+            /* Initialize some UI components! */
+            {
+                m_guiStyleHover.normal.textColor = mDefaultText;
+                m_guiStyleDefault.normal.textColor = mDefaultText;
+            }
+
             Refresh();
+        }
+
+        private void OnDisable()
+        {
+            OVERRIDE_PROMPT = null;
+            OVERRIDE_COMMANDS = null;
+            OVERRIDE_EXECUTE_COMMAND = null;
         }
 
         private void OnQuitting()
@@ -157,15 +168,7 @@ namespace MetaX
             InputType input = this.UpdateEventBeforeDraw(Event.current);
 
             DrawSearchBar(input);
-            DrawCandidates(input);
-
-            /* Initialize some UI components! */
-            {
-                m_guiStyleHover.normal.textColor = mDefaultText;
-                m_guiStyleDefault.normal.textColor = mDefaultText;
-            }
-
-            mFirstDraw = false;
+            DrawCompletion(input);
         }
 
         public void Refresh()
@@ -174,11 +177,6 @@ namespace MetaX
             this.mMethods = GetMethods();
 
             RecreateCommandList();
-        }
-
-        public bool HasCommand()
-        {
-            return this.mMethods.Count > 0;
         }
 
         /// <summary>
@@ -213,9 +211,13 @@ namespace MetaX
             {
                 EditorGUILayout.BeginHorizontal();
                 {
-                    const string findSearchFieldControlName = "FindEditorToolsSearchField";
+                    string prompt = OVERRIDE_PROMPT ?? DEFAULT_PROMPT;
 
-                    GUI.SetNextControlName(findSearchFieldControlName);
+                    float width = EditorStyles.label.CalcSize(new GUIContent(prompt)).x;
+
+                    EditorGUILayout.LabelField(prompt, GUILayout.Width(width));
+
+                    GUI.SetNextControlName(FIND_SEARCH_FIELD_CTRL_NAME);
                     mSearchString = EditorGUILayout.TextField(mSearchString, GUI.skin.FindStyle(mToolbarSearchTextFieldStyleName));
 
                     if (GUILayout.Button(string.Empty, GUI.skin.FindStyle(mToolbarSearchCancelButtonStyleName)) && mSearchString != string.Empty)
@@ -226,9 +228,9 @@ namespace MetaX
                         this.SendEvent(evt);
                     }
 
-                    if (mFirstDraw || input == InputType.Clear)
+                    if (String.IsNullOrEmpty(mSearchString) || input == InputType.Clear)
                     {
-                        EditorGUI.FocusTextInControl(findSearchFieldControlName);
+                        EditorGUI.FocusTextInControl(FIND_SEARCH_FIELD_CTRL_NAME);
                     }
                 }
                 EditorGUILayout.EndHorizontal();
@@ -241,11 +243,8 @@ namespace MetaX
             }
         }
 
-        private void DrawCandidates(InputType input)
+        private void DrawCompletion(InputType input)
         {
-            if (mCommandsFiltered.Count == 0)
-                return;
-
             Rect rectPosition = this.position;
             float fButtonAreaHeight = rectPosition.height - c_fButtonStartPosition;
             float fButtonCount = fButtonAreaHeight / c_fButtonHeight;
@@ -272,10 +271,10 @@ namespace MetaX
             }
 
             int iBase = bScrollbar ? Mathf.RoundToInt(mScrollBar / c_fButtonHeight) : 0;
+
             for (int i = iBase, j = 0, imax = Mathf.Min(iBase + iButtonCountCeil, mCommandsFilteredCount); i < imax; ++i, ++j)
             {
-                string candidate = mCommandsFiltered[i];
-                InteractiveAttribute attr = GetAttribute(candidate);
+                string name = mCommandsFiltered[i];
 
                 bool bSelected = (i == mSelected);
 
@@ -292,11 +291,23 @@ namespace MetaX
                 m_guiStyleHover.fixedWidth = rect.width - fIndentation;
                 m_guiStyleDefault.fixedWidth = rect.width - fIndentation;
 
-                EditorGUI.LabelField(rect, new GUIContent(candidate, null, attr.tooltip), bSelected ? m_guiStyleHover : m_guiStyleDefault);
+                if (IsCompletingRead())
+                {
+                    EditorGUI.LabelField(rect, name, bSelected ? m_guiStyleHover : m_guiStyleDefault);
 
-                Rect rectFavorite = new Rect(0.0f, c_fButtonStartPosition + j * c_fButtonHeight, mIconWidth, c_fButtonHeight - 1.0f);
-                EditorGUI.DrawRect(rectFavorite, bSelected ? c_cHover : c_cDefault);
-                EditorGUI.LabelField(rectFavorite, new GUIContent(attr.texture, attr.tooltip));
+                    Rect rectIcon = new Rect(0.0f, c_fButtonStartPosition + j * c_fButtonHeight, mIconWidth, c_fButtonHeight - 1.0f);
+                    EditorGUI.DrawRect(rectIcon, bSelected ? c_cHover : c_cDefault);
+                }
+                else
+                {
+                    InteractiveAttribute attr = GetAttribute(name);
+
+                    EditorGUI.LabelField(rect, new GUIContent(name, null, attr.tooltip), bSelected ? m_guiStyleHover : m_guiStyleDefault);
+
+                    Rect rectIcon = new Rect(0.0f, c_fButtonStartPosition + j * c_fButtonHeight, mIconWidth, c_fButtonHeight - 1.0f);
+                    EditorGUI.DrawRect(rectIcon, bSelected ? c_cHover : c_cDefault);
+                    EditorGUI.LabelField(rectIcon, new GUIContent(attr.texture, attr.tooltip));
+                }
             }
 
             this.UpdateEventAfterDraw(Event.current, input, iBase, bScrollbar);
@@ -359,10 +370,15 @@ namespace MetaX
 
                 case InputType.Execute:
                     {
-                        if (mSelected < mCommandsFilteredCount)
+                        string asnwer = mSearchString;
+
+                        if (mCommandsFilteredCount > 0 && 
+                            mSelected < mCommandsFilteredCount)
                         {
-                            this.ExecuteCommand(mCommandsFiltered[mSelected]);
+                            asnwer = mCommandsFiltered[mSelected];
                         }
+
+                        this.ExecuteCommand(asnwer);
                     }
                     return;
 
@@ -456,11 +472,27 @@ namespace MetaX
 
         private void ExecuteCommand(string name)
         {
+            if (IsCompletingRead())
+            {
+                if (OVERRIDE_EXECUTE_COMMAND != null)
+                    OVERRIDE_EXECUTE_COMMAND.Invoke(name);
+
+                this.Close();
+                return;
+            }
+
             MoveToLast(mHistory, name);
             UpdateHistory();
 
             MethodInfo method = GetMethod(name);
             method.Invoke(null, null);
+
+            if (IsCompletingRead())
+            {
+                mSearchString = "";
+                RecreateCommandList();
+                return;
+            }
 
             this.Close();
         }
@@ -474,6 +506,13 @@ namespace MetaX
 
         private void RecreateCommandList()
         {
+            if (IsCompletingRead())
+            {
+                mCommands = OVERRIDE_COMMANDS;
+                RecreateFilteredList();
+                return;
+            }
+
             mCommands.Clear();
             mMethodsIndex.Clear();
 
@@ -519,7 +558,11 @@ namespace MetaX
 
         private void RecreateFilteredList()
         {
-            if (String.IsNullOrEmpty(mSearchString))
+            if (mCommands == null)
+            {
+                mCommandsFiltered = new List<string>();
+            }
+            else if (String.IsNullOrEmpty(mSearchString))
             {
                 mCommandsFiltered = new List<string>(mCommands);
             }
@@ -601,6 +644,20 @@ namespace MetaX
             UpdateHistory();
         }
         #endregion
+
+        public static void OverrideIt(string prompt, List<string> candidates, CompletingReadCallback callback)
+        {
+            OVERRIDE_PROMPT = prompt;
+            OVERRIDE_COMMANDS = candidates;
+            OVERRIDE_EXECUTE_COMMAND = callback;
+        }
+
+        public static bool IsCompletingRead()
+        {
+            return OVERRIDE_PROMPT != null
+                || OVERRIDE_COMMANDS != null
+                || OVERRIDE_EXECUTE_COMMAND != null;
+        }
     }
 }
 #endif
