@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEditor;
 
-
 namespace Mx
 {
     [InitializeOnLoad]
@@ -36,7 +35,7 @@ namespace Mx
         }
 
         [SettingsProvider]
-        static SettingsProvider Create_WatchLogProvider()
+        static SettingsProvider CreateMxSettingsProvider()
         {
             return new MxSettingsProvider("Preferences/Mx", SettingsScope.User);
         }
