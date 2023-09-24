@@ -17,21 +17,21 @@ namespace Mx
 
         /* Functions */
 
-        [Interactive("", "Log Mx version")]
+        [Interactive(Summary: "Log Mx version")]
         private static void MxVersion()
         {
             Debug.Log("Mx " + VERSION);
         }
 
         [Interactive(
-            "d_UnityEditor.AnimationWindow", 
-            "Clear the completion history")]
+            Icon: "d_UnityEditor.AnimationWindow",
+            Summary: "Clear the completion history")]
         private static void MxClearHistory()
         {
             MxCompletionWindow.ClearHistory();
         }
 
-        [Interactive("", "Clear the console logs")]
+        [Interactive(Summary: "Clear the console logs")]
         private static void ConsoleClear()
         {
             var assembly = Assembly.GetAssembly(typeof(UnityEditor.Editor));
@@ -40,13 +40,13 @@ namespace Mx
             method.Invoke(new object(), null);
         }
 
-        [Interactive("", "Enter the play mode")]
+        [Interactive(Summary: "Enter the play mode")]
         private static void EnterPlayMode() => EditorApplication.EnterPlaymode();
 
-        [Interactive("", "Exit the play mode")]
+        [Interactive(Summary: "Exit the play mode")]
         private static void ExitPlaymode() => EditorApplication.ExitPlaymode();
 
-        [Interactive("", "Toggle the play mode")]
+        [Interactive(Summary: "Toggle the play mode")]
         private static void TogglePlaymode()
         {
             if (Application.isPlaying)
@@ -55,9 +55,27 @@ namespace Mx
                 EnterPlayMode();
         }
 
+        [Interactive(Summary: "Pause in the editor application")]
+        private static void Pause()
+        {
+            EditorApplication.isPaused = true;
+        }
+
+        [Interactive(Summary: "Unpause in the editor application")]
+        private static void Unpause()
+        {
+            EditorApplication.isPaused = false;
+        }
+
+        [Interactive(Summary: "Toggle pausing in the editor application")]
+        private static void TogglePause()
+        {
+            EditorApplication.isPaused = !EditorApplication.isPaused;
+        }
+
         [Interactive(
-            "d_FolderEmpty Icon", 
-            "Show data path in file browser")]
+            Icon:"d_FolderEmpty Icon",
+            Summary: "Show data path in file browser")]
         private static void FindDataPath()
         {
             CompletionRead("Data path: ", new List<string>()
@@ -84,8 +102,8 @@ namespace Mx
         }
 
         [Interactive(
-            "UnityLogo", 
-            "Open a scene")]
+            Icon: "UnityLogo",
+            Summary: "Open a scene")]
         private static void OpenScene()
         {
             CompletionRead("Scene name: ", GetScenes(),

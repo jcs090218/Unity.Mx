@@ -27,7 +27,7 @@ namespace Mx
 
         public static void ReadString(string prompt, CompletingReadCallback callback)
         {
-            MxCompletionWindow.OverrideIt(prompt, null, callback);
+            MxCompletionWindow.OverrideIt(prompt, null, callback, false);
         }
     }
 }

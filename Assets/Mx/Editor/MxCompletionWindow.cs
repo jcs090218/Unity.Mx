@@ -34,6 +34,7 @@ namespace Mx
         public static string OVERRIDE_PROMPT = null;
         public static List<string> OVERRIDE_COMMANDS = null;
         public static CompletingReadCallback OVERRIDE_EXECUTE_COMMAND = null;
+        public static bool REQUIRED_MATCH = true;
 
         private List<Mx> mTypes = null;
         private List<MethodInfo> mMethods = null;
@@ -107,6 +108,7 @@ namespace Mx
             OVERRIDE_PROMPT = null;
             OVERRIDE_COMMANDS = null;
             OVERRIDE_EXECUTE_COMMAND = null;
+            REQUIRED_MATCH = true;
         }
 
         private void OnQuitting()
@@ -335,9 +337,11 @@ namespace Mx
                     {
                         string asnwer = mSearchString;
 
-                        if (mCommandsFilteredCount > 0 &&
-                            mSelected < mCommandsFilteredCount)
+                        if (REQUIRED_MATCH)
                         {
+                            if (mCommandsFilteredCount <= 0)
+                                return;
+
                             asnwer = mCommandsFiltered[mSelected];
                         }
 
@@ -437,13 +441,15 @@ namespace Mx
         {
             if (IsCompletingRead())
             {
-                if (OVERRIDE_EXECUTE_COMMAND != null)
-                    OVERRIDE_EXECUTE_COMMAND.Invoke(name);
-
-                this.Close();
+                ExecCommand_Completing(name);
                 return;
             }
 
+            ExecCommand_Root(name);
+        }
+
+        private void ExecCommand_Root(string name)
+        {
             MoveToLast(mHistory, name);
             UpdateHistory();
 
@@ -456,6 +462,14 @@ namespace Mx
                 RecreateCommandList();
                 return;
             }
+
+            this.Close();
+        }
+
+        private void ExecCommand_Completing(string name)
+        {
+            if (OVERRIDE_EXECUTE_COMMAND != null)
+                OVERRIDE_EXECUTE_COMMAND.Invoke(name);
 
             this.Close();
         }
@@ -514,6 +528,7 @@ namespace Mx
             }
 
             // Sort history in the correct order!
+            mCommands = mCommands.OrderBy(i => i.Length).ToList();
             mCommands = mCommands.OrderByDescending(d => mHistory.IndexOf(d)).ToList();
 
             RecreateFilteredList();
@@ -527,7 +542,7 @@ namespace Mx
             }
             else if (String.IsNullOrEmpty(mSearchString))
             {
-                mCommandsFiltered = mCommands.OrderBy(i => i.Length).ToList();
+                mCommandsFiltered = new List<string>(mCommands);
             }
             else
             {
@@ -605,11 +620,16 @@ namespace Mx
         }
         #endregion
 
-        public static void OverrideIt(string prompt, List<string> candidates, CompletingReadCallback callback)
+        public static void OverrideIt(
+            string prompt, 
+            List<string> candidates, 
+            CompletingReadCallback callback,
+            bool requiredMatch = true)
         {
             OVERRIDE_PROMPT = prompt;
             OVERRIDE_COMMANDS = candidates;
             OVERRIDE_EXECUTE_COMMAND = callback;
+            REQUIRED_MATCH = requiredMatch;
         }
 
         public static bool IsCompletingRead()
