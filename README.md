@@ -1,8 +1,10 @@
+<br/><br/>
+
 <p align="center">
 <img alt="Logo" src="./etc/logo.png" width="30%"/>
 </p>
 
-<br/>
+<br/><br/>
 
 <p align="center">
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT">
