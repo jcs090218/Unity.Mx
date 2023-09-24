@@ -6,15 +6,12 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 using FlxCs;
-using static PlasticPipe.PlasticProtocol.Messages.Serialization.ItemHandlerMessagesSerialization;
 
 namespace MetaX
 {
     public class MxWindow : EditorWindow
     {
         /* Variables */
-
-        public const string NAME = "Mx";
 
         public static MxWindow instance = null;
 
@@ -44,7 +41,7 @@ namespace MetaX
         private List<string> mCommandsFiltered = new();
         private List<ToolUsage> mCommandsUsage = new();
 
-        public static List<string> HISTORY = null;
+        private static List<string> mHistory = null;
 
         private enum InputType
         {
@@ -141,7 +138,7 @@ namespace MetaX
         {
             instance = this;
 
-            HISTORY = GetHistory();
+            mHistory = GetHistory();
 
             EditorApplication.quitting += OnQuitting;
 
@@ -454,7 +451,7 @@ namespace MetaX
 
         private void ExecuteCommand(string candidate)
         {
-            MoveToFront(HISTORY, candidate);
+            MoveToFront(mHistory, candidate);
             UpdateHistory();
 
             MethodInfo method = mMethodsIndex[candidate];
@@ -470,23 +467,26 @@ namespace MetaX
             mCommands.Clear();
             mMethodsIndex.Clear();
 
+            var history = new List<string>();
+
             foreach (MethodInfo method in mMethods)
             {
                 string candidate = method.DeclaringType + "." + method.Name;
 
                 mMethodsIndex.Add(candidate, method);
 
-                if (HISTORY.Contains(candidate))
+                if (mHistory.Contains(candidate))
                 {
-                    mCommands.Insert(0, candidate);
-                    Debug.Log("+ " + candidate);
+                    history.Add(candidate);
                     continue;
                 }
 
                 mCommands.Add(candidate);
             }
 
-            Debug.Log(mCommands[0]);
+            history = history.OrderBy(d => mHistory.IndexOf(d)).ToList();
+
+            mCommands = history.Concat(mCommands).ToList();
 
             RecreateFilteredList();
         }
@@ -509,6 +509,7 @@ namespace MetaX
 
                     FlxCs.Score score = Flx.Score(cmd, mSearchString);
 
+                    // First filtered out low score!
                     if (score != null && score.score > 0)
                     {
                         if (!scores.ContainsKey(score.score))
@@ -518,9 +519,10 @@ namespace MetaX
                     }
                 }
 
+                // The sort it by the score!
                 foreach (int key in scores.Keys.Reverse())
                 {
-                    scores[key].OrderBy(i => i);
+                    scores[key] = scores[key].OrderBy(i => i).ToList();
 
                     foreach (string cmd in scores[key])
                     {
@@ -543,7 +545,7 @@ namespace MetaX
 
         public static void UpdateHistory()
         {
-            MxUtil.SetList(PK_HISTORY, HISTORY);
+            MxUtil.SetList(PK_HISTORY, mHistory);
         }
 
         public static List<string> GetHistory()
@@ -553,7 +555,7 @@ namespace MetaX
 
         public static void ClearHistory()
         {
-            HISTORY.Clear();
+            mHistory.Clear();
             UpdateHistory();
         }
         #endregion

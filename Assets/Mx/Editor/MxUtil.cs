@@ -19,7 +19,7 @@ namespace MetaX
         public static string FormKey(string name)
         {
             // XXX: Registery is one instance per history!
-            return Application.dataPath + "." + MxWindow.NAME + "." + name;
+            return Application.dataPath + "." + Mx.NAME + "." + name;
         }
 
         public static void SetList(string key, List<string> lst)
@@ -39,6 +39,18 @@ namespace MetaX
             string reg = EditorPrefs.GetString(key);
 
             return reg.Split(":").ToList();
+        }
+
+        public static void Print(List<string> lst)
+        {
+            string result = "";
+
+            foreach (string item in lst)
+            {
+                result += item + " ";
+            }
+
+            Debug.Log(result);
         }
     }
 }
