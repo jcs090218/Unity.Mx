@@ -7,7 +7,7 @@ namespace MetaX
 {
     public delegate void CompletingReadCallback(string answer);
 
-    public class Mx
+    public abstract class Mx
     {
         /* Variables */
 
@@ -18,6 +18,8 @@ namespace MetaX
 
         /* Functions */
         
+        public virtual bool Enable() { return true; }
+
         public static void CompletionRead(string prompt, List<string> candidates, CompletingReadCallback callback)
         {
             MxWindow.OverrideIt(prompt, candidates, callback);

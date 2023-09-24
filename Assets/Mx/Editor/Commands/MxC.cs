@@ -1,9 +1,11 @@
 #if UNITY_EDITOR
-using UnityEngine;
-using System.Reflection;
-using UnityEditor;
 using System.Collections.Generic;
+using System.Reflection;
 using System.IO;
+using System.Linq;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
 
 namespace MetaX
 {
@@ -15,7 +17,7 @@ namespace MetaX
 
         /* Functions */
 
-        [Interactive("Animation.Record", "Log Mx version")]
+        [Interactive("", "Log Mx version")]
         private static void Mx_Version()
         {
             Debug.Log("Mx " + VERSION);
@@ -51,10 +53,10 @@ namespace MetaX
                 EnterPlayMode();
         }
 
-        [Interactive("", "Show data path in file browser")]
-        private static void OpenDataPath()
+        [Interactive("d_FolderEmpty Icon", "Show data path in file browser")]
+        private static void FindDataPath()
         {
-            CompletionRead("Try compleing read: ", new List<string>()
+            CompletionRead("Data path: ", new List<string>()
             {
                 Application.dataPath,
                 Application.persistentDataPath,
@@ -64,6 +66,27 @@ namespace MetaX
             (answer) =>
             {
                 EditorUtility.RevealInFinder(answer);
+            });
+        }
+
+        /// <summary>
+        /// Return all scenes.
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> GetScenes()
+        {
+            string[] paths = Directory.GetFiles("Assets", "*.unity", SearchOption.AllDirectories);
+            return paths.ToList();
+        }
+
+        [Interactive("UnityLogo", "Open a scene")]
+        private static void OpenScene()
+        {
+            CompletionRead("Scene name: ", GetScenes(),
+            (answer) =>
+            {
+                EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
+                EditorSceneManager.OpenScene(answer);
             });
         }
     }

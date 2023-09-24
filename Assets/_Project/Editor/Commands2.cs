@@ -11,6 +11,8 @@ public class Commands2 : Mx
 
     /* Functions */
 
+    public override bool Enable() { return false; }
+
     [Interactive(
             Icon: "Animation.Record",
             Tooltip: "Log Mx version.")]

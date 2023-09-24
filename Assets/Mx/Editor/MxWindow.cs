@@ -133,6 +133,7 @@ namespace MetaX
                 .SelectMany(assembly => assembly.GetTypes())
                 .Where(type => type.IsSubclassOf(typeof(Mx)))
                 .Select(type => Activator.CreateInstance(type) as Mx)
+                .Where(inst => inst.Enable())
                 .ToList();
         }
 
@@ -251,6 +252,9 @@ namespace MetaX
                 else
                 {
                     InteractiveAttribute attr = GetAttribute(name);
+
+                    if (attr == null)
+                        continue;
 
                     EditorGUI.LabelField(rMain, new GUIContent(name, null, attr.tooltip), selected ? mGuiStyleHover : mGuiStyleDefault);
 
@@ -571,7 +575,9 @@ namespace MetaX
 
         public InteractiveAttribute GetAttribute(string candidate)
         {
-            return mMethodsIndex[candidate].GetCustomAttribute(typeof(InteractiveAttribute), false) as InteractiveAttribute;
+            if (mMethodsIndex.ContainsKey(candidate))
+                return mMethodsIndex[candidate].GetCustomAttribute(typeof(InteractiveAttribute), false) as InteractiveAttribute;
+            return null;
         }
 
         #region History
