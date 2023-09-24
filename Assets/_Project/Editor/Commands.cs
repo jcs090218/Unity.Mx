@@ -1,8 +1,8 @@
 #if UNITY_EDITOR
 using UnityEngine;
-using MetaX;
+using Mx;
 
-public class Commands : Mx
+public class Commands : Mx.Mx
 {
     /* Variables */
 

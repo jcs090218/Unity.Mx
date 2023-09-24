@@ -7,7 +7,7 @@ using UnityEditor;
 using UnityEngine;
 using FlxCs;
 
-namespace MetaX
+namespace Mx
 {
     public class MxCompletionWindow : EditorWindow
     {

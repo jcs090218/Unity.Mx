@@ -1,9 +1,9 @@
 #if UNITY_EDITOR
 using System.Collections.Generic;
 using UnityEngine;
-using MetaX;
+using Mx;
 
-public class Commands2 : Mx
+public class Commands2 : Mx.Mx
 {
     /* Variables */
 

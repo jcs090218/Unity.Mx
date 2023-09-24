@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace MetaX
+namespace Mx
 {
     public static class MxUtil
     {

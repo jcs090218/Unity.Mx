@@ -1,8 +1,7 @@
 using System;
-using System.IO;
 using UnityEngine;
 
-namespace MetaX
+namespace Mx
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     public class InteractiveAttribute : PropertyAttribute

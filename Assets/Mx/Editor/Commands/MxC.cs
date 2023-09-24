@@ -7,7 +7,7 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
-namespace MetaX
+namespace Mx
 {
     public class MxC : Mx
     {

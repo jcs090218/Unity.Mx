@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MetaX
+namespace Mx
 {
     public delegate void CompletingReadCallback(string answer);
 
