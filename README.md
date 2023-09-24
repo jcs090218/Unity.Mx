@@ -13,9 +13,11 @@
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 **Table of Contents**
 
+- [💾 Installation](#💾-installation)
 - [🔨 Usage](#🔨-usage)
 - [❓ How to define your own command?](#❓-how-to-define-your-own-command)
 - [📌 Dependencies](#📌-dependencies)
+- [License](#license)
 
 <!-- markdown-toc end -->
 
