@@ -6,6 +6,7 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 using FlxCs;
+using System.Drawing.Printing;
 
 namespace MetaX
 {
@@ -76,7 +77,14 @@ namespace MetaX
         /* Functions */
 
         [MenuItem("Tools/MetaX/Window &x", false, -1000)]
-        public static void ShowWindow() { GetWindow<MxWindow>("MetaX"); }
+        public static void ShowWindow() 
+        {
+            EditorWindow window = GetWindow<MxWindow>("MetaX");
+            Resolution res = Screen.currentResolution;
+            int width = res.width * 50 / 100;
+            int height = res.height * 25 / 100;
+            window.minSize = new Vector2(width, height);
+        }
 
         private void OnEnable()
         {
