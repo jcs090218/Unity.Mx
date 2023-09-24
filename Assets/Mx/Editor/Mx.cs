@@ -20,12 +20,15 @@ namespace Mx
         
         public virtual bool Enable() { return true; }
 
-        public static void CompletionRead(string prompt, List<string> candidates, CompletingReadCallback callback)
+        public static void CompletionRead(
+            string prompt, List<string> candidates, CompletingReadCallback callback,
+            bool requiredMatch = true)
         {
-            MxCompletionWindow.OverrideIt(prompt, candidates, callback);
+            MxCompletionWindow.OverrideIt(prompt, candidates, callback, requiredMatch);
         }
 
-        public static void ReadString(string prompt, CompletingReadCallback callback)
+        public static void ReadString(
+            string prompt, CompletingReadCallback callback)
         {
             MxCompletionWindow.OverrideIt(prompt, null, callback, false);
         }

@@ -17,6 +17,8 @@ namespace Mx
 
         /* Functions */
 
+        public override bool Enable() { return true; }
+
         [Interactive(Summary: "Log Mx version")]
         private static void MxVersion()
         {

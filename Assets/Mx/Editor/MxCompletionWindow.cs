@@ -15,11 +15,7 @@ namespace Mx
 
         public static MxCompletionWindow instance = null;
 
-        public static bool CYCLE = true;
-
         private const string DEFAULT_PROMPT = "M-x ";
-
-        private const float TOOLTIP_RATIO = 40.0f / 100.0f;
 
 #if UNITY_2022_3_OR_NEWER
         private const string mToolbarSearchTextFieldStyleName = "ToolbarSearchTextField";
@@ -79,10 +75,12 @@ namespace Mx
         [MenuItem("Tools/Mx/Window/Completion &x", false, -1000)]
         public static void ShowWindow() 
         {
+            var data = MxSettings.data;
+
             EditorWindow window = GetWindow<MxCompletionWindow>("Mx Completion");
             Resolution res = Screen.currentResolution;
-            int width = res.width * 50 / 100;
-            int height = res.height * 25 / 100;
+            int width = res.width * data.MinWindowWidthRatio / 100;
+            int height = res.height * data.MinWindowHeightRatio / 100;
             window.minSize = new Vector2(width, height);
         }
 
@@ -167,9 +165,7 @@ namespace Mx
                 {
                     string prompt = OVERRIDE_PROMPT ?? DEFAULT_PROMPT;
 
-                    float width = EditorStyles.label.CalcSize(new GUIContent(prompt)).x;
-
-                    EditorGUILayout.LabelField(prompt, GUILayout.Width(width));
+                    MxEditorUtil.LabelField(prompt);
 
                     GUI.SetNextControlName(FIND_SEARCH_FIELD_CTRL_NAME);
                     mSearchString = EditorGUILayout.TextField(mSearchString, GUI.skin.FindStyle(mToolbarSearchTextFieldStyleName));
@@ -226,7 +222,7 @@ namespace Mx
 
             int _base = bScrollbar ? Mathf.RoundToInt(mScrollBar / mButtonHeight) : 0;
 
-            float tooltipWidth = winRect.width * TOOLTIP_RATIO;
+            float tooltipWidth = winRect.width * MxSettings.data.SummaryRatio / 100.0f;
 
             float sbWidth = (bScrollbar ? mSrollbarWidth : 0.0f);
 
@@ -353,7 +349,7 @@ namespace Mx
                     {
                         ++mSelected;
 
-                        if (CYCLE)
+                        if (MxSettings.data.Cycle)
                         {
                             if (mSelected >= mCommandsFilteredCount)
                                 mSelected = 0;
@@ -373,7 +369,7 @@ namespace Mx
                     {
                         --mSelected;
 
-                        if (CYCLE)
+                        if (MxSettings.data.Cycle)
                         {
                             if (mSelected < 0)
                                 mSelected = mCommandsFilteredCount - 1;

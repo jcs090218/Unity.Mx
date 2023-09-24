@@ -11,7 +11,7 @@ public class Commands2 : Mx.Mx
 
     /* Functions */
 
-    public override bool Enable() { return true; }
+    public override bool Enable() { return false; }
 
     [Interactive(
         Icon: "Animation.Record",

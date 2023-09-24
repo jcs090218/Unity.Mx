@@ -6,6 +6,8 @@ using UnityEngine;
 
 namespace Mx
 {
+    public delegate void EmptyFunction();
+
     public static class MxEditorUtil
     {
         /* Variables */
@@ -25,6 +27,44 @@ namespace Mx
             return Application.dataPath + "." + Mx.NAME + "." + name;
         }
 
+        public static void BeginHorizontal(EmptyFunction func, bool flexibleSpace = false)
+        {
+            GUILayout.BeginHorizontal();
+            if (flexibleSpace) GUILayout.FlexibleSpace();
+            func.Invoke();
+            GUILayout.EndHorizontal();
+        }
+
+        public static void BeginVertical(EmptyFunction func)
+        {
+            GUILayout.BeginVertical("box");
+            func.Invoke();
+            GUILayout.EndVertical();
+        }
+
+        public static void Indent(EmptyFunction func)
+        {
+            EditorGUI.indentLevel++;
+            func.Invoke();
+            EditorGUI.indentLevel--;
+        }
+
+        public static void LabelField(string text)
+        {
+            float width = EditorStyles.label.CalcSize(new GUIContent(text)).x;
+            EditorGUILayout.LabelField(text, GUILayout.Width(width));
+        }
+
+        public static void ResetButton(EmptyFunction func)
+        {
+            if (!GUILayout.Button("Reset"))
+                return;
+
+            func.Invoke();
+            MxSettings.data.SavePref();
+        }
+
+        #region EditorPrefs
         /// <summary>
         /// Extends `EditorPrefs` to set the list of strings.
         /// </summary>
@@ -49,6 +89,7 @@ namespace Mx
 
             return reg.Split(":").ToList();
         }
+        #endregion
 
         /// <summary>
         /// Get a texture from its source filename.
