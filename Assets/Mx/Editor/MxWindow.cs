@@ -528,7 +528,7 @@ namespace MetaX
             }
             else if (String.IsNullOrEmpty(mSearchString))
             {
-                mCommandsFiltered = new List<string>(mCommands);
+                mCommandsFiltered = mCommands.OrderBy(i => i.Length).ToList();
             }
             else
             {
