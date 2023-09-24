@@ -5,13 +5,23 @@
 # Meta X
 > M-x for Unity
 
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+**Table of Contents**
+
+- [Meta X](#meta-x)
+  - [🔨 Usage](#🔨-usage)
+  - [❓ How to define your own command?](#❓-how-to-define-your-own-command)
+  - [📌 Dependencies](#📌-dependencies)
+
+<!-- markdown-toc end -->
+
 ## 🔨 Usage
 
 Hit <kbd>Alt</kbd>+<kbd>x</kbd>!
 
 ## ❓ How to define your own command?
 
-Here is a simple example that print out `"Hello World!~"` with `Debug.Log`.
+Here is a simple example that prints out `"Hello World!~"` with `Debug.Log`.
 
 ```cs
 [Interactive(Summary: "Print Hello World!")]
