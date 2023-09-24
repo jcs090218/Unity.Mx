@@ -18,9 +18,16 @@ namespace MetaX
         /* Functions */
 
         [Interactive("", "Log Mx version")]
-        private static void Mx_Version()
+        private static void MxVersion()
         {
             Debug.Log("Mx " + VERSION);
+        }
+
+        [Interactive("d_UnityEditor.AnimationWindow", 
+            "Clear the completion history")]
+        private static void MxClearHistory()
+        {
+            MxWindow.ClearHistory();
         }
 
         [Interactive("", "Clear the console logs")]
@@ -30,12 +37,6 @@ namespace MetaX
             var type = assembly.GetType("UnityEditor.LogEntries");
             var method = type.GetMethod("Clear");
             method.Invoke(new object(), null);
-        }
-
-        [Interactive("d_UnityEditor.AnimationWindow", "Clear the history")]
-        private static void ClearHistory()
-        {
-            MxWindow.ClearHistory();
         }
 
         [Interactive("", "Enter the play mode")]

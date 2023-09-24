@@ -22,6 +22,8 @@ namespace MetaX
 
         private const string DEFAULT_PROMPT = "M-x ";
 
+        private const float TOOLTIP_RATIO = 40.0f / 100.0f;
+
 #if UNITY_2022_3_OR_NEWER
         private const string mToolbarSearchTextFieldStyleName = "ToolbarSearchTextField";
         private const string mToolbarSearchCancelButtonStyleName = "ToolbarSearchCancelButton";
@@ -218,8 +220,7 @@ namespace MetaX
 
             int _base = bScrollbar ? Mathf.RoundToInt(mScrollBar / mButtonHeight) : 0;
 
-            float ratio = 60.0f / 100.0f;
-            float tooltipWidth = winRect.width * ratio;
+            float tooltipWidth = winRect.width * TOOLTIP_RATIO;
 
             float sbWidth = (bScrollbar ? mSrollbarWidth : 0.0f);
 
