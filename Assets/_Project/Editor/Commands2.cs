@@ -34,7 +34,6 @@ public class Commands2 : Mx
         {
             Debug.Log("Chosen: " + answer);
         });
-
     }
 
     [Interactive(

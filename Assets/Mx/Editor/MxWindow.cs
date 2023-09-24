@@ -8,6 +8,7 @@ using UnityEngine;
 using FlxCs;
 using System.Drawing.Printing;
 using static System.Collections.Specialized.BitVector32;
+using Unity.VisualScripting;
 
 namespace MetaX
 {
@@ -60,70 +61,14 @@ namespace MetaX
             SelectionUp,
         };
 
-        public class ToolUsage
-        {
-            private int m_iValue;
-
-            //
-
-            public string Path
-            {
-                get;
-                private set;
-            }
-
-            public int Count
-            {
-                get { return this.Favorite ? m_iValue ^ (1 << 30) : m_iValue; }
-                set { m_iValue = this.CreateValue(value, this.Favorite); }
-            }
-
-            public bool Favorite
-            {
-                get { return (m_iValue & (1 << 30)) != 0; }
-                set { m_iValue = this.CreateValue(this.Count, value); }
-            }
-
-            public int Value
-            {
-                get { return m_iValue; }
-            }
-
-            //
-
-            public void ToggleFavorite()
-            {
-                this.Favorite = !this.Favorite;
-            }
-
-            private int CreateValue(int _iCount, bool _bFavorite)
-            {
-                return Mathf.Min(_iCount, (1 << 30) - 1) | (_bFavorite ? (1 << 30) : 0);
-            }
-
-            //
-
-            public ToolUsage(string _sPath, int _iCount, bool _bFavorite)
-            {
-                Path = _sPath;
-                m_iValue = this.CreateValue(_iCount, _bFavorite);
-            }
-
-            public ToolUsage(string _sPath, int _iValue)
-            {
-                Path = _sPath;
-                m_iValue = _iValue;
-            }
-        }
-
-        private const float c_fButtonStartPosition = 24.0f;
-        private const float c_fButtonHeight = 16.0f;
-        private const float c_fSrollbarWidth = 15.0f;
+        private const float mButtonStartPosition = 24.0f;
+        private const float mButtonHeight = 16.0f;
+        private const float mSrollbarWidth = 15.0f;
         private const float mIconWidth = 20.0f;
-        private static readonly Color c_cHover = new Color32(38, 79, 120, 255);
-        private static readonly Color c_cDefault = new Color32(46, 46, 46, 255);
-        private GUIStyle m_guiStyleHover = new GUIStyle();
-        private GUIStyle m_guiStyleDefault = new GUIStyle();
+        private static readonly Color mHover = new Color32(38, 79, 120, 255);
+        private static readonly Color mDefault = new Color32(46, 46, 46, 255);
+        private GUIStyle mGuiStyleHover = new GUIStyle();
+        private GUIStyle mGuiStyleDefault = new GUIStyle();
 
         private static readonly Color mDefaultText = new Color(46, 46, 46);  // #2E2E2E
 
@@ -144,8 +89,8 @@ namespace MetaX
 
             /* Initialize some UI components! */
             {
-                m_guiStyleHover.normal.textColor = mDefaultText;
-                m_guiStyleDefault.normal.textColor = mDefaultText;
+                mGuiStyleHover.normal.textColor = mDefaultText;
+                mGuiStyleDefault.normal.textColor = mDefaultText;
             }
 
             Refresh();
@@ -245,9 +190,9 @@ namespace MetaX
 
         private void DrawCompletion(InputType input)
         {
-            Rect rectPosition = this.position;
-            float fButtonAreaHeight = rectPosition.height - c_fButtonStartPosition;
-            float fButtonCount = fButtonAreaHeight / c_fButtonHeight;
+            Rect winRect = this.position;
+            float fButtonAreaHeight = winRect.height - mButtonStartPosition;
+            float fButtonCount = fButtonAreaHeight / mButtonHeight;
             int iButtonCountFloor = Mathf.Min(Mathf.FloorToInt(fButtonCount), mCommandsFilteredCount); // used for showing the scrollbar
             int iButtonCountCeil = Mathf.Min(Mathf.CeilToInt(fButtonCount), mCommandsFilteredCount);   // used to additionally show the last button (even if visible only in half)
             bool bScrollbar = iButtonCountCeil < mCommandsFilteredCount;
@@ -258,59 +203,67 @@ namespace MetaX
             {
                 mScrollBar = GUI.VerticalScrollbar(
                     new Rect(
-                        rectPosition.width - c_fSrollbarWidth,
-                        c_fButtonStartPosition,
-                        c_fSrollbarWidth,
-                        rectPosition.height - c_fButtonStartPosition
+                        winRect.width - mSrollbarWidth,
+                        mButtonStartPosition,
+                        mSrollbarWidth,
+                        winRect.height - mButtonStartPosition
                     ),
                     mScrollBar,
-                    iButtonCountFloor * c_fButtonHeight,
+                    iButtonCountFloor * mButtonHeight,
                     0.0f,
-                    mCommandsFilteredCount * c_fButtonHeight
+                    mCommandsFilteredCount * mButtonHeight
                 );
             }
 
-            int iBase = bScrollbar ? Mathf.RoundToInt(mScrollBar / c_fButtonHeight) : 0;
+            int _base = bScrollbar ? Mathf.RoundToInt(mScrollBar / mButtonHeight) : 0;
 
-            for (int i = iBase, j = 0, imax = Mathf.Min(iBase + iButtonCountCeil, mCommandsFilteredCount); i < imax; ++i, ++j)
+            float ratio = 60.0f / 100.0f;
+            float tooltipWidth = winRect.width * ratio;
+
+            float sbWidth = (bScrollbar ? mSrollbarWidth : 0.0f);
+
+            float width = winRect.width - sbWidth - mIconWidth;
+            float height = mButtonHeight - 1.0f;
+
+            float tooltipDisplayWidth = winRect.width - tooltipWidth - sbWidth;
+
+            for (int i = _base, j = 0, imax = Mathf.Min(_base + iButtonCountCeil, mCommandsFilteredCount); i < imax; ++i, ++j)
             {
                 string name = mCommandsFiltered[i];
+                bool selected = (i == mSelected);
 
-                bool bSelected = (i == mSelected);
+                float y = mButtonStartPosition + j * mButtonHeight;
+                var rMain = new Rect(mIconWidth, y, width, height);
 
-                Rect rect = new Rect(
-                    mIconWidth,
-                    c_fButtonStartPosition + j * c_fButtonHeight,
-                    rectPosition.width - (bScrollbar ? c_fSrollbarWidth : 0.0f) - mIconWidth,
-                    c_fButtonHeight - 1.0f
-                );
+                EditorGUI.DrawRect(rMain, selected ? mHover : mDefault);
 
-                EditorGUI.DrawRect(rect, bSelected ? c_cHover : c_cDefault);
-
-                float fIndentation = EditorGUI.IndentedRect(rect).x - rect.x;
-                m_guiStyleHover.fixedWidth = rect.width - fIndentation;
-                m_guiStyleDefault.fixedWidth = rect.width - fIndentation;
+                float indentation = EditorGUI.IndentedRect(rMain).x - rMain.x;
+                mGuiStyleHover.fixedWidth = rMain.width - indentation;
+                mGuiStyleDefault.fixedWidth = rMain.width - indentation;
 
                 if (IsCompletingRead())
                 {
-                    EditorGUI.LabelField(rect, name, bSelected ? m_guiStyleHover : m_guiStyleDefault);
+                    EditorGUI.LabelField(rMain, name, selected ? mGuiStyleHover : mGuiStyleDefault);
 
-                    Rect rectIcon = new Rect(0.0f, c_fButtonStartPosition + j * c_fButtonHeight, mIconWidth, c_fButtonHeight - 1.0f);
-                    EditorGUI.DrawRect(rectIcon, bSelected ? c_cHover : c_cDefault);
+                    Rect rectIcon = new Rect(0.0f, mButtonStartPosition + j * mButtonHeight, mIconWidth, mButtonHeight - 1.0f);
+                    EditorGUI.DrawRect(rectIcon, selected ? mHover : mDefault);
                 }
                 else
                 {
                     InteractiveAttribute attr = GetAttribute(name);
 
-                    EditorGUI.LabelField(rect, new GUIContent(name, null, attr.tooltip), bSelected ? m_guiStyleHover : m_guiStyleDefault);
+                    EditorGUI.LabelField(rMain, new GUIContent(name, null, attr.tooltip), selected ? mGuiStyleHover : mGuiStyleDefault);
 
-                    Rect rectIcon = new Rect(0.0f, c_fButtonStartPosition + j * c_fButtonHeight, mIconWidth, c_fButtonHeight - 1.0f);
-                    EditorGUI.DrawRect(rectIcon, bSelected ? c_cHover : c_cDefault);
-                    EditorGUI.LabelField(rectIcon, new GUIContent(attr.texture, attr.tooltip));
+                    Rect rIcon = new Rect(0.0f, mButtonStartPosition + j * mButtonHeight, mIconWidth, mButtonHeight - 1.0f);
+                    EditorGUI.DrawRect(rIcon, selected ? mHover : mDefault);
+                    EditorGUI.LabelField(rIcon, new GUIContent(attr.texture, attr.tooltip));
+
+                    var rTooltip = new Rect(tooltipWidth, y, tooltipDisplayWidth, height);
+                    EditorGUI.LabelField(rTooltip, attr.tooltip);
                 }
             }
 
-            this.UpdateEventAfterDraw(Event.current, input, iBase, bScrollbar);
+            this.UpdateEventAfterDraw(Event.current, input, _base, bScrollbar);
         }
 
         private InputType UpdateEventBeforeDraw(Event evt)
@@ -324,6 +277,7 @@ namespace MetaX
 
                     switch (evt.keyCode)
                     {
+                        case KeyCode.KeypadEnter:
                         case KeyCode.Return:
                             evt.Use();
                             return InputType.Execute;
@@ -372,7 +326,7 @@ namespace MetaX
                     {
                         string asnwer = mSearchString;
 
-                        if (mCommandsFilteredCount > 0 && 
+                        if (mCommandsFilteredCount > 0 &&
                             mSelected < mCommandsFilteredCount)
                         {
                             asnwer = mCommandsFiltered[mSelected];
@@ -430,8 +384,8 @@ namespace MetaX
             {
                 case EventType.MouseDown:
                     {
-                        int iIndex = currentBase + Mathf.FloorToInt((evt.mousePosition.y - c_fButtonStartPosition) / c_fButtonHeight);
-                        if (iIndex >= 0 && iIndex < mCommandsFilteredCount && (!scrollbar || evt.mousePosition.x < this.position.width - c_fSrollbarWidth))
+                        int iIndex = currentBase + Mathf.FloorToInt((evt.mousePosition.y - mButtonStartPosition) / mButtonHeight);
+                        if (iIndex >= 0 && iIndex < mCommandsFilteredCount && (!scrollbar || evt.mousePosition.x < this.position.width - mSrollbarWidth))
                         {
                             this.ExecuteCommand(mCommandsFiltered[iIndex]);
                         }
@@ -442,7 +396,7 @@ namespace MetaX
                     {
                         if (scrollbar)
                         {
-                            mScrollBar += evt.delta.y * c_fButtonHeight;
+                            mScrollBar += evt.delta.y * mButtonHeight;
                             this.Repaint();
                         }
                     }
@@ -455,18 +409,18 @@ namespace MetaX
 
         private void CheckScrollToSelected()
         {
-            float fButtonAreaHeight = this.position.height - c_fButtonStartPosition;
-            float fButtonCount = fButtonAreaHeight / c_fButtonHeight;
-            int iBase = Mathf.RoundToInt(mScrollBar / c_fButtonHeight);
+            float fButtonAreaHeight = this.position.height - mButtonStartPosition;
+            float fButtonCount = fButtonAreaHeight / mButtonHeight;
+            int iBase = Mathf.RoundToInt(mScrollBar / mButtonHeight);
             int iButtonCountFloor = Mathf.Min(Mathf.FloorToInt(fButtonCount), mCommandsFilteredCount);
 
             if (mSelected >= Mathf.Min(iBase + iButtonCountFloor, mCommandsFilteredCount))
             {
-                mScrollBar = c_fButtonHeight * (mSelected - iButtonCountFloor + 1);
+                mScrollBar = mButtonHeight * (mSelected - iButtonCountFloor + 1);
             }
             else if (mSelected < iBase)
             {
-                mScrollBar = c_fButtonHeight * mSelected;
+                mScrollBar = mButtonHeight * mSelected;
             }
         }
 
@@ -600,13 +554,8 @@ namespace MetaX
                 }
             }
 
+            mSelected = 0;
             mCommandsFilteredCount = mCommandsFiltered.Count;
-        }
-
-        private static void MoveToFront<T>(List<T> lst, T obj)
-        {
-            lst.Remove(obj);
-            lst.Insert(0, obj);
         }
 
         private static void MoveToLast<T>(List<T> lst, T obj)

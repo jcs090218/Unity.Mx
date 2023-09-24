@@ -22,7 +22,7 @@ namespace MetaX
         {
             get
             {
-                if (this.mIcon == null)
+                if (String.IsNullOrEmpty(this.mIcon))
                 {
                     if (DEFAULT_ICON == null)
                         return null;
