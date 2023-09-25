@@ -574,12 +574,15 @@ namespace Mx
             }
 
             // Initial sort
+            switch (MxSettings.data.InitialSortingOrder)
             {
-                // By length
-                //mCommands = mCommands.OrderBy(i => i.Length).ToList();
+                case SortType.Alphabetic:
+                    mCommands = mCommands.OrderBy(i => i).ToList();
+                    break;
 
-                // By alphabetic order
-                mCommands = mCommands.OrderBy(i => i).ToList();
+                case SortType.Length:
+                    mCommands = mCommands.OrderBy(i => i.Length).ToList();
+                    break;
             }
 
             // Sort history in the correct order!
