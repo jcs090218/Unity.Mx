@@ -4,13 +4,7 @@
  * 
  * jcs090218@gmail.com
  */
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.IO;
-using System.Linq;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 namespace Mx
@@ -47,97 +41,11 @@ namespace Mx
             SettingsService.OpenUserPreferences("Preferences/Mx");
         }
 
-        //
-
-        [Interactive(Summary: "Clear the console logs")]
-        private static void ClearConsole()
-        {
-            var assembly = Assembly.GetAssembly(typeof(UnityEditor.Editor));
-            var type = assembly.GetType("UnityEditor.LogEntries");
-            var method = type.GetMethod("Clear");
-            method.Invoke(new object(), null);
-        }
-
-        [Interactive(Summary: "Enter the play mode")]
-        private static void EnterPlayMode() => EditorApplication.EnterPlaymode();
-
-        [Interactive(Summary: "Exit the play mode")]
-        private static void ExitPlayMode() => EditorApplication.ExitPlaymode();
-
-        [Interactive(Summary: "Toggle the play mode")]
-        private static void TogglePlayMode()
-        {
-            if (Application.isPlaying)
-                ExitPlayMode();
-            else
-                EnterPlayMode();
-        }
-
-        [Interactive(Summary: "Pause in the editor application")]
-        private static void Pause()
-        {
-            EditorApplication.isPaused = true;
-        }
-
-        [Interactive(Summary: "Unpause in the editor application")]
-        private static void Unpause()
-        {
-            EditorApplication.isPaused = false;
-        }
-
-        [Interactive(Summary: "Toggle pausing in the editor application")]
-        private static void TogglePause()
-        {
-            EditorApplication.isPaused = !EditorApplication.isPaused;
-        }
-
         [Interactive(
-            Icon:"d_FolderEmpty Icon",
-            Summary: "Show data path in file browser")]
-        private static void FindDataPath()
+            Summary: "Open Mx project's homepage")]
+        private static void MxHomepage()
         {
-            CompletionRead("Data path: ", new List<string>()
-            {
-                Application.dataPath,
-                Application.persistentDataPath,
-                Application.streamingAssetsPath,
-                Application.temporaryCachePath,
-            },
-            (answer) =>
-            {
-                EditorUtility.RevealInFinder(answer);
-            });
-        }
-
-        /// <summary>
-        /// Return all scenes.
-        /// </summary>
-        /// <returns></returns>
-        public static List<string> GetScenes()
-        {
-            string[] paths = Directory.GetFiles("Assets", "*.unity", SearchOption.AllDirectories);
-            return paths.ToList();
-        }
-
-        [Interactive(
-            Icon: "UnityLogo",
-            Summary: "Open a scene")]
-        private static void OpenScene()
-        {
-            CompletionRead("Scene name: ", GetScenes(),
-            (answer) =>
-            {
-                EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
-                EditorSceneManager.OpenScene(answer);
-            });
-        }
-
-        [Interactive(
-            Summary: "List out key code")]
-        private static void ListKeyCode()
-        {
-            var result = MxEditorUtil.EnumTuple(typeof(KeyCode));
-            CompletionRead("Key code: ", result.Item1, result.Item2, null);
+            Application.OpenURL("https://github.com/jcs090218/Unity.Mx");
         }
     }
 }

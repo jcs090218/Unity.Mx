@@ -7,6 +7,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Mx;
+using System.Runtime.CompilerServices;
 
 public class TryCommands : Mx.Mx
 {
@@ -18,26 +19,21 @@ public class TryCommands : Mx.Mx
 
     public override bool Enable() { return true; }
 
-    [Interactive(
-        Icon: "Animation.Record",
-        Summary: "Log Mx version.")]
-    private static void Mx_Version()
-    {
-        Debug.Log("Mx " + VERSION);
-    }
+    [Interactive]
+    private static void MxVersion() { }
 
     [Interactive(
         Icon: "d_PreMatCube",
         Summary: "Try completing read!")]
     private static void _TryCompletingRead()
     {
-        CompletionRead("Try compleing read: ", new List<string>()
+        CompletingRead("Try compleing read: ", new List<string>()
         {
             "Item 1",
             "Item 2",
             "Item 3",
         },
-        (answer) =>
+        (answer, summary) =>
         {
             Debug.Log("Chosen: " + answer);
         });
@@ -48,7 +44,7 @@ public class TryCommands : Mx.Mx
         Summary: "Try read string!")]
     private static void _TryReadString()
     {
-        ReadString("Try read string: ", (answer) =>
+        ReadString("Try read string: ", (answer, summary) =>
         {
             Debug.Log("String: " + answer);
         });
@@ -59,7 +55,7 @@ public class TryCommands : Mx.Mx
         Summary: "Try read number!")]
     private static void _TryReadNumber()
     {
-        ReadNumber("Try read number: ", (answer) =>
+        ReadNumber("Try read number: ", (answer, summary) =>
         {
             Debug.Log("Number: " + answer);
         });
@@ -70,9 +66,29 @@ public class TryCommands : Mx.Mx
        Summary: "Try yes or no!")]
     private static void _TryYesOrNo()
     {
-        YesOrNo("Try yes or no: ", (answer) =>
+        YesOrNo("Try yes or no: ", (answer, summary) =>
         {
             Debug.Log("Answer: " + answer);
+        });
+    }
+
+    [Interactive(
+       Icon: "d_PreMatCube",
+       Summary: "Try nested completing!")]
+    private static void _TryNestedCompleting()
+    {
+        YesOrNo("Try yes or no: ", (answer, summary) =>
+        {
+            CompletingRead("Try compleing read: ", new List<string>()
+            {
+                "Item 1",
+                "Item 2",
+                "Item 3",
+            },
+            (answer, summary) =>
+            {
+                Debug.Log("Chosen: " + answer);
+            });
         });
     }
 }

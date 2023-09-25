@@ -4,8 +4,11 @@
  * 
  * jcs090218@gmail.com
  */
-using UnityEngine;
+using System.Collections.Generic;
+using System;
+using System.Linq;
 using Mx;
+using UnityEditor;
 
 public class TestCommands : Mx.Mx
 {
@@ -15,32 +18,27 @@ public class TestCommands : Mx.Mx
 
     /* Functions */
 
-    public override bool Enable() { return false; }
-
-    [Interactive(
-            Icon: "Animation.Record",
-            Summary: "Log Mx version.")]
-    private static void Mx_Version()
-    {
-        Debug.Log("Mx " + VERSION);
-    }
+    public override bool Enable() { return true; }
 
     [Interactive]
-    private static void _TestPrivate()
-    {
-        Debug.Log("From test private");
-    }
+    private static void MxVersion() { }
 
     [Interactive]
-    private static void _TestPublic()
+    private static void ListComponents()
     {
+        List<Type> lst = AppDomain.CurrentDomain.GetAssemblies()
+            .SelectMany(assembly => assembly.GetTypes())
+            .Where(type => type.IsSubclassOf(typeof(UnityEngine.Object)))
+            .ToList();
 
+        var strs = MxUtil.ToListString<Type>(lst);
+
+        CompletingRead("Components: ", strs, null);
     }
 
-    [Interactive]
-    private static void _TestSomeFunctionExterme()
+    private static void ToggleConsoleCollapse()
     {
-
+        
     }
 }
 #endif

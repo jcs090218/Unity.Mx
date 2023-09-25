@@ -14,6 +14,8 @@ using FlxCs;
 
 namespace Mx
 {
+    public delegate void CompletingReadCallback(string answer, string summary = null);
+
     public class MxCompletionWindow : EditorWindow
     {
         /* Variables */
@@ -267,7 +269,7 @@ namespace Mx
                     EditorGUI.DrawRect(rIcon, selected ? mHover : mDefault);
 
                     // Draw summary
-                    if (OVERRIDE_SUMMARIES != null)
+                    if (OVERRIDE_SUMMARIES != null && OVERRIDE_SUMMARIES.Count != 0)
                     {
                         var rSummary = new Rect(tooltipWidth, y, tooltipDisplayWidth, height);
                         EditorGUI.LabelField(rSummary, OVERRIDE_SUMMARIES[i]);
@@ -466,6 +468,17 @@ namespace Mx
             INHIBIT_CLOSE = false;
         }
 
+        public void Continue()
+        {
+            if (!IsCompletingRead())
+                return;
+
+            mSearchString = "";
+            RecreateCommandList();
+
+            INHIBIT_CLOSE = true;
+        }
+
         private void ExecCommand_Root(string name)
         {
             MoveToLast(mHistory, name);
@@ -476,8 +489,7 @@ namespace Mx
 
             if (IsCompletingRead())
             {
-                mSearchString = "";
-                RecreateCommandList();
+                Continue();
                 return;
             }
 
@@ -487,10 +499,21 @@ namespace Mx
         private void ExecCommand_Completing(string name)
         {
             if (OVERRIDE_EXECUTE_COMMAND != null)
-                OVERRIDE_EXECUTE_COMMAND.Invoke(name);
+                OVERRIDE_EXECUTE_COMMAND.Invoke(name, GetSummary());
 
             if (!INHIBIT_CLOSE)
                 this.Close();
+        }
+
+        private string GetSummary()
+        {
+            if (OVERRIDE_SUMMARIES == null)
+                return null;
+
+            if (OVERRIDE_SUMMARIES.Count <= mSelected || mSelected < 0)
+                return null;
+
+            return OVERRIDE_SUMMARIES[mSelected];
         }
 
         private string FormName(MethodInfo info, bool full = false)
@@ -646,11 +669,16 @@ namespace Mx
             CompletingReadCallback callback,
             bool requiredMatch = true)
         {
+            bool already = IsCompletingRead();
+
             OVERRIDE_PROMPT = prompt;
             OVERRIDE_CANDIDATES = candidates;
             OVERRIDE_SUMMARIES = summaries;
             OVERRIDE_EXECUTE_COMMAND = callback;
             REQUIRED_MATCH = requiredMatch;
+
+            if (already)
+                instance.Continue();
         }
 
         public static bool IsCompletingRead()

@@ -20,10 +20,18 @@ namespace Mx
         public override bool Enable() { return true; }
 
         [Interactive(
+            Icon: "d_FolderEmpty Icon",
             Summary: "Show project path in the file browser")]
         private static void OpenProjectPath()
         {
             EditorUtility.RevealInFinder(Application.dataPath);
+        }
+
+        [Interactive(
+            Summary: "Show project settings")]
+        private static void ProjectSettings()
+        {
+            EditorApplication.ExecuteMenuItem("Edit/Project Settings...");
         }
     }
 }
