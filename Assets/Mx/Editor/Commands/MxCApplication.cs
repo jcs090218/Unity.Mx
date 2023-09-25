@@ -22,7 +22,7 @@ namespace Mx
         public override bool Enable() { return true; }
 
         [Interactive(Summary: "Clear the console logs")]
-        private static void ClearConsole()
+        public static void ClearConsole()
         {
             var assembly = Assembly.GetAssembly(typeof(UnityEditor.Editor));
             var type = assembly.GetType("UnityEditor.LogEntries");
@@ -31,13 +31,13 @@ namespace Mx
         }
 
         [Interactive(Summary: "Enter the play mode")]
-        private static void EnterPlayMode() => EditorApplication.EnterPlaymode();
+        public static void EnterPlayMode() => EditorApplication.EnterPlaymode();
 
         [Interactive(Summary: "Exit the play mode")]
-        private static void ExitPlayMode() => EditorApplication.ExitPlaymode();
+        public static void ExitPlayMode() => EditorApplication.ExitPlaymode();
 
         [Interactive(Summary: "Toggle the play mode")]
-        private static void TogglePlayMode()
+        public static void TogglePlayMode()
         {
             if (Application.isPlaying)
                 ExitPlayMode();
@@ -46,19 +46,19 @@ namespace Mx
         }
 
         [Interactive(Summary: "Pause in the editor application")]
-        private static void Pause()
+        public static void Pause()
         {
             EditorApplication.isPaused = true;
         }
 
         [Interactive(Summary: "Unpause in the editor application")]
-        private static void Unpause()
+        public static void Unpause()
         {
             EditorApplication.isPaused = false;
         }
 
         [Interactive(Summary: "Toggle pausing in the editor application")]
-        private static void TogglePause()
+        public static void TogglePause()
         {
             EditorApplication.isPaused = !EditorApplication.isPaused;
         }
@@ -66,7 +66,7 @@ namespace Mx
         [Interactive(
             Icon: "d_FolderEmpty Icon",
             Summary: "Show data path in file browser")]
-        private static void FindDataPath()
+        public static void FindDataPath()
         {
             CompletingRead("Data path: ", new List<string>()
             {

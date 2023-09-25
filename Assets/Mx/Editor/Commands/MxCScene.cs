@@ -37,14 +37,14 @@ namespace Mx
         [Interactive(
             Icon: "UnityLogo",
             Summary: "Switch to scene")]
-        private static void SwitchScene()
+        public static void SwitchScene()
         {
             CompletingRead("Switch to scene: ", GetScenes(),
-            (answer, summary) =>
-            {
-                EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
-                EditorSceneManager.OpenScene(answer);
-            });
+                (answer, summary) =>
+                {
+                    EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
+                    EditorSceneManager.OpenScene(answer);
+                });
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Mx
 
         [Interactive(
             Summary: "Find GameObject in scene")]
-        private static void FindGameObjectInScene()
+        public static void FindGameObjectInScene()
         {
             var objs = Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None).ToList();
             var ids = GetInstanceIDs(objs);
@@ -79,7 +79,7 @@ namespace Mx
 
         [Interactive(
             Summary: "Find GameObject in scene by tag")]
-        private static void FindGameObjectWithTag()
+        public static void FindGameObjectWithTag()
         {
             CompletingRead("Enter tag name: ", InternalEditorUtility.tags.ToList(),
                 (tag, _) =>

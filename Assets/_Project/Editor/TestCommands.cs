@@ -21,10 +21,10 @@ public class TestCommands : Mx.Mx
     public override bool Enable() { return true; }
 
     [Interactive]
-    private static void MxVersion() { }
+    public static void MxVersion() { }
 
     [Interactive]
-    private static void ListComponents()
+    public static void ListComponents()
     {
         List<Type> lst = AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(assembly => assembly.GetTypes())
@@ -36,7 +36,7 @@ public class TestCommands : Mx.Mx
         CompletingRead("Components: ", strs, null);
     }
 
-    private static void ToggleConsoleCollapse()
+    public static void ToggleConsoleCollapse()
     {
         
     }

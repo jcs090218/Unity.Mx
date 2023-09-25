@@ -7,6 +7,7 @@
 using System;
 using System.Reflection;
 using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine;
 
 namespace Mx
@@ -26,7 +27,7 @@ namespace Mx
         [Interactive(
             Icon: "InspectorLock",
             Summary: "Toggle Inspector lock")]
-        private static void ToggleInspectorLock()
+        public static void ToggleInspectorLock()
         {
             Type inspectorWindowType = Assembly.GetAssembly(typeof(Editor)).GetType("UnityEditor.InspectorWindow");
 
@@ -46,6 +47,41 @@ namespace Mx
 
                 INSPECTOR_WINDOW.Repaint();
             }
+        }
+
+        private static void ExpandComponents(Transform trans, bool expand)
+        {
+            if (trans == null)
+            {
+                Debug.Log("No GameObject selected");
+                return;
+            }
+
+            MxCWindow.ToInspector();
+
+            Component[] comps = trans.GetComponents<Component>();
+
+            foreach (Component comp in comps)
+                InternalEditorUtility.SetIsInspectorExpanded(comp, expand);
+
+            ActiveEditorTracker tracker = ActiveEditorTracker.sharedTracker;
+            for (int i = 0, length = tracker.activeEditors.Length; i < length; i++)
+                tracker.SetVisible(i, (expand) ? 1 : 0);
+
+            EditorWindow.focusedWindow.Repaint();
+        }
+
+        // Copied: https://gist.github.com/yasirkula/0b541b0865eba11b55518ead45fba8fc?permalink_comment_id=2242423
+        [Interactive(Summary: "Collapse all components in the inspector")]
+        public static void CollapseComponents()
+        {
+            ExpandComponents(Selection.activeTransform, false);
+        }
+
+        [Interactive(Summary: "Expand all components in the inspector")]
+        public static void ExpandComponents()
+        {
+            ExpandComponents(Selection.activeTransform, true);
         }
     }
 }

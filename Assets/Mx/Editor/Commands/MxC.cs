@@ -20,7 +20,7 @@ namespace Mx
         public override bool Enable() { return true; }
 
         [Interactive(Summary: "Log Mx version")]
-        private static void MxVersion()
+        public static void MxVersion()
         {
             Debug.Log("Mx " + VERSION);
         }
@@ -28,7 +28,7 @@ namespace Mx
         [Interactive(
             Icon: "d_UnityEditor.AnimationWindow",
             Summary: "Clear the completion history")]
-        private static void MxClearHistory()
+        public static void MxClearHistory()
         {
             MxCompletionWindow.ClearHistory();
         }
@@ -36,14 +36,14 @@ namespace Mx
         [Interactive(
             Icon: "d_Settings",
             Summary: "Show Mx preferences")]
-        private static void MxPreference()
+        public static void MxPreference()
         {
             SettingsService.OpenUserPreferences("Preferences/Mx");
         }
 
         [Interactive(
             Summary: "Open Mx project's homepage")]
-        private static void MxHomepage()
+        public static void MxHomepage()
         {
             Application.OpenURL("https://github.com/jcs090218/Unity.Mx");
         }

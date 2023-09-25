@@ -20,14 +20,14 @@ namespace Mx
 
         [Interactive(
             Summary: "Open/Focus the console window")]
-        private static void ToConsole()
+        public static void ToConsole()
         {
             EditorApplication.ExecuteMenuItem("Window/General/Console");
         }
 
         [Interactive(
             Summary: "Open/Focus the inspector window")]
-        private static void ToInspector()
+        public static void ToInspector()
         {
             EditorApplication.ExecuteMenuItem("Window/General/Inspector");
         }

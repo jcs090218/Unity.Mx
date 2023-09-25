@@ -21,7 +21,7 @@ namespace Mx
 
         [Interactive(
             Summary: "List out key code")]
-        private static void ListKeyCode()
+        public static void ListKeyCode()
         {
             var result = MxUtil.EnumTuple(typeof(KeyCode));
             CompletingRead("Key code: ", result, null);

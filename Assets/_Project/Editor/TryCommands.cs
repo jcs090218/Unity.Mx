@@ -19,12 +19,12 @@ public class TryCommands : Mx.Mx
     public override bool Enable() { return true; }
 
     [Interactive]
-    private static void MxVersion() { }
+    public static void MxVersion() { }
 
     [Interactive(
         Icon: "d_PreMatCube",
         Summary: "Try completing read!")]
-    private static void _TryCompletingRead()
+    public static void _TryCompletingRead()
     {
         CompletingRead("Try compleing read: ", new List<string>()
         {
@@ -41,7 +41,7 @@ public class TryCommands : Mx.Mx
     [Interactive(
         Icon: "d_PreMatCube",
         Summary: "Try read string!")]
-    private static void _TryReadString()
+    public static void _TryReadString()
     {
         ReadString("Try read string: ", (answer, summary) =>
         {
@@ -52,7 +52,7 @@ public class TryCommands : Mx.Mx
     [Interactive(
         Icon: "d_PreMatCube",
         Summary: "Try read number!")]
-    private static void _TryReadNumber()
+    public static void _TryReadNumber()
     {
         ReadNumber("Try read number: ", (answer, summary) =>
         {
@@ -63,7 +63,7 @@ public class TryCommands : Mx.Mx
     [Interactive(
        Icon: "d_PreMatCube",
        Summary: "Try yes or no!")]
-    private static void _TryYesOrNo()
+    public static void _TryYesOrNo()
     {
         YesOrNo("Try yes or no: ", (answer, summary) =>
         {
@@ -74,7 +74,7 @@ public class TryCommands : Mx.Mx
     [Interactive(
        Icon: "d_PreMatCube",
        Summary: "Try nested completing!")]
-    private static void _TryNestedCompleting()
+    public static void _TryNestedCompleting()
     {
         YesOrNo("Try yes or no: ", (answer, summary) =>
         {
