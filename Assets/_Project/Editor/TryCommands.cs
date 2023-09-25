@@ -48,8 +48,7 @@ public class TryCommands : Mx.Mx
         Summary: "Try read string!")]
     private static void _TryReadString()
     {
-        ReadString("Try read string: ",
-        (answer) =>
+        ReadString("Try read string: ", (answer) =>
         {
             Debug.Log("String: " + answer);
         });
@@ -60,10 +59,20 @@ public class TryCommands : Mx.Mx
         Summary: "Try read number!")]
     private static void _TryReadNumber()
     {
-        ReadNumber("Try read number: ",
-        (answer) =>
+        ReadNumber("Try read number: ", (answer) =>
         {
             Debug.Log("Number: " + answer);
+        });
+    }
+
+    [Interactive(
+       Icon: "d_PreMatCube",
+       Summary: "Try yes or no!")]
+    private static void _TryYesOrNo()
+    {
+        YesOrNo("Try yes or no: ", (answer) =>
+        {
+            Debug.Log("Answer: " + answer);
         });
     }
 }

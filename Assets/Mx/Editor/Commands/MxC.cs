@@ -4,6 +4,7 @@
  * 
  * jcs090218@gmail.com
  */
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.IO;
@@ -11,8 +12,6 @@ using System.Linq;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
-using System;
-using Unity.VisualScripting;
 
 namespace Mx
 {
@@ -51,7 +50,7 @@ namespace Mx
         //
 
         [Interactive(Summary: "Clear the console logs")]
-        private static void ConsoleClear()
+        private static void ClearConsole()
         {
             var assembly = Assembly.GetAssembly(typeof(UnityEditor.Editor));
             var type = assembly.GetType("UnityEditor.LogEntries");
@@ -131,6 +130,14 @@ namespace Mx
                 EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
                 EditorSceneManager.OpenScene(answer);
             });
+        }
+
+        [Interactive(
+            Summary: "List out key code")]
+        private static void ListKeyCode()
+        {
+            var result = MxEditorUtil.EnumTuple(typeof(KeyCode));
+            CompletionRead("Key code: ", result.Item1, result.Item2, null);
         }
     }
 }

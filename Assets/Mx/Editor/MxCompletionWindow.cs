@@ -35,7 +35,8 @@ namespace Mx
         private const string FIND_SEARCH_FIELD_CTRL_NAME = "FindEditorToolsSearchField";
 
         public static string OVERRIDE_PROMPT = null;
-        public static List<string> OVERRIDE_COMMANDS = null;
+        public static List<string> OVERRIDE_CANDIDATES = null;
+        public static List<string> OVERRIDE_SUMMARIES = null;
         public static CompletingReadCallback OVERRIDE_EXECUTE_COMMAND = null;
         public static bool REQUIRED_MATCH = true;
 
@@ -111,7 +112,8 @@ namespace Mx
         private void OnDisable()
         {
             OVERRIDE_PROMPT = null;
-            OVERRIDE_COMMANDS = null;
+            OVERRIDE_CANDIDATES = null;
+            OVERRIDE_SUMMARIES = null;
             OVERRIDE_EXECUTE_COMMAND = null;
             REQUIRED_MATCH = true;
             INHIBIT_CLOSE = false;
@@ -260,8 +262,16 @@ namespace Mx
                 {
                     EditorGUI.LabelField(rMain, name, selected ? mGuiStyleHover : mGuiStyleDefault);
 
-                    Rect rectIcon = new Rect(0.0f, mButtonStartPosition + j * mButtonHeight, mIconWidth, mButtonHeight - 1.0f);
-                    EditorGUI.DrawRect(rectIcon, selected ? mHover : mDefault);
+                    // Draw tooltip
+                    Rect rIcon = new Rect(0.0f, mButtonStartPosition + j * mButtonHeight, mIconWidth, mButtonHeight - 1.0f);
+                    EditorGUI.DrawRect(rIcon, selected ? mHover : mDefault);
+
+                    // Draw summary
+                    if (OVERRIDE_SUMMARIES != null)
+                    {
+                        var rSummary = new Rect(tooltipWidth, y, tooltipDisplayWidth, height);
+                        EditorGUI.LabelField(rSummary, OVERRIDE_SUMMARIES[i]);
+                    }
                 }
                 else
                 {
@@ -272,12 +282,14 @@ namespace Mx
 
                     EditorGUI.LabelField(rMain, new GUIContent(name, null, attr.tooltip), selected ? mGuiStyleHover : mGuiStyleDefault);
 
+                    // Draw tooltip
                     Rect rIcon = new Rect(0.0f, mButtonStartPosition + j * mButtonHeight, mIconWidth, mButtonHeight - 1.0f);
                     EditorGUI.DrawRect(rIcon, selected ? mHover : mDefault);
                     EditorGUI.LabelField(rIcon, new GUIContent(attr.texture, attr.tooltip));
 
-                    var rTooltip = new Rect(tooltipWidth, y, tooltipDisplayWidth, height);
-                    EditorGUI.LabelField(rTooltip, attr.summary);
+                    // Draw summary
+                    var rSummary = new Rect(tooltipWidth, y, tooltipDisplayWidth, height);
+                    EditorGUI.LabelField(rSummary, attr.summary);
                 }
             }
 
@@ -492,7 +504,7 @@ namespace Mx
         {
             if (IsCompletingRead())
             {
-                mCommands = OVERRIDE_COMMANDS;
+                mCommands = OVERRIDE_CANDIDATES;
                 RecreateFilteredList();
                 return;
             }
@@ -629,12 +641,14 @@ namespace Mx
 
         public static void OverrideIt(
             string prompt, 
-            List<string> candidates, 
+            List<string> candidates,
+            List<string> summaries,
             CompletingReadCallback callback,
             bool requiredMatch = true)
         {
             OVERRIDE_PROMPT = prompt;
-            OVERRIDE_COMMANDS = candidates;
+            OVERRIDE_CANDIDATES = candidates;
+            OVERRIDE_SUMMARIES = summaries;
             OVERRIDE_EXECUTE_COMMAND = callback;
             REQUIRED_MATCH = requiredMatch;
         }
@@ -642,7 +656,8 @@ namespace Mx
         public static bool IsCompletingRead()
         {
             return OVERRIDE_PROMPT != null
-                || OVERRIDE_COMMANDS != null
+                || OVERRIDE_CANDIDATES != null
+                || OVERRIDE_SUMMARIES != null
                 || OVERRIDE_EXECUTE_COMMAND != null;
         }
     }
