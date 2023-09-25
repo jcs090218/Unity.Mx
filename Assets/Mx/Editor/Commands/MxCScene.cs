@@ -11,7 +11,6 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEditorInternal;
-using OpenCover.Framework.Model;
 
 namespace Mx
 {
@@ -90,8 +89,6 @@ namespace Mx
 
                     var objss = MxUtil.ToListString(objs);
                     var idss = MxUtil.ToListString(ids);
-
-                    MxCompletionWindow.INHIBIT_CLOSE = true;
 
                     CompletingRead("Find GameObject with tag: (" + tag + ") ",
                         objss, idss,

@@ -9,7 +9,6 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-
 namespace Mx
 {
     public static class MxUtil
