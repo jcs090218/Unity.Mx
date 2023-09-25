@@ -1,4 +1,9 @@
 #if UNITY_EDITOR
+/**
+ * Copyright (c) Jen-Chieh Shen. All rights reserved.
+ * 
+ * jcs090218@gmail.com
+ */
 using System;
 using System.Collections.Generic;
 using System.Linq;

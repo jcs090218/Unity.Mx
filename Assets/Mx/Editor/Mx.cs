@@ -1,4 +1,9 @@
 #if UNITY_EDITOR
+/**
+ * Copyright (c) Jen-Chieh Shen. All rights reserved.
+ * 
+ * jcs090218@gmail.com
+ */
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,7 +48,7 @@ namespace Mx
                     if (!float.TryParse(answer, out number))
                     {
                         MxCompletionWindow.INHIBIT_CLOSE = true;
-                        Debug.LogWarning("Invalid number: " + answer);
+                        Debug.LogError("Invalid number: " + answer);
                         return;
                     }
 
