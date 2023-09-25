@@ -18,7 +18,7 @@ public class TryCommands : Mx.Mx
 
     public override bool Enable() { return true; }
 
-    [Interactive]
+    [Interactive(Summary: "Test command with same name",Enabled: false)]
     public static void MxVersion() { }
 
     [Interactive(

@@ -24,22 +24,12 @@ namespace Mx
 
         public override bool Enable() { return true; }
 
-        /// <summary>
-        /// Return all scenes.
-        /// </summary>
-        /// <returns></returns>
-        public static List<string> GetScenes()
-        {
-            string[] paths = Directory.GetFiles("Assets", "*.unity", SearchOption.AllDirectories);
-            return paths.ToList();
-        }
-
         [Interactive(
             Icon: "UnityLogo",
             Summary: "Switch to scene")]
-        public static void SwitchScene()
+        public static void SwitchToScene()
         {
-            CompletingRead("Switch to scene: ", GetScenes(),
+            CompletingRead("Switch to scene: ", MxUtil.GetFiles("*.unity"),
                 (answer, summary) =>
                 {
                     EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
@@ -47,20 +37,12 @@ namespace Mx
                 });
         }
 
-        /// <summary>
-        /// Convert list object GameObject to its instance ID.
-        /// </summary>
-        private static List<int> GetInstanceIDs(List<GameObject> objs)
-        {
-            return objs.Select(i => i.GetInstanceID()).ToList();
-        }
-
         [Interactive(
             Summary: "Find GameObject in scene")]
         public static void FindGameObjectInScene()
         {
             var objs = Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None).ToList();
-            var ids = GetInstanceIDs(objs);
+            var ids = MxUtil.GetInstanceIDs(objs);
 
             var objss = MxUtil.ToListString(objs);
             var idss = MxUtil.ToListString(ids);
@@ -85,7 +67,7 @@ namespace Mx
                 (tag, _) =>
                 {
                     var objs = GameObject.FindGameObjectsWithTag(tag).ToList();
-                    var ids = GetInstanceIDs(objs);
+                    var ids = MxUtil.GetInstanceIDs(objs);
 
                     var objss = MxUtil.ToListString(objs);
                     var idss = MxUtil.ToListString(ids);

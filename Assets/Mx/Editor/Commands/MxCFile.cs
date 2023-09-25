@@ -5,7 +5,6 @@
  * jcs090218@gmail.com
  */
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using UnityEngine;
 
@@ -25,11 +24,11 @@ namespace Mx
             Summary: "Find file externally")]
         public static void FindFileExternal()
         {
-            List<string> paths = Directory.GetFiles("Assets", "*.*", SearchOption.AllDirectories)
+            List<string> paths = MxUtil.GetFiles("*.*")
                 .Where(name => !name.EndsWith(".meta"))
                 .ToList();
 
-            CompletingRead("Find file: ", paths,
+            CompletingRead("Find file externally: ", paths,
                 (answer, summary) =>
                 {
                     Application.OpenURL(answer);

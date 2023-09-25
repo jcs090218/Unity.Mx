@@ -26,6 +26,10 @@
 
 <!-- markdown-toc end -->
 
+## 🏆 Features
+
+WIP
+
 ## 💾 Installation
 
 WIP

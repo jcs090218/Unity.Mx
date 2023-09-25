@@ -57,7 +57,7 @@ namespace Mx
                 return;
             }
 
-            MxCWindow.ToInspector();
+            MxCWindow.SwitchToInspector();
 
             Component[] comps = trans.GetComponents<Component>();
 

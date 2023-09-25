@@ -20,6 +20,8 @@ namespace Mx
         private string mSummary = null;
         private string mTooltip = null;
 
+        private bool mEnabled = false;
+
         /* Setter & Getter */
 
         public string Icon { get { return this.mIcon; } }
@@ -39,16 +41,19 @@ namespace Mx
                 return MxUtil.FindTexture(mIcon);
             }
         }
+        public bool Enabled { get { return this.mEnabled; } }
 
         /* Functions */
 
         public InteractiveAttribute(string Icon = null, 
             string Summary = null,
-            string Tooltip = null)
+            string Tooltip = null,
+            bool Enabled = true)
         {
             this.mIcon = Icon;
             this.mSummary = Summary;
             this.mTooltip = Tooltip;
+            this.mEnabled = Enabled;
         }
     }
 }

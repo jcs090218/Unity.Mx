@@ -30,31 +30,13 @@ namespace Mx
             method.Invoke(new object(), null);
         }
 
-        [Interactive(Summary: "Enter the play mode")]
-        public static void EnterPlayMode() => EditorApplication.EnterPlaymode();
-
-        [Interactive(Summary: "Exit the play mode")]
-        public static void ExitPlayMode() => EditorApplication.ExitPlaymode();
-
         [Interactive(Summary: "Toggle the play mode")]
         public static void TogglePlayMode()
         {
             if (Application.isPlaying)
-                ExitPlayMode();
+                EditorApplication.EnterPlaymode();
             else
-                EnterPlayMode();
-        }
-
-        [Interactive(Summary: "Pause in the editor application")]
-        public static void Pause()
-        {
-            EditorApplication.isPaused = true;
-        }
-
-        [Interactive(Summary: "Unpause in the editor application")]
-        public static void Unpause()
-        {
-            EditorApplication.isPaused = false;
+                EditorApplication.ExitPlaymode();
         }
 
         [Interactive(Summary: "Toggle pausing in the editor application")]

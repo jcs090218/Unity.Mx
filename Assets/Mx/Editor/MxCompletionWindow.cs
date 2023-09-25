@@ -166,6 +166,7 @@ namespace Mx
 
             return mTypes.SelectMany(t => t.GetType().GetMethods(bindings))
                 .Where(m => m.GetCustomAttributes(typeof(InteractiveAttribute), false).Length > 0)
+                .Where(m => (m.GetCustomAttribute(typeof(InteractiveAttribute)) as InteractiveAttribute).Enabled)
                 .ToList();
         }
 
@@ -458,17 +459,10 @@ namespace Mx
             }
         }
 
-        private void ExecuteCommand(string name)
-        {
-            if (IsCompletingRead())
-                ExecCommand_Completing(name);
-            else
-                ExecCommand_Root(name);
-
-            INHIBIT_CLOSE = false;
-        }
-
-        public void Continue()
+        /// <summary>
+        /// Call this to continue the completing read process.
+        /// </summary>
+        private void Continue()
         {
             if (!IsCompletingRead())
                 return;
@@ -477,6 +471,16 @@ namespace Mx
             RecreateCommandList();
 
             INHIBIT_CLOSE = true;
+        }
+
+        private void ExecuteCommand(string name)
+        {
+            if (IsCompletingRead())
+                ExecCommand_Completing(name);
+            else
+                ExecCommand_Root(name);
+
+            INHIBIT_CLOSE = false;
         }
 
         private void ExecCommand_Root(string name)

@@ -5,6 +5,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -88,6 +89,31 @@ namespace Mx
         public static List<string> ToListString(List<GameObject> lst)
         {
             return lst.Select(i => i.name).ToList();
+        }
+
+        /// <summary>
+        /// Convert list GameObjects to its instance ID.
+        /// </summary>
+        public static List<int> GetInstanceIDs(List<GameObject> objs)
+        {
+            return objs.Select(i => i.GetInstanceID()).ToList();
+        }
+
+        /// <summary>
+        /// Convert list EditorWindow to its instance ID.
+        /// </summary>
+        public static List<int> GetInstanceIDs(List<EditorWindow> objs)
+        {
+            return objs.Select(i => i.GetInstanceID()).ToList();
+        }
+
+        /// <summary>
+        /// Return all files match with patterns.
+        /// </summary>
+        public static List<string> GetFiles(string pattern)
+        {
+            string[] paths = Directory.GetFiles("Assets", pattern, SearchOption.AllDirectories);
+            return paths.ToList();
         }
     }
 }
