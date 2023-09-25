@@ -65,7 +65,9 @@ You can see all complex examples in our source code, under [Assets/Mx/Editor/Com
 
 ## License
 
-[MIT](./LICENSE)
+Copyright (c) Jen-Chieh Shen. All rights reserved.
+
+See [LICENSE](./LICENSE) for details.
 
 
 [Assets/Mx/Editor/Commands]: https://github.com/jcs090218/Unity.Mx/tree/master/Assets/Mx/Editor/Commands
