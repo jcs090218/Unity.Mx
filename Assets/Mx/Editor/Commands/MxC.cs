@@ -25,6 +25,12 @@ namespace Mx
             Debug.Log("Mx " + VERSION);
         }
 
+        [Interactive(Summary: "Open Mx project's homepage")]
+        public static void MxHome()
+        {
+            Application.OpenURL("https://github.com/jcs090218/Unity.Mx");
+        }
+
         [Interactive(
             Icon: "d_UnityEditor.AnimationWindow",
             Summary: "Clear the completion history")]
@@ -39,13 +45,6 @@ namespace Mx
         public static void MxPreference()
         {
             SettingsService.OpenUserPreferences("Preferences/Mx");
-        }
-
-        [Interactive(
-            Summary: "Open Mx project's homepage")]
-        public static void MxHomepage()
-        {
-            Application.OpenURL("https://github.com/jcs090218/Unity.Mx");
         }
     }
 }

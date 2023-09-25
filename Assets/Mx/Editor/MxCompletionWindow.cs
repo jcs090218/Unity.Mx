@@ -573,8 +573,16 @@ namespace Mx
                 mCommands.Add(name);
             }
 
+            // Initial sort
+            {
+                // By length
+                //mCommands = mCommands.OrderBy(i => i.Length).ToList();
+
+                // By alphabetic order
+                mCommands = mCommands.OrderBy(i => i).ToList();
+            }
+
             // Sort history in the correct order!
-            mCommands = mCommands.OrderBy(i => i.Length).ToList();
             mCommands = mCommands.OrderByDescending(d => mHistory.IndexOf(d)).ToList();
 
             RecreateFilteredList();
