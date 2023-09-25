@@ -69,3 +69,4 @@ You can see all complex examples in our source code, under [Assets/Mx/Editor/Com
 
 
 [Assets/Mx/Editor/Commands]: https://github.com/jcs090218/Unity.Mx/tree/master/Assets/Mx/Editor/Commands
+[unity-editor-icons]: https://github.com/halak/unity-editor-icons
