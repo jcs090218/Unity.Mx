@@ -4,6 +4,10 @@
  * 
  * jcs090218@gmail.com
  */
+using System;
+using System.Reflection;
+using UnityEditor;
+using UnityEngine;
 
 namespace Mx
 {
@@ -11,11 +15,38 @@ namespace Mx
     {
         /* Variables */
 
+        private static EditorWindow INSPECTOR_WINDOW;
+
         /* Setter & Getter */
 
         /* Functions */
 
+        public override bool Enable() { return true; }
 
+        [Interactive(
+            Icon: "InspectorLock",
+            Summary: "Toggle Inspector lock")]
+        private static void ToggleInspectorLock()
+        {
+            Type inspectorWindowType = Assembly.GetAssembly(typeof(Editor)).GetType("UnityEditor.InspectorWindow");
+
+            if (INSPECTOR_WINDOW == null)
+            {
+                UnityEngine.Object[] findObjectsOfTypeAll = Resources.FindObjectsOfTypeAll(inspectorWindowType);
+                INSPECTOR_WINDOW = (EditorWindow)findObjectsOfTypeAll[0];
+            }
+
+            if (INSPECTOR_WINDOW != null && INSPECTOR_WINDOW.GetType().Name == "InspectorWindow")
+            {
+                PropertyInfo isLockedPropertyInfo = inspectorWindowType.GetProperty("isLocked");
+                if (isLockedPropertyInfo == null) return;
+
+                bool value = (bool)isLockedPropertyInfo.GetValue(INSPECTOR_WINDOW, null);
+                isLockedPropertyInfo.SetValue(INSPECTOR_WINDOW, !value, null);
+
+                INSPECTOR_WINDOW.Repaint();
+            }
+        }
     }
 }
 #endif

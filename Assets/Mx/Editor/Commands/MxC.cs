@@ -12,6 +12,7 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using System;
+using Unity.VisualScripting;
 
 namespace Mx
 {
@@ -39,6 +40,16 @@ namespace Mx
             MxCompletionWindow.ClearHistory();
         }
 
+        [Interactive(
+            Icon: "d_Settings",
+            Summary: "Show Mx preferences")]
+        private static void MxPreference()
+        {
+            SettingsService.OpenUserPreferences("Preferences/Mx");
+        }
+
+        //
+
         [Interactive(Summary: "Clear the console logs")]
         private static void ConsoleClear()
         {
@@ -52,13 +63,13 @@ namespace Mx
         private static void EnterPlayMode() => EditorApplication.EnterPlaymode();
 
         [Interactive(Summary: "Exit the play mode")]
-        private static void ExitPlaymode() => EditorApplication.ExitPlaymode();
+        private static void ExitPlayMode() => EditorApplication.ExitPlaymode();
 
         [Interactive(Summary: "Toggle the play mode")]
-        private static void TogglePlaymode()
+        private static void TogglePlayMode()
         {
             if (Application.isPlaying)
-                ExitPlaymode();
+                ExitPlayMode();
             else
                 EnterPlayMode();
         }
@@ -120,33 +131,6 @@ namespace Mx
                 EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
                 EditorSceneManager.OpenScene(answer);
             });
-        }
-
-        private static EditorWindow _inspectorWindow;
-
-        [Interactive(
-            Icon: "InspectorLock",
-            Summary: "Toggle Inspector lock")]
-        private static void ToggleInspectorLock()
-        {
-            Type inspectorWindowType = Assembly.GetAssembly(typeof(Editor)).GetType("UnityEditor.InspectorWindow");
-
-            if (_inspectorWindow == null)
-            {
-                UnityEngine.Object[] findObjectsOfTypeAll = Resources.FindObjectsOfTypeAll(inspectorWindowType);
-                _inspectorWindow = (EditorWindow)findObjectsOfTypeAll[0];
-            }
-
-            if (_inspectorWindow != null && _inspectorWindow.GetType().Name == "InspectorWindow")
-            {
-                PropertyInfo isLockedPropertyInfo = inspectorWindowType.GetProperty("isLocked");
-                if (isLockedPropertyInfo == null) return;
-
-                bool value = (bool)isLockedPropertyInfo.GetValue(_inspectorWindow, null);
-                isLockedPropertyInfo.SetValue(_inspectorWindow, !value, null);
-
-                _inspectorWindow.Repaint();
-            }
         }
     }
 }
