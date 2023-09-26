@@ -81,7 +81,7 @@ attribute.
 
 #### Summary (`string`)
 
-A brief description of your command. It will appears on the right of your
+A brief description of your command. It will appear on the right of your
 command name.
 
 #### Icon (`string`)
@@ -92,7 +92,7 @@ See full list of icon in [unity-editor-icons][].
 
 #### Tooltip (`string`)
 
-The full description of your command. It will shows it in the popup window when
+The full description of your command. It will appear in the popup window when
 you hover with your mouse.
 
 #### Enabled (`boolean`)
