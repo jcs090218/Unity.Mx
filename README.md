@@ -38,9 +38,12 @@ multiple tasks. It gives you the option to choose and explore unnoticed commands
 
 ## 🏆 Features
 
-- Out of the box
-- Easy to use
-- Features 
+- Out of the box & Easy to use
+- Beginner Friendly & Easy to work as a team
+- Performant & Lightweight
+- Configurable & Extensible
+- Visually see things in action
+- Aim for the best UX
 
 ## 💾 Installation
 
