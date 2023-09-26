@@ -21,7 +21,12 @@
 - [🏆 Features](#🏆-features)
 - [💾 Installation](#💾-installation)
 - [🔨 Usage](#🔨-usage)
-- [❓ How to define your own command?](#❓-how-to-define-your-own-command)
+  - [❓ How to define your own command?](#❓-how-to-define-your-own-command)
+  - [⚛ `Interactive` Attribute's Properties](#⚛-interactive-attributes-properties)
+    - [Summary (`string`)](#summary-string)
+    - [Icon (`string`)](#icon-string)
+    - [Tooltip (`string`)](#tooltip-string)
+    - [Enabled (`boolean`)](#enabled-boolean)
 - [📌 Credits](#📌-credits)
 - [License](#license)
 
@@ -29,7 +34,9 @@
 
 ## 🏆 Features
 
-WIP
+- Out of the box
+- Easy to use
+- Features 
 
 ## 💾 Installation
 
@@ -39,7 +46,7 @@ WIP
 
 Hit <kbd>Alt</kbd>+<kbd>x</kbd>!
 
-## ❓ How to define your own command?
+### ❓ How to define your own command?
 
 Here is a simple example that prints out `"Hello World!~"` with `Debug.Log`.
 
@@ -62,12 +69,41 @@ public class DummyCommands : Mx.Mx
 }
 ```
 
-You can see all complex examples in our source code, under [Assets/Mx/Editor/Commands][]!
+You can see all more advanced examples in our source code, under
+[Assets/Mx/Editor/Commands][]!
+
+### ⚛ `Interactive` Attribute's Properties
+
+This part of the document explains all properties inside `Interactive`
+attribute.
+
+<!-- TODO: Put a explain image here. -->
+
+#### Summary (`string`)
+
+A brief description of your command. It will appears on the right of your
+command name.
+
+#### Icon (`string`)
+
+The name of the icon.
+
+See full list of icon in [unity-editor-icons][].
+
+#### Tooltip (`string`)
+
+The full description of your command. It will shows it in the popup window when
+you hover with your mouse.
+
+#### Enabled (`boolean`)
+
+Enable/Disable your command. If the value is `false`, it will not be shown
+inside the completion window.
 
 ## 📌 Credits
 
-- [Find Editor Tools][] by `@phwitti` - UI extracted here
-- [FlxCs][] by `@jcs090218` - Fuzzy matching library
+- [Find Editor Tools][] by **`@phwitti`** - UI extracted here
+- [FlxCs][] by **`@jcs090218`** - Fuzzy matching library
 
 ## License
 
