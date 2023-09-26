@@ -23,10 +23,10 @@
 - [🔨 Usage](#🔨-usage)
   - [❓ How to define your own command?](#❓-how-to-define-your-own-command)
   - [⚛ `Interactive` Attribute's Properties](#⚛-interactive-attributes-properties)
-    - [Summary (`string`)](#summary-string)
-    - [Icon (`string`)](#icon-string)
-    - [Tooltip (`string`)](#tooltip-string)
-    - [Enabled (`boolean`)](#enabled-boolean)
+    - [🧪 Summary (`string`)](#🧪-summary-string)
+    - [🧪 Icon (`string`)](#🧪-icon-string)
+    - [🧪 Tooltip (`string`)](#🧪-tooltip-string)
+    - [🧪 Enabled (`boolean`)](#🧪-enabled-boolean)
 - [📌 Credits](#📌-credits)
 - [License](#license)
 
@@ -79,23 +79,23 @@ attribute.
 
 <!-- TODO: Put a explain image here. -->
 
-#### Summary (`string`)
+#### 🧪 Summary (`string`)
 
 A brief description of your command. It will appear on the right of your
 command name.
 
-#### Icon (`string`)
+#### 🧪 Icon (`string`)
 
 The name of the icon.
 
 See full list of icon in [unity-editor-icons][].
 
-#### Tooltip (`string`)
+#### 🧪 Tooltip (`string`)
 
 The full description of your command. It will appear in the popup window when
 you hover with your mouse.
 
-#### Enabled (`boolean`)
+#### 🧪 Enabled (`boolean`)
 
 Enable/Disable your command. If the value is `false`, it will not be shown
 inside the completion window.
