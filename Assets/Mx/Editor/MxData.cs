@@ -47,11 +47,11 @@ namespace Mx
 
         public void Init()
         {
-            mSummaryRatio = EditorPrefs.GetFloat(FormKey("mSummaryRatio"));
-            mCycle = EditorPrefs.GetBool(FormKey("mCycle"));
-            mInitialSortingOrder = (SortType)EditorPrefs.GetInt(FormKey("mInitialSortingOrder"));
-            mMinWindowWidthRatio = EditorPrefs.GetInt(FormKey("mMinWindowWidthRatio"));
-            mMinWindowHeightRatio = EditorPrefs.GetInt(FormKey("mMinWindowHeightRatio"));
+            mSummaryRatio = EditorPrefs.GetFloat(FormKey("mSummaryRatio"), mSummaryRatio);
+            mCycle = EditorPrefs.GetBool(FormKey("mCycle"), mCycle);
+            mInitialSortingOrder = (SortType)EditorPrefs.GetInt(FormKey("mInitialSortingOrder"), (int)mInitialSortingOrder);
+            mMinWindowWidthRatio = EditorPrefs.GetInt(FormKey("mMinWindowWidthRatio"), mMinWindowWidthRatio);
+            mMinWindowHeightRatio = EditorPrefs.GetInt(FormKey("mMinWindowHeightRatio"), mMinWindowHeightRatio);
         }
 
         public void Draw()
