@@ -15,7 +15,7 @@ namespace Mx
         /* Variables */
 
         public const string NAME = "Mx";
-        public static readonly Version VERSION = new Version(Application.version);
+        public static readonly Version VERSION = new Version("0.1.0");
 
         /* Setter & Getter */
 
