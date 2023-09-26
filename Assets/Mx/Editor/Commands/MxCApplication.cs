@@ -57,6 +57,13 @@ namespace Mx
                 Application.streamingAssetsPath,
                 Application.temporaryCachePath,
             },
+            new List<string>()
+            {
+                "Application.dataPath",
+                "Application.persistentDataPath",
+                "Application.streamingAssetsPath",
+                "Application.temporaryCachePath",
+            },
             (answer, summary) =>
             {
                 EditorUtility.RevealInFinder(answer);

@@ -238,14 +238,14 @@ namespace Mx
 
             int _base = bScrollbar ? Mathf.RoundToInt(mScrollBar / mButtonHeight) : 0;
 
-            float tooltipWidth = winRect.width * MxSettings.data.SummaryRatio / 100.0f;
+            float summaryWidth = winRect.width * MxSettings.data.SummaryRatio / 100.0f;
 
             float sbWidth = (bScrollbar ? mSrollbarWidth : 0.0f);
 
             float width = winRect.width - sbWidth - mIconWidth;
             float height = mButtonHeight - 1.0f;
 
-            float tooltipDisplayWidth = winRect.width - tooltipWidth - sbWidth;
+            float tooltipDisplayWidth = winRect.width - summaryWidth - sbWidth;
 
             for (int i = _base, j = 0, imax = Mathf.Min(_base + iButtonCountCeil, mCommandsFilteredCount); i < imax; ++i, ++j)
             {
@@ -261,18 +261,24 @@ namespace Mx
                 mGuiStyleHover.fixedWidth = rMain.width - indentation;
                 mGuiStyleDefault.fixedWidth = rMain.width - indentation;
 
+                GUIStyle style = selected ? mGuiStyleHover : mGuiStyleDefault;
+                float nameWidth = new GUIStyle().CalcSize(new GUIContent(name)).x;
+                nameWidth += mIconWidth;
+
+                float summaryStart = Mathf.Max(summaryWidth, nameWidth);
+
                 if (IsCompletingRead())
                 {
-                    EditorGUI.LabelField(rMain, name, selected ? mGuiStyleHover : mGuiStyleDefault);
+                    EditorGUI.LabelField(rMain, name, style);
 
                     // Draw tooltip
-                    Rect rIcon = new Rect(0.0f, mButtonStartPosition + j * mButtonHeight, mIconWidth, mButtonHeight - 1.0f);
+                    var rIcon = new Rect(0.0f, mButtonStartPosition + j * mButtonHeight, mIconWidth, mButtonHeight - 1.0f);
                     EditorGUI.DrawRect(rIcon, selected ? mHover : mDefault);
 
                     // Draw summary
                     if (OVERRIDE_SUMMARIES != null && OVERRIDE_SUMMARIES.Count != 0)
                     {
-                        var rSummary = new Rect(tooltipWidth, y, tooltipDisplayWidth, height);
+                        var rSummary = new Rect(summaryStart, y, tooltipDisplayWidth, height);
                         EditorGUI.LabelField(rSummary, OVERRIDE_SUMMARIES[i]);
                     }
                 }
@@ -283,15 +289,15 @@ namespace Mx
                     if (attr == null)
                         continue;
 
-                    EditorGUI.LabelField(rMain, new GUIContent(name, null, attr.tooltip), selected ? mGuiStyleHover : mGuiStyleDefault);
+                    EditorGUI.LabelField(rMain, new GUIContent(name, null, attr.tooltip), style);
 
                     // Draw tooltip
-                    Rect rIcon = new Rect(0.0f, mButtonStartPosition + j * mButtonHeight, mIconWidth, mButtonHeight - 1.0f);
+                    var rIcon = new Rect(0.0f, mButtonStartPosition + j * mButtonHeight, mIconWidth, mButtonHeight - 1.0f);
                     EditorGUI.DrawRect(rIcon, selected ? mHover : mDefault);
                     EditorGUI.LabelField(rIcon, new GUIContent(attr.texture, attr.tooltip));
 
                     // Draw summary
-                    var rSummary = new Rect(tooltipWidth, y, tooltipDisplayWidth, height);
+                    var rSummary = new Rect(summaryStart, y, tooltipDisplayWidth, height);
                     EditorGUI.LabelField(rSummary, attr.summary);
                 }
             }
