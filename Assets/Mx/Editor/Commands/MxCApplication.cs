@@ -34,9 +34,9 @@ namespace Mx
         public static void TogglePlayMode()
         {
             if (Application.isPlaying)
-                EditorApplication.EnterPlaymode();
-            else
                 EditorApplication.ExitPlaymode();
+            else
+                EditorApplication.EnterPlaymode();
         }
 
         [Interactive(Summary: "Toggle pausing in the editor application")]
