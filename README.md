@@ -4,7 +4,9 @@
 <img alt="Logo" src="./etc/logo.png" width="30%"/>
 </p>
 
-<br/><br/>
+<p align="center">
+<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=38F75C&center=true&vCenter=true&width=435&lines=Design+your+own+style!" alt="Typing SVG" /></a>
+</p>
 
 <p align="center">
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT">
