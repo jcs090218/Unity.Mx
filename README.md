@@ -51,7 +51,9 @@ This part of the document explains what Mx is trying to aim for!
 
 ## 💾 Installation
 
-WIP
+Go to our [release page](https://github.com/jcs090218/Unity.Mx/releases) and download the latest `.unitypackage`.
+
+Simply import it to your project! Done!
 
 ## 🔨 Usage
 
