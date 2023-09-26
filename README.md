@@ -63,9 +63,10 @@ public class DummyCommands : Mx.Mx
 
 You can see all complex examples in our source code, under [Assets/Mx/Editor/Commands][]!
 
-## 📌 Dependencies
+## 📌 Credits
 
-- [FlxCs](https://github.com/jcs090218/FlxCs)
+- [Find Editor Tools][] by `@phwitti` - UI extracted here
+- [FlxCs][] by `@jcs090218` - Fuzzy matching library
 
 ## License
 
@@ -76,3 +77,5 @@ See [LICENSE](./LICENSE) for details.
 
 [Assets/Mx/Editor/Commands]: https://github.com/jcs090218/Unity.Mx/tree/master/Assets/Mx/Editor/Commands
 [unity-editor-icons]: https://github.com/halak/unity-editor-icons
+[FlxCs]: https://github.com/jcs090218/FlxCs
+[Find Editor Tools]: https://github.com/phwitti/unity-find-editor-tools

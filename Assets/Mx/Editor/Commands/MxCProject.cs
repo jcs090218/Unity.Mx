@@ -27,8 +27,7 @@ namespace Mx
             EditorUtility.RevealInFinder(Application.dataPath);
         }
 
-        [Interactive(
-            Summary: "Show project settings")]
+        [Interactive(Summary: "Show project settings")]
         public static void ProjectSettings()
         {
             EditorApplication.ExecuteMenuItem("Edit/Project Settings...");
