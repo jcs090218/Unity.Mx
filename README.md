@@ -115,8 +115,14 @@ inside the completion window.
 
 ## 📌 Credits
 
+This part of the document lists projects that I've used as references to develop Mx.
+
 - [Find Editor Tools][] by **`@phwitti`** - UI extracted here
 - [FlxCs][] by **`@jcs090218`** - Fuzzy matching library
+
+Any other supported projects:
+
+- [readme-typing-svg][] by **`@DenverCoder1`**
 
 ## License
 
@@ -127,5 +133,7 @@ See [LICENSE](./LICENSE) for details.
 
 [Assets/Mx/Editor/Commands]: https://github.com/jcs090218/Unity.Mx/tree/master/Assets/Mx/Editor/Commands
 [unity-editor-icons]: https://github.com/halak/unity-editor-icons
-[FlxCs]: https://github.com/jcs090218/FlxCs
+
 [Find Editor Tools]: https://github.com/phwitti/unity-find-editor-tools
+[FlxCs]: https://github.com/jcs090218/FlxCs
+[readme-typing-svg]: https://github.com/DenverCoder1/readme-typing-svg
