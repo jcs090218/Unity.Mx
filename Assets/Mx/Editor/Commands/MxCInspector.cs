@@ -57,7 +57,7 @@ namespace Mx
                 return;
             }
 
-            MxCWindow.SwitchToInspector();
+            EditorApplication.ExecuteMenuItem("Window/General/Inspector");
 
             Component[] comps = trans.GetComponents<Component>();
 
