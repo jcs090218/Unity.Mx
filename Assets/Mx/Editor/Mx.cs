@@ -6,6 +6,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Mx
@@ -26,12 +27,39 @@ namespace Mx
 
         public static void CompletingRead(
             string prompt,
+            Dictionary<string, string> collection,
+            CompletingReadCallback callback,
+            CompletingReadCallback hover = null,
+            bool requiredMatch = true)
+        {
+            MxCompletionWindow.OverrideIt(prompt, collection, callback, hover, requiredMatch);
+        }
+
+        public static void CompletingRead(
+            string prompt,
             List<string> candidates,
             List<string> summaries,
             CompletingReadCallback callback,
+            CompletingReadCallback hover = null,
             bool requiredMatch = true)
         {
-            MxCompletionWindow.OverrideIt(prompt, candidates, summaries, callback, requiredMatch);
+            Dictionary<string, string> collection;
+
+            if (candidates != null)
+            {
+                if (summaries == null)
+                    summaries = new List<string>(new string[candidates.Count]);
+
+                collection = candidates
+                    .Zip(summaries, (k, v) => new { k, v })
+                    .ToDictionary(x => x.k, x => x.v);
+            }
+            else
+            {
+                collection = new Dictionary<string, string>();
+            }
+
+            CompletingRead(prompt, collection, callback, hover, requiredMatch);
         }
 
         public static void CompletingRead<T, Y>(
@@ -39,51 +67,55 @@ namespace Mx
             List<T> candidates,
             List<Y> summaries,
             CompletingReadCallback callback,
+            CompletingReadCallback hover = null,
             bool requiredMatch = true)
         {
             var _candidates = MxUtil.ToListString(candidates);
             var _summaries = MxUtil.ToListString(summaries);
-            CompletingRead(prompt, _candidates, _summaries, callback, requiredMatch);
+            CompletingRead(prompt, _candidates, _summaries, callback, hover, requiredMatch);
         }
 
         public static void CompletingRead(
             string prompt, 
             List<string> candidates, 
             CompletingReadCallback callback,
+            CompletingReadCallback hover = null,
             bool requiredMatch = true)
         {
-            CompletingRead(prompt, candidates, null, callback, requiredMatch);
+            CompletingRead(prompt, candidates, null, callback, hover, requiredMatch);
         }
 
         public static void CompletingRead<T>(
             string prompt,
             List<T> candidates,
             CompletingReadCallback callback,
+            CompletingReadCallback hover = null,
             bool requiredMatch = true)
         {
             var _candidates = MxUtil.ToListString(candidates);
-            CompletingRead(prompt, _candidates, null, callback, requiredMatch);
+            CompletingRead(prompt, _candidates, null, callback, hover, requiredMatch);
         }
 
         public static void CompletingRead(
             string prompt,
             (List<string>, List<string>) collection,
             CompletingReadCallback callback,
+            CompletingReadCallback hover = null,
             bool requiredMatch = true)
         {
-            CompletingRead(prompt, collection.Item1, collection.Item2, callback, requiredMatch);
+            CompletingRead(prompt, collection.Item1, collection.Item2, callback, hover, requiredMatch);
         }
 
         public static void ReadString(
             string prompt, CompletingReadCallback callback)
         {
-            CompletingRead(prompt, null, callback, false);
+            CompletingRead(prompt, null, null, callback, null, false);
         }
 
         public static void ReadNumber(
             string prompt, CompletingReadCallback callback)
         {
-            CompletingRead(prompt, null, (answer, summary) =>
+            CompletingRead(prompt, null, null, (answer, summary) =>
                 {
                     float number;
 
@@ -95,7 +127,7 @@ namespace Mx
                     }
 
                     callback.Invoke(answer);
-                }, false);
+                }, null, false);
         }
 
         public static void YesOrNo(string prompt, CompletingReadCallback callback)

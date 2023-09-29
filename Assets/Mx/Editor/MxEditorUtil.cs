@@ -96,6 +96,15 @@ namespace Mx
             return reg.Split(":").ToList();
         }
         #endregion
+
+        /// <summary>
+        /// Focus a GameObject in scene view.
+        /// </summary>
+        public static void FocusInSceneView(GameObject obj)
+        {
+            Selection.activeGameObject = obj;
+            SceneView.FrameLastActiveSceneView();
+        }
     }
 }
 #endif

@@ -62,6 +62,26 @@ namespace Mx
         }
 
         /// <summary>
+        /// Remove last item from list.
+        /// </summary>
+        public static void RemoveLast<T>(List<T> _list)
+        {
+            if (_list == null || _list.Count == 0)
+                return;
+
+            _list.RemoveAt(_list.Count - 1);
+        }
+
+        /// <summary>
+        /// Move an item from the list to the end of the list.
+        /// </summary>
+        public static void MoveToLast<T>(List<T> lst, T obj)
+        {
+            lst.Remove(obj);
+            lst.Add(obj);
+        }
+
+        /// <summary>
         /// Conver enum to a tuple contains two list.
         ///   - Item1 : is the name.
         ///   - Item2 : is the value.

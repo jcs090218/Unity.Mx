@@ -15,14 +15,6 @@ namespace Mx
     {
         private static readonly List<string> mSkipRoots = new List<string> { "CONTEXT", "&File", "&Help", "Help", "Component", "&Window" };
 
-        private static void RemoveLast<T>(List<T> _list)
-        {
-            if (_list == null || _list.Count == 0)
-                return;
-
-            _list.RemoveAt(_list.Count - 1);
-        }
-
         private static string CreateCommandString(string _command, List<string> _list)
         {
             StringBuilder stringBuilder = new();
@@ -63,10 +55,10 @@ namespace Mx
 
                 if (iPreviousIndention > iCurrentIndention)
                 {
-                    RemoveLast(lCurrentParents);
+                    MxUtil.RemoveLast(lCurrentParents);
                     while (iPreviousIndention > iCurrentIndention)
                     {
-                        RemoveLast(lCurrentParents);
+                        MxUtil.RemoveLast(lCurrentParents);
                         iPreviousIndention--;
                     }
 
@@ -80,14 +72,14 @@ namespace Mx
                 {
                     if (!mSkipRoots.Contains(sCurrentRoot))
                     {
-                        RemoveLast(commands);
+                        MxUtil.RemoveLast(commands);
                         commands.Add(CreateCommandString(sCurrentLineTrimmed, lCurrentParents));
                     }
                     lCurrentParents.Add(sCurrentLineTrimmed);
                 }
                 else
                 {
-                    RemoveLast(lCurrentParents);
+                    MxUtil.RemoveLast(lCurrentParents);
                     if (!mSkipRoots.Contains(sCurrentRoot))
                     {
                         commands.Add(CreateCommandString(sCurrentLineTrimmed, lCurrentParents));

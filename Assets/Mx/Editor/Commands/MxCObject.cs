@@ -8,6 +8,8 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEditorInternal;
+using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace Mx
 {
@@ -19,25 +21,28 @@ namespace Mx
 
         /* Functions */
 
+        private static void OnFind(List<GameObject> objs, List<string> objss, string answer)
+        {
+            int index = objss.IndexOf(answer);
+
+            GameObject obj = objs[index];
+
+            MxEditorUtil.FocusInSceneView(obj);
+        }
+
         [Interactive(Summary: "Find GameObject in scene")]
         public static void FindGameObjectInScene()
         {
             var objs = Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None).ToList();
-            var ids = MxUtil.GetInstanceIDs(objs);
 
             var objss = MxUtil.ToListString(objs);
-            var idss = MxUtil.ToListString(ids);
 
-            CompletingRead("Find GameObject in scene: ", objss, idss,
-                (answer, summary) =>
-                {
-                    int index = idss.IndexOf(summary);
+            for (int index = 0; index < objss.Count; ++index)
+                objss[index] = "(" + objs[index].GetInstanceID() + ") " + objss[index];
 
-                    GameObject obj = objs[index];
-
-                    Selection.activeGameObject = obj;
-                    SceneView.FrameLastActiveSceneView();
-                });
+            CompletingRead("Find GameObject in scene: ", objss,
+                (answer, _) => { OnFind(objs, objss, answer); },
+                (answer, _) => { OnFind(objs, objss, answer); });
         }
 
         [Interactive(Summary: "Find GameObject in scene by tag")]
@@ -60,8 +65,7 @@ namespace Mx
 
                             GameObject obj = objs[index];
 
-                            Selection.activeGameObject = obj;
-                            SceneView.FrameLastActiveSceneView();
+                            MxEditorUtil.FocusInSceneView(obj);
                         });
                 });
         }

@@ -37,9 +37,9 @@ namespace Mx
         private const string FIND_SEARCH_FIELD_CTRL_NAME = "FindEditorToolsSearchField";
 
         public static string OVERRIDE_PROMPT = null;
-        public static List<string> OVERRIDE_CANDIDATES = null;
-        public static List<string> OVERRIDE_SUMMARIES = null;
-        public static CompletingReadCallback OVERRIDE_EXECUTE_COMMAND = null;
+        public static Dictionary<string, string> OVERRIDE_COLLECTION = null;
+        public static CompletingReadCallback OVERRIDE_EXECUTE = null;
+        public static CompletingReadCallback OVERRIDE_HOVER = null;
         public static bool REQUIRED_MATCH = true;
 
         private List<Mx> mTypes = null;
@@ -83,7 +83,7 @@ namespace Mx
         /* Functions */
 
         [MenuItem("Tools/Mx/Window/Completion &x", false, -1000)]
-        public static void ShowWindow() 
+        public static void ShowWindow()
         {
             var data = MxSettings.data;
 
@@ -114,9 +114,9 @@ namespace Mx
         private void OnDisable()
         {
             OVERRIDE_PROMPT = null;
-            OVERRIDE_CANDIDATES = null;
-            OVERRIDE_SUMMARIES = null;
-            OVERRIDE_EXECUTE_COMMAND = null;
+            OVERRIDE_COLLECTION = null;
+            OVERRIDE_EXECUTE = null;
+            OVERRIDE_HOVER = null;
             REQUIRED_MATCH = true;
             INHIBIT_CLOSE = false;
         }
@@ -192,7 +192,7 @@ namespace Mx
                         this.SendEvent(evt);
                     }
 
-                    if (String.IsNullOrEmpty(mSearchString) || 
+                    if (String.IsNullOrEmpty(mSearchString) ||
                         input == InputType.Clear ||
                         mCommandsFilteredCount == 0)
                     {
@@ -276,11 +276,8 @@ namespace Mx
                     EditorGUI.DrawRect(rIcon, selected ? mHover : mDefault);
 
                     // Draw summary
-                    if (OVERRIDE_SUMMARIES != null && OVERRIDE_SUMMARIES.Count != 0)
-                    {
-                        var rSummary = new Rect(summaryStart, y, tooltipDisplayWidth, height);
-                        EditorGUI.LabelField(rSummary, OVERRIDE_SUMMARIES[i]);
-                    }
+                    var rSummary = new Rect(summaryStart, y, tooltipDisplayWidth, height);
+                    EditorGUI.LabelField(rSummary, OVERRIDE_COLLECTION[name]);
                 }
                 else
                 {
@@ -393,6 +390,13 @@ namespace Mx
 
                         if (scrollbar)
                             this.CheckScrollToSelected();
+
+                        if (mCommandsFilteredCount > 0)
+                        {
+                            if (OVERRIDE_HOVER != null)
+                                OVERRIDE_HOVER(mCommandsFiltered[mSelected], "");
+                        }
+
                         this.Repaint();
                     }
                     return;
@@ -413,6 +417,13 @@ namespace Mx
 
                         if (scrollbar)
                             this.CheckScrollToSelected();
+
+                        if (mCommandsFilteredCount > 0)
+                        {
+                            if (OVERRIDE_HOVER != null)
+                                OVERRIDE_HOVER(mCommandsFiltered[mSelected], "");
+                        }
+
                         this.Repaint();
                     }
                     return;
@@ -491,7 +502,7 @@ namespace Mx
 
         private void ExecCommand_Root(string name)
         {
-            MoveToLast(mHistory, name);
+            MxUtil.MoveToLast(mHistory, name);
             UpdateHistory();
 
             MethodInfo method = GetMethod(name);
@@ -508,22 +519,18 @@ namespace Mx
 
         private void ExecCommand_Completing(string name)
         {
-            if (OVERRIDE_EXECUTE_COMMAND != null)
-                OVERRIDE_EXECUTE_COMMAND.Invoke(name, GetSummary());
+            if (OVERRIDE_EXECUTE != null)
+                OVERRIDE_EXECUTE.Invoke(name, GetSummary(name));
 
             if (!INHIBIT_CLOSE)
                 this.Close();
         }
 
-        private string GetSummary()
+        private string GetSummary(string name)
         {
-            if (OVERRIDE_SUMMARIES == null)
-                return null;
-
-            if (OVERRIDE_SUMMARIES.Count <= mSelected || mSelected < 0)
-                return null;
-
-            return OVERRIDE_SUMMARIES[mSelected];
+            if (OVERRIDE_COLLECTION.ContainsKey(name))
+                return OVERRIDE_COLLECTION[name];
+            return "";
         }
 
         private string FormName(MethodInfo info, bool full = false)
@@ -537,7 +544,7 @@ namespace Mx
         {
             if (IsCompletingRead())
             {
-                mCommands = OVERRIDE_CANDIDATES;
+                mCommands = OVERRIDE_COLLECTION.Keys.ToList();
                 RecreateFilteredList();
                 return;
             }
@@ -645,12 +652,6 @@ namespace Mx
             mCommandsFilteredCount = mCommandsFiltered.Count;
         }
 
-        private static void MoveToLast<T>(List<T> lst, T obj)
-        {
-            lst.Remove(obj);
-            lst.Add(obj);
-        }
-
         public MethodInfo GetMethod(string candidate)
         {
             return mMethodsIndex[candidate];
@@ -684,18 +685,18 @@ namespace Mx
         #endregion
 
         public static void OverrideIt(
-            string prompt, 
-            List<string> candidates,
-            List<string> summaries,
+            string prompt,
+            Dictionary<string, string> collection,
             CompletingReadCallback callback,
+            CompletingReadCallback hover,
             bool requiredMatch = true)
         {
             bool already = IsCompletingRead();
 
             OVERRIDE_PROMPT = prompt;
-            OVERRIDE_CANDIDATES = candidates;
-            OVERRIDE_SUMMARIES = summaries;
-            OVERRIDE_EXECUTE_COMMAND = callback;
+            OVERRIDE_COLLECTION = collection;
+            OVERRIDE_EXECUTE = callback;
+            OVERRIDE_HOVER = hover;
             REQUIRED_MATCH = requiredMatch;
 
             if (already)
@@ -705,9 +706,9 @@ namespace Mx
         public static bool IsCompletingRead()
         {
             return OVERRIDE_PROMPT != null
-                || OVERRIDE_CANDIDATES != null
-                || OVERRIDE_SUMMARIES != null
-                || OVERRIDE_EXECUTE_COMMAND != null;
+                || OVERRIDE_COLLECTION != null
+                || OVERRIDE_EXECUTE != null
+                || OVERRIDE_HOVER != null;
         }
     }
 }
