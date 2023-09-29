@@ -23,7 +23,7 @@ namespace Mx
             Summary: "Switch to scene")]
         public static void SwitchToScene()
         {
-            CompletingRead("Switch to scene: ", MxUtil.GetFiles("*.unity"),
+            CompletingRead("Switch to scene: ", MxEditorUtil.GetFiles("*.unity"),
                 (answer, summary) =>
                 {
                     EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();

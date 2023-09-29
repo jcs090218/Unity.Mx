@@ -6,8 +6,10 @@
  */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
@@ -70,6 +72,36 @@ namespace Mx
 
             func.Invoke();
             MxSettings.data.SavePref();
+        }
+
+        /// <summary>
+        /// Return all files match with patterns.
+        /// </summary>
+        public static List<string> GetFiles(params string[] patterns)
+        {
+            // Remove duplicates, prevent iterate file tree repreatedly!
+            patterns = patterns.Distinct().ToArray();
+
+            List<string> paths = new();
+
+            foreach (string pattern in patterns)
+            {
+                string[] files = Directory.GetFiles("Assets", pattern, SearchOption.AllDirectories);
+
+                paths = paths.Union(files).ToList();
+            }
+
+            return paths.ToList();
+        }
+
+        /// <summary>
+        /// Return a list of file path excludes .meta files.
+        /// </summary>
+        public static List<string> DefaultFiles(string pat = "*.*")
+        {
+            return GetFiles(pat)
+                .Where(name => !name.EndsWith(".meta"))
+                .ToList();
         }
 
         #region EditorPrefs

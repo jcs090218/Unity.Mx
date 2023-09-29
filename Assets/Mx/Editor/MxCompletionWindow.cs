@@ -370,7 +370,7 @@ namespace Mx
                         if (!this.IsFocused())
                             return;
 
-                        //InvokeHover();
+                        InvokeHover();
                     }
                     break;
 

@@ -6,7 +6,6 @@
  */
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
@@ -22,20 +21,12 @@ namespace Mx
 
         public override bool Enable() { return true; }
 
-        /// <summary>
-        /// Return a list of file path excludes .meta files.
-        /// </summary>
-        private static List<string> DefaultFiles(string pat = "*.*")
-        {
-            return MxUtil.GetFiles(pat)
-                .Where(name => !name.EndsWith(".meta"))
-                .ToList();
-        }
+        
 
         [Interactive(Summary: "Find file")]
         public static void FindFile()
         {
-            CompletingRead("Find file: ", DefaultFiles(),
+            CompletingRead("Find file: ", MxEditorUtil.DefaultFiles(),
                 (path, _) =>
                 { InternalEditorUtility.OpenFileAtLineExternal(path, 1); },
                 (path, _) =>
@@ -45,7 +36,7 @@ namespace Mx
         [Interactive(Summary: "Find the file and open it externally")]
         public static void FindFileExternal()
         {
-            CompletingRead("Find file externally: ", DefaultFiles(),
+            CompletingRead("Find file externally: ", MxEditorUtil.DefaultFiles(),
                 (path, _) => { Application.OpenURL(path); },
                 (path, _) =>
                 { MxEditorUtil.HighlightAsset(path); });
@@ -67,7 +58,7 @@ namespace Mx
             (type, pattern) =>
             {
                 CompletingRead("Find file by type: (" + type + ") ",
-                    DefaultFiles(pattern),
+                    MxEditorUtil.DefaultFiles(pattern),
                     (path, _) =>
                     { InternalEditorUtility.OpenFileAtLineExternal(path, 1); }, 
                     (path, _) => 
@@ -81,7 +72,7 @@ namespace Mx
             ReadString("Wildcard pattern: ", (pattern, _) =>
             {
                 CompletingRead("Find file by wildcard: (" + pattern + ") ",
-                   DefaultFiles(pattern),
+                   MxEditorUtil.DefaultFiles(pattern),
                    (path, _) =>
                    { InternalEditorUtility.OpenFileAtLineExternal(path, 1); },
                    (path, _) =>

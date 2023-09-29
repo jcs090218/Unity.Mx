@@ -127,15 +127,6 @@ namespace Mx
         {
             return objs.Select(i => i.GetInstanceID()).ToList();
         }
-
-        /// <summary>
-        /// Return all files match with patterns.
-        /// </summary>
-        public static List<string> GetFiles(string pattern)
-        {
-            string[] paths = Directory.GetFiles("Assets", pattern, SearchOption.AllDirectories);
-            return paths.ToList();
-        }
     }
 }
 #endif

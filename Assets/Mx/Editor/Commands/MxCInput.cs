@@ -29,7 +29,7 @@ namespace Mx
 
         public static void SwitchTheme()
         {
-            // TODO: ..
+            
         }
     }
 }
