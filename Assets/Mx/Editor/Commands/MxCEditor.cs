@@ -99,6 +99,11 @@ namespace Mx
                 EditorApplication.ExecuteMenuItem(command);
             });
         }
+
+        public static void ListEditorPref()
+        {
+
+        }
     }
 }
 #endif

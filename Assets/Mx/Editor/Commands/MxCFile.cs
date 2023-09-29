@@ -6,6 +6,7 @@
  */
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 namespace Mx
@@ -31,6 +32,10 @@ namespace Mx
                 (answer, summary) =>
                 {
                     Application.OpenURL(answer);
+                },
+                (answer, _) =>
+                {
+                    Selection.activeObject = AssetDatabase.LoadMainAssetAtPath(answer);
                 });
         }
     }
