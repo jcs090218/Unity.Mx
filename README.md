@@ -124,6 +124,11 @@ Any other supported projects:
 
 - [readme-typing-svg][] by **`@DenverCoder1`**
 
+## 🔍 See Also
+
+- [ReUniter][] - Better Search For Unity
+- [QuickSearch][] - A Command Palette for Unity
+
 ## License
 
 Copyright (c) Jen-Chieh Shen. All rights reserved.
@@ -137,3 +142,6 @@ See [LICENSE](./LICENSE) for details.
 [Find Editor Tools]: https://github.com/phwitti/unity-find-editor-tools
 [FlxCs]: https://github.com/jcs090218/FlxCs
 [readme-typing-svg]: https://github.com/DenverCoder1/readme-typing-svg
+
+[ReUniter]: https://assetstore.unity.com/packages/tools/utilities/reuniter-better-search-for-unity-28691
+[QuickSearch]: https://github.com/appetizermonster/Unity3D-QuickSearch
