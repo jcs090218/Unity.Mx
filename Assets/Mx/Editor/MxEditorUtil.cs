@@ -105,6 +105,11 @@ namespace Mx
             Selection.activeGameObject = obj;
             SceneView.FrameLastActiveSceneView();
         }
+
+        public static void HighlightAsset(string path)
+        {
+            Selection.activeObject = AssetDatabase.LoadMainAssetAtPath(path);
+        }
     }
 }
 #endif
