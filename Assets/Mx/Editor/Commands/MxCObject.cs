@@ -5,10 +5,8 @@
  * jcs090218@gmail.com
  */
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 using UnityEditorInternal;
-using NUnit.Framework;
 using System.Collections.Generic;
 
 namespace Mx
@@ -52,21 +50,16 @@ namespace Mx
                 (tag, _) =>
                 {
                     var objs = GameObject.FindGameObjectsWithTag(tag).ToList();
-                    var ids = MxUtil.GetInstanceIDs(objs);
 
                     var objss = MxUtil.ToListString(objs);
-                    var idss = MxUtil.ToListString(ids);
+
+                    for (int index = 0; index < objss.Count; ++index)
+                        objss[index] = "(" + objs[index].GetInstanceID() + ") " + objss[index];
 
                     CompletingRead("Find GameObject with tag: (" + tag + ") ",
-                        objss, idss,
-                        (answer, summary) =>
-                        {
-                            int index = idss.IndexOf(summary);
-
-                            GameObject obj = objs[index];
-
-                            MxEditorUtil.FocusInSceneView(obj);
-                        });
+                        objss,
+                        (answer, summary) => { OnFind(objs, objss, answer); },
+                        (answer, summary) => { OnFind(objs, objss, answer); });
                 });
         }
     }
