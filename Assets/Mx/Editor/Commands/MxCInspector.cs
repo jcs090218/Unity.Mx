@@ -49,6 +49,7 @@ namespace Mx
             }
         }
 
+        // Copied: https://gist.github.com/yasirkula/0b541b0865eba11b55518ead45fba8fc?permalink_comment_id=2242423
         private static void ExpandComponents(Transform trans, bool expand)
         {
             if (trans == null)
@@ -71,7 +72,6 @@ namespace Mx
             EditorWindow.focusedWindow.Repaint();
         }
 
-        // Copied: https://gist.github.com/yasirkula/0b541b0865eba11b55518ead45fba8fc?permalink_comment_id=2242423
         [Interactive(Summary: "Collapse all components in the inspector")]
         public static void CollapseComponents()
         {

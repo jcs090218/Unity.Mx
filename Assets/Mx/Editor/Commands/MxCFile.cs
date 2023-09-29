@@ -20,7 +20,7 @@ namespace Mx
 
         public override bool Enable() { return true; }
 
-        [Interactive(Summary: "Find file externally")]
+        [Interactive(Summary: "Find the file and open it externally")]
         public static void FindFileExternal()
         {
             List<string> paths = MxUtil.GetFiles("*.*")
