@@ -72,12 +72,21 @@ namespace Mx
         private const float mButtonHeight = 16.0f;
         private const float mSrollbarWidth = 15.0f;
         private const float mIconWidth = 20.0f;
-        private static readonly Color mHover = new Color32(38, 79, 120, 255);
-        private static readonly Color mDefault = new Color32(46, 46, 46, 255);
+        private static readonly Color mHover =
+            (EditorGUIUtility.isProSkin) ? 
+            new Color32(38, 79, 120, 255) :
+            new Color32(153, 201, 239, 255);
+        private static readonly Color mDefault =
+            (EditorGUIUtility.isProSkin) ? 
+            new Color32(46, 46, 46, 255) :
+            new Color32(180, 180, 180, 255);
         private GUIStyle mGuiStyleHover = new GUIStyle();
         private GUIStyle mGuiStyleDefault = new GUIStyle();
 
-        private static readonly Color mDefaultText = new Color(46, 46, 46);  // #2E2E2E
+        private static readonly Color mDefaultText = 
+            (EditorGUIUtility.isProSkin) ? 
+            new Color(46, 46, 46) :  // #2E2E2E
+            new Color(0, 0, 0);
 
         /* Setter & Getter */
 

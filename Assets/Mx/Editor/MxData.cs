@@ -24,8 +24,8 @@ namespace Mx
         /* Variables */
 
         private float mSummaryRatio = 40.0f;
-        private bool mCycle = true;
         private SortType mInitialSortingOrder = SortType.Alphabetic;
+        private bool mCycle = true;
         private bool mHistory = true;
 
         private int mMinWindowWidthRatio = 50;
@@ -34,8 +34,8 @@ namespace Mx
         /* Setter & Getter */
 
         public float SummaryRatio { get { return mSummaryRatio; } }
-        public bool Cycle { get { return mCycle; } }
         public SortType InitialSortingOrder { get { return mInitialSortingOrder; } }
+        public bool Cycle { get { return mCycle; } }
         public bool History { get { return mHistory; } }
         public int MinWindowWidthRatio { get { return mMinWindowWidthRatio; } }
         public int MinWindowHeightRatio { get { return mMinWindowHeightRatio; } }
@@ -50,8 +50,8 @@ namespace Mx
         public void Init()
         {
             mSummaryRatio = EditorPrefs.GetFloat(FormKey("mSummaryRatio"), mSummaryRatio);
-            mCycle = EditorPrefs.GetBool(FormKey("mCycle"), mCycle);
             mInitialSortingOrder = (SortType)EditorPrefs.GetInt(FormKey("mInitialSortingOrder"), (int)mInitialSortingOrder);
+            mCycle = EditorPrefs.GetBool(FormKey("mCycle"), mCycle);
             mHistory = EditorPrefs.GetBool(FormKey("mHistory"), mHistory);
             mMinWindowWidthRatio = EditorPrefs.GetInt(FormKey("mMinWindowWidthRatio"), mMinWindowWidthRatio);
             mMinWindowHeightRatio = EditorPrefs.GetInt(FormKey("mMinWindowHeightRatio"), mMinWindowHeightRatio);
@@ -75,21 +75,21 @@ namespace Mx
 
             MxEditorUtil.BeginHorizontal(() =>
             {
-                EditorGUILayout.LabelField("Cycle", options);
-                mCycle = EditorGUILayout.Toggle(mCycle);
-                EditorGUILayout.LabelField("", GUILayout.MaxWidth(138));
-
-                MxEditorUtil.ResetButton(() => mCycle = true);
-                GUILayout.FlexibleSpace();
-            });
-
-            MxEditorUtil.BeginHorizontal(() =>
-            {
                 EditorGUILayout.LabelField("Initial Sorting Order", options);
                 mInitialSortingOrder = (SortType)EditorGUILayout.EnumPopup(mInitialSortingOrder);
                 EditorGUILayout.LabelField("", GUILayout.MaxWidth(102));
 
                 MxEditorUtil.ResetButton(() => mInitialSortingOrder = SortType.Alphabetic);
+                GUILayout.FlexibleSpace();
+            });
+
+            MxEditorUtil.BeginHorizontal(() =>
+            {
+                EditorGUILayout.LabelField("Cycle", options);
+                mCycle = EditorGUILayout.Toggle(mCycle);
+                EditorGUILayout.LabelField("", GUILayout.MaxWidth(138));
+
+                MxEditorUtil.ResetButton(() => mCycle = true);
                 GUILayout.FlexibleSpace();
             });
 
@@ -130,8 +130,8 @@ namespace Mx
         public void SavePref()
         {
             EditorPrefs.SetFloat(FormKey("mSummaryRatio"), mSummaryRatio);
-            EditorPrefs.SetBool(FormKey("mCycle"), mCycle);
             EditorPrefs.SetInt(FormKey("mInitialSortingOrder"), (int)mInitialSortingOrder);
+            EditorPrefs.SetBool(FormKey("mCycle"), mCycle);
             EditorPrefs.SetBool(FormKey("mHistory"), mHistory);
             EditorPrefs.SetInt(FormKey("mMinWindowWidthRatio"), mMinWindowWidthRatio);
             EditorPrefs.SetInt(FormKey("mMinWindowHeightRatio"), mMinWindowHeightRatio);

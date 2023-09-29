@@ -4,6 +4,7 @@
  * 
  * jcs090218@gmail.com
  */
+using UnityEditor;
 using UnityEngine;
 
 namespace Mx
@@ -24,6 +25,11 @@ namespace Mx
         {
             var result = MxUtil.EnumTuple(typeof(KeyCode));
             CompletingRead("Key code: ", result, null);
+        }
+
+        public static void SwitchTheme()
+        {
+            // TODO: ..
         }
     }
 }
