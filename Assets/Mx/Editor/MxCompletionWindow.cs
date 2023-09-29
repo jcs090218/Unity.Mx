@@ -370,9 +370,9 @@ namespace Mx
                         if (!this.IsFocused())
                             return;
 
-                        InvokeHover();
+                        //InvokeHover();
                     }
-                    return;
+                    break;
 
                 case InputType.Close:
                     return;
