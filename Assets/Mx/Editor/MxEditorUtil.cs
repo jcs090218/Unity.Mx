@@ -106,6 +106,9 @@ namespace Mx
             SceneView.FrameLastActiveSceneView();
         }
 
+        /// <summary>
+        /// Highlight asset by path.
+        /// </summary>
         public static void HighlightAsset(string path)
         {
             Selection.activeObject = AssetDatabase.LoadMainAssetAtPath(path);

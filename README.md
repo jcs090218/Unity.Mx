@@ -46,7 +46,7 @@ multiple tasks. It gives you the option to choose and explore unnoticed commands
 This part of the document explains what Mx is trying to aim for!
 
 - Out of the box & Easy to use
-- Beginner Friendly & Easy to work as a team
+- Beginner Friendly & Easy to work with a team
 - Performant & Lightweight
 - Configurable & Extensible
 - Visually see things in action
