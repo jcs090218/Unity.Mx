@@ -50,6 +50,10 @@ This part of the document explains what Mx is trying to aim for!
 - Visually see things in action
 - Aim for the best UX
 
+## 🖼️ Gallery
+
+WIP
+
 ## 💾 Installation
 
 Go to our [release page](https://github.com/jcs090218/Unity.Mx/releases) and download the latest `.unitypackage`.
