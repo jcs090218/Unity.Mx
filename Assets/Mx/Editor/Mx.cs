@@ -35,7 +35,7 @@ namespace Mx
             MxCompletionWindow.OverrideIt(prompt, collection, callback, hover, requiredMatch);
         }
 
-        public static void CompletingRead(
+        private static void CompletingRead(
             string prompt,
             List<string> candidates,
             List<string> summaries,
@@ -60,19 +60,6 @@ namespace Mx
             }
 
             CompletingRead(prompt, collection, callback, hover, requiredMatch);
-        }
-
-        public static void CompletingRead<T, Y>(
-            string prompt,
-            List<T> candidates,
-            List<Y> summaries,
-            CompletingReadCallback callback,
-            CompletingReadCallback hover = null,
-            bool requiredMatch = true)
-        {
-            var _candidates = MxUtil.ToListString(candidates);
-            var _summaries = MxUtil.ToListString(summaries);
-            CompletingRead(prompt, _candidates, _summaries, callback, hover, requiredMatch);
         }
 
         public static void CompletingRead(

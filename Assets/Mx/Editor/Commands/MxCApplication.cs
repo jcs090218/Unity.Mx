@@ -50,19 +50,12 @@ namespace Mx
             Summary: "Show data path in file browser")]
         public static void FindDataPath()
         {
-            CompletingRead("Data path: ", new List<string>()
+            CompletingRead("Data path: ", new Dictionary<string, string>()
             {
-                Application.dataPath,
-                Application.persistentDataPath,
-                Application.streamingAssetsPath,
-                Application.temporaryCachePath,
-            },
-            new List<string>()
-            {
-                "Application.dataPath",
-                "Application.persistentDataPath",
-                "Application.streamingAssetsPath",
-                "Application.temporaryCachePath",
+                { Application.dataPath, "Application.dataPath" },
+                { Application.persistentDataPath, "Application.persistentDataPath" },
+                { Application.streamingAssetsPath, "Application.streamingAssetsPath" },
+                { Application.temporaryCachePath, "Application.temporaryCachePath" },
             },
             (answer, summary) =>
             {
