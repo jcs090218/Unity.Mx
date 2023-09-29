@@ -25,6 +25,8 @@ multiple tasks. It gives you the option to choose and explore unnoticed commands
 **Table of Contents**
 
 - [🏆 Features](#🏆-features)
+- [🖼️ Gallery](#🖼️-gallery)
+- [📇 Commands](#📇-commands)
 - [💾 Installation](#💾-installation)
 - [🔨 Usage](#🔨-usage)
   - [❓ How to define your own command?](#❓-how-to-define-your-own-command)
@@ -51,6 +53,10 @@ This part of the document explains what Mx is trying to aim for!
 - Aim for the best UX
 
 ## 🖼️ Gallery
+
+WIP
+
+## 📇 Commands
 
 WIP
 
@@ -92,7 +98,7 @@ You can see all more advanced examples in our source code, under
 
 ### ⚛ `Interactive` Attribute's Properties
 
-This part of the document explains all properties inside `Interactive`
+This part of the document explains all properties inside the `Interactive`
 attribute.
 
 <!-- TODO: Put a explain image here. -->
@@ -106,7 +112,7 @@ command name.
 
 The name of the icon.
 
-See full list of icon in [unity-editor-icons][].
+See the full list of icons in [unity-editor-icons][].
 
 #### 🧪 Tooltip (`string`)
 
