@@ -34,6 +34,7 @@ multiple tasks. It gives you the option to choose and explore unnoticed commands
     - [🧪 Tooltip (`string`)](#🧪-tooltip-string)
     - [🧪 Enabled (`boolean`)](#🧪-enabled-boolean)
 - [📌 Credits](#📌-credits)
+- [🔍 See Also](#🔍-see-also)
 - [License](#license)
 
 <!-- markdown-toc end -->
