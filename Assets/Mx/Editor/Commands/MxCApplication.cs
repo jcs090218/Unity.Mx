@@ -21,7 +21,7 @@ namespace Mx
 
         public override bool Enable() { return true; }
 
-        [Interactive(Summary: "Clear the console logs")]
+        [Interactive(Summary: "Clear console logs")]
         public static void ClearConsole()
         {
             var assembly = Assembly.GetAssembly(typeof(UnityEditor.Editor));
@@ -30,7 +30,7 @@ namespace Mx
             method.Invoke(new object(), null);
         }
 
-        [Interactive(Summary: "Toggle the play mode")]
+        [Interactive(Summary: "Toggle the play mode on/off")]
         public static void TogglePlayMode()
         {
             if (Application.isPlaying)
@@ -39,7 +39,7 @@ namespace Mx
                 EditorApplication.EnterPlaymode();
         }
 
-        [Interactive(Summary: "Toggle pausing in the editor application")]
+        [Interactive(Summary: "Toggle pausing on/off in the editor application")]
         public static void TogglePause()
         {
             EditorApplication.isPaused = !EditorApplication.isPaused;
@@ -58,9 +58,7 @@ namespace Mx
                 { Application.temporaryCachePath, "Application.temporaryCachePath" },
             },
             (answer, summary) =>
-            {
-                EditorUtility.RevealInFinder(answer);
-            });
+            { EditorUtility.RevealInFinder(answer); });
         }
     }
 }

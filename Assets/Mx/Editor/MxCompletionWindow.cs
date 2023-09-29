@@ -8,10 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using FlxCs;
-using Unity.VisualScripting;
 
 namespace Mx
 {
@@ -612,7 +612,8 @@ namespace Mx
             }
 
             // Sort history in the correct order!
-            mCommands = mCommands.OrderByDescending(d => mHistory.IndexOf(d)).ToList();
+            if (MxSettings.data.History)
+                mCommands = mCommands.OrderByDescending(d => mHistory.IndexOf(d)).ToList();
 
             RecreateFilteredList();
         }

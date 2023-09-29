@@ -39,7 +39,7 @@ namespace Mx
                 (path, _) =>
                 { InternalEditorUtility.OpenFileAtLineExternal(path, 1); },
                 (path, _) =>
-                { Selection.activeObject = AssetDatabase.LoadMainAssetAtPath(path); });
+                { MxEditorUtil.HighlightAsset(path); });
         }
 
         [Interactive(Summary: "Find the file and open it externally")]
@@ -75,7 +75,7 @@ namespace Mx
             });
         }
 
-        [Interactive(Summary: "Find file by type of the file")]
+        [Interactive(Summary: "Find file by wildcard pattern")]
         public static void FindFileByWildcard()
         {
             ReadString("Wildcard pattern: ", (pattern, _) =>

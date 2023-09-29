@@ -19,8 +19,7 @@ namespace Mx
         public override bool Enable() { return true; }
 
 
-        [Interactive(
-            Summary: "List out key code")]
+        [Interactive(Summary: "List out key code for exploration")]
         public static void ListKeyCode()
         {
             var result = MxUtil.EnumTuple(typeof(KeyCode));

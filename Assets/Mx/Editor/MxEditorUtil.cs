@@ -7,7 +7,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEditor;
+using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 
 namespace Mx
@@ -113,6 +115,40 @@ namespace Mx
         {
             Selection.activeObject = AssetDatabase.LoadMainAssetAtPath(path);
         }
+
+        #region TreeView
+        public const BindingFlags INSTANCE_FLAGS = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
+        public const BindingFlags STATIC_FLAGS = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
+
+        /// <summary>
+        /// Collapse TreeView controller.
+        /// </summary>
+        public static void CollapseTreeViewController(EditorWindow editorWindow, object treeViewController, TreeViewState treeViewState, IList<int> additionalInstanceIDsToExpand = null)
+        {
+            object treeViewDataSource = treeViewController.GetType().GetProperty("data", INSTANCE_FLAGS).GetValue(treeViewController, null);
+            List<int> treeViewSelectedIDs = new List<int>(treeViewState.selectedIDs);
+            int[] additionalInstanceIDsToExpandArray;
+            if (additionalInstanceIDsToExpand != null && additionalInstanceIDsToExpand.Count > 0)
+            {
+                treeViewSelectedIDs.AddRange(additionalInstanceIDsToExpand);
+
+                additionalInstanceIDsToExpandArray = new int[additionalInstanceIDsToExpand.Count];
+                additionalInstanceIDsToExpand.CopyTo(additionalInstanceIDsToExpandArray, 0);
+            }
+            else
+                additionalInstanceIDsToExpandArray = new int[0];
+
+            treeViewDataSource.GetType().GetMethod("SetExpandedIDs", INSTANCE_FLAGS).Invoke(treeViewDataSource, new object[] { additionalInstanceIDsToExpandArray });
+#if UNITY_2019_1_OR_NEWER
+            treeViewDataSource.GetType().GetMethod("RevealItems", INSTANCE_FLAGS).Invoke(treeViewDataSource, new object[] { treeViewSelectedIDs.ToArray() });
+#else
+		    foreach( int treeViewSelectedID in treeViewSelectedIDs )
+			    treeViewDataSource.GetType().GetMethod( "RevealItem", INSTANCE_FLAGS ).Invoke( treeViewDataSource, new object[] { treeViewSelectedID } );
+#endif
+
+            editorWindow.Repaint();
+        }
+        #endregion
     }
 }
 #endif
