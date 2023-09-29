@@ -126,6 +126,7 @@ Any other supported projects:
 
 ## 🔍 See Also
 
+- [Find Editor Tools][] - Command Palette for Unity
 - [ReUniter][] - Better Search For Unity
 - [QuickSearch][] - A Command Palette for Unity
 
