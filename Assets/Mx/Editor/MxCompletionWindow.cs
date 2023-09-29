@@ -11,6 +11,7 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 using FlxCs;
+using Unity.VisualScripting;
 
 namespace Mx
 {
@@ -355,6 +356,15 @@ namespace Mx
 
             switch (input)
             {
+                case InputType.None:
+                    {
+                        if (!this.IsFocused())
+                            return;
+
+                        InvokeHover();
+                    }
+                    return;
+
                 case InputType.Close:
                     return;
 
@@ -391,11 +401,7 @@ namespace Mx
                         if (scrollbar)
                             this.CheckScrollToSelected();
 
-                        if (mCommandsFilteredCount > 0)
-                        {
-                            if (OVERRIDE_HOVER != null)
-                                OVERRIDE_HOVER(mCommandsFiltered[mSelected], "");
-                        }
+                        InvokeHover();
 
                         this.Repaint();
                     }
@@ -418,11 +424,7 @@ namespace Mx
                         if (scrollbar)
                             this.CheckScrollToSelected();
 
-                        if (mCommandsFilteredCount > 0)
-                        {
-                            if (OVERRIDE_HOVER != null)
-                                OVERRIDE_HOVER(mCommandsFiltered[mSelected], "");
-                        }
+                        InvokeHover();
 
                         this.Repaint();
                     }
@@ -474,6 +476,17 @@ namespace Mx
             {
                 mScrollBar = mButtonHeight * mSelected;
             }
+        }
+
+        private void InvokeHover()
+        {
+            if (mCommandsFilteredCount <= 0)
+                return;
+
+            string name = mCommandsFiltered[mSelected];
+
+            if (OVERRIDE_HOVER != null)
+                OVERRIDE_HOVER(name, GetSummary(name));
         }
 
         /// <summary>
