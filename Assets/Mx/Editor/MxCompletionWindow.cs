@@ -11,7 +11,6 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 using FlxCs;
-using UnityEditorInternal;
 
 namespace Mx
 {
