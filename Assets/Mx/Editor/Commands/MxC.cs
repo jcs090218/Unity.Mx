@@ -40,7 +40,7 @@ namespace Mx
         }
 
         [Interactive(
-            Icon: "d_Settings",
+            Icon: "ClothInspector.SettingsTool",
             Summary: "Show Mx preferences")]
         public static void MxPreference()
         {

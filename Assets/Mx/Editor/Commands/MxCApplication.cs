@@ -21,10 +21,12 @@ namespace Mx
 
         public override bool Enable() { return true; }
 
-        [Interactive(Summary: "Clear console logs")]
+        [Interactive(
+            Icon: "d_console.erroricon.inactive.sml",
+            Summary: "Clear console logs")]
         public static void ClearConsole()
         {
-            var assembly = Assembly.GetAssembly(typeof(UnityEditor.Editor));
+            var assembly = Assembly.GetAssembly(typeof(Editor));
             var type = assembly.GetType("UnityEditor.LogEntries");
             var method = type.GetMethod("Clear");
             method.Invoke(new object(), null);
