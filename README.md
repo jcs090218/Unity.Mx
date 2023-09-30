@@ -130,6 +130,7 @@ This part of the document lists projects that I've used as references to develop
 
 - [Find Editor Tools][] by **`@phwitti`** - UI extracted here
 - [FlxCs][] by **`@jcs090218`** - Fuzzy matching library
+- [PlayerPrefsEditor][] by **`@sabresaurus`** - Retrieved list of `EditorPrefs`/`PlayerPrefs`
 
 Any other supported projects:
 
@@ -153,6 +154,7 @@ See [LICENSE](./LICENSE) for details.
 
 [Find Editor Tools]: https://github.com/phwitti/unity-find-editor-tools
 [FlxCs]: https://github.com/jcs090218/FlxCs
+[PlayerPrefsEditor]: https://github.com/sabresaurus/PlayerPrefsEditor
 [readme-typing-svg]: https://github.com/DenverCoder1/readme-typing-svg
 
 [ReUniter]: https://assetstore.unity.com/packages/tools/utilities/reuniter-better-search-for-unity-28691
