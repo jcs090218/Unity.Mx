@@ -47,6 +47,12 @@ namespace Mx
             EditorApplication.isPaused = !EditorApplication.isPaused;
         }
 
+        [Interactive(Summary: "Perform a single frame step")]
+        public static void StepFrame()
+        {
+            EditorApplication.Step();
+        }
+
         [Interactive(
             Icon: "d_FolderEmpty Icon",
             Summary: "Show data path in file browser")]
