@@ -179,6 +179,14 @@ namespace Mx
             editorWindow.Repaint();
         }
         #endregion
+
+        /// <summary>
+        /// Copy string to clipboard.
+        /// </summary>
+        public static void CopyToClipboard(this string str)
+        {
+            GUIUtility.systemCopyBuffer = str;
+        }
     }
 }
 #endif

@@ -4,9 +4,14 @@
  * 
  * jcs090218@gmail.com
  */
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
+using Codice.CM.SEIDInfo;
+using NUnit.Framework;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEditor;
 
 namespace Mx
@@ -98,6 +103,113 @@ namespace Mx
             {
                 EditorApplication.ExecuteMenuItem(command);
             });
+        }
+
+        [Interactive(Summary: "List the EditorPref key & value; then copy the key to clipboard")]
+        public static void GetEditorPref()
+        {
+            Dictionary<string, string> prefss = Prefs.GetPrefsString(PrefType.Editor);
+
+            CompletingRead("Get EditorPref key: ", prefss, (key, _) =>
+            { 
+                key.CopyToClipboard();
+                UnityEngine.Debug.Log("Copied EditorPref key: " + key);
+            });
+        }
+
+        [Interactive(Summary: "List the PlayerPref key & value; then copy the key to clipboard")]
+        public static void GetPlayerPref()
+        {
+            Dictionary<string, string> prefss = Prefs.GetPrefsString(PrefType.Player);
+
+            CompletingRead("Get PlayerPref key: ", prefss, (key, _) =>
+            { 
+                key.CopyToClipboard();
+                UnityEngine.Debug.Log("Copied PlayerPref key: " + key);
+            });
+        }
+
+        private static string GetPrefPrefix(PrefType type)
+        {
+            return (type == PrefType.Editor) ? "[EditorPref]" : "[PlayerPref]";
+        }
+
+        private static void CreatePref(PrefType type, string key)
+        {
+            CompletingRead("Select type: ", new Dictionary<string, string>()
+            {
+                { "Bool"  , "True or False" },
+                { "Float" , "Any decimal number (10.0f, 30.0f)" },
+                { "Int"   , "Any integer number (10, 30)" },
+                { "String", "" },
+            },
+            (createType, _) =>
+            {
+                ReadString(GetPrefPrefix(type) + " Create `" + key + "` with value", (input, _) =>
+                {
+                    switch (createType)
+                    {
+                        case "Bool":
+                            Prefs.SetBool(type, key, bool.Parse(input));
+                            break;
+                        case "Float":
+                            Prefs.SetFloat(type, key, float.Parse(input));
+                            break;
+                        case "Int":
+                            Prefs.SetInt(type, key, int.Parse(input));
+                            break;
+                        case "String":
+                            Prefs.SetString(type, key, input);
+                            break;
+                    }
+                });
+            });
+        }
+
+        [Interactive(Summary: "Create or update EditorPref")]
+        public static void SetEditorPref()
+        {
+            PrefType type = PrefType.Editor;
+
+            Dictionary<string, string> prefss = Prefs.GetPrefsString(type);
+            Dictionary<string, Type> prefst = Prefs.GetPrefsType(type);
+
+            CompletingRead(GetPrefPrefix(type) + " Set value: ", prefss, (key, _) =>
+            {
+                if (prefst.ContainsKey(key))
+                {
+                    ReadString("Update `" + key + "`'s value to ", (input, _) =>
+                    { Prefs.Set(type, prefst, key, input); });
+
+                    return;
+                }
+
+                CreatePref(type, key);
+            }, 
+            requiredMatch: false);
+        }
+
+        [Interactive(Summary: "Create or update PlayerPref")]
+        public static void SetPlayerPref()
+        {
+            PrefType type = PrefType.Player;
+
+            Dictionary<string, string> prefss = Prefs.GetPrefsString(type);
+            Dictionary<string, Type> prefst = Prefs.GetPrefsType(type);
+
+            CompletingRead(GetPrefPrefix(type) + " Set value: ", prefss, (key, _) =>
+            {
+                if (prefst.ContainsKey(key))
+                {
+                    ReadString("Update `" + key + "`'s value to ", (input, _) =>
+                    { Prefs.Set(type, prefst, key, input); });
+
+                    return;
+                }
+
+                CreatePref(type, key);
+            },
+            requiredMatch: false);
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Mx
         }
 
         [Interactive(Summary: "Toggle the play mode on/off")]
-        public static void TogglePlayMode()
+        public static void TogglePlay()
         {
             if (Application.isPlaying)
                 EditorApplication.ExitPlaymode();

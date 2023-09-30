@@ -7,8 +7,9 @@
 using System.Collections.Generic;
 using System;
 using System.Linq;
-using Mx;
+using System.Reflection;
 using UnityEditor;
+using Mx;
 
 public class TestCommands : Mx.Mx
 {
@@ -18,9 +19,9 @@ public class TestCommands : Mx.Mx
 
     /* Functions */
 
-    public override bool Enable() { return false; }
+    public override bool Enable() { return true; }
 
-    [Interactive]
+    [Interactive(Enabled: false)]
     public static void MxVersion() { }
 
     [Interactive]
@@ -36,9 +37,13 @@ public class TestCommands : Mx.Mx
         CompletingRead("Components: ", strs, null);
     }
 
+    [Interactive]
     public static void ToggleConsoleCollapse()
     {
-        
+        var assembly = Assembly.GetAssembly(typeof(Editor));
+        var type = assembly.GetType("UnityEditor.LogEntries");
+        var method = type.GetMethod("Collapse");
+        method.Invoke(new object(), null);
     }
 }
 #endif

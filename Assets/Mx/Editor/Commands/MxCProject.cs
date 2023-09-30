@@ -4,8 +4,6 @@
  * 
  * jcs090218@gmail.com
  */
-using System.Collections.Generic;
-using System.Reflection;
 using UnityEditor;
 using UnityEditor.IMGUI.Controls;
 using UnityEditorInternal;

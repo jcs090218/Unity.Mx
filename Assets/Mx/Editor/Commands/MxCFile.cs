@@ -44,6 +44,7 @@ namespace Mx
         {
             CompletingRead("Find file by type: ", new Dictionary<string, string>()
             {
+                { "All"      , "*.*" },
                 { "Scene"    , "*.unity" },
                 { "Prefab"   , "*.prefab" },
                 { "Texture"  , "*.png" },
@@ -51,9 +52,12 @@ namespace Mx
                 { "Mesh"     , "*.mesh" },
                 { "C# script", "*.cs" },
                 { "Text"     , "*.txt" },
+                { "Font"     , "*.ttf" },
             },
             (type, pattern) =>
             {
+                string[] patterns = pattern.Split('|');
+
                 CompletingRead("Find file by type: (" + type + ") ",
                     MxEditorUtil.DefaultFiles(pattern),
                     (path, _) =>

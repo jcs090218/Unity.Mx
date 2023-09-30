@@ -395,6 +395,11 @@ namespace Mx
 
                             asnwer = mCommandsFiltered[mSelected];
                         }
+                        else
+                        {
+                            if (mCommandsFilteredCount != 0)
+                                asnwer = mCommandsFiltered[mSelected];
+                        }
 
                         this.ExecuteCommand(asnwer);
                     }
