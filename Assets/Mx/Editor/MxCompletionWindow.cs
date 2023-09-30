@@ -72,18 +72,18 @@ namespace Mx
         private const float mSrollbarWidth = 15.0f;
         private const float mIconWidth = 20.0f;
         private static readonly Color mHover =
-            (EditorGUIUtility.isProSkin) ? 
+            (EditorGUIUtility.isProSkin) ?
             new Color32(38, 79, 120, 255) :
             new Color32(153, 201, 239, 255);
         private static readonly Color mDefault =
-            (EditorGUIUtility.isProSkin) ? 
+            (EditorGUIUtility.isProSkin) ?
             new Color32(46, 46, 46, 255) :
             new Color32(180, 180, 180, 255);
         private GUIStyle mGuiStyleHover = new GUIStyle();
         private GUIStyle mGuiStyleDefault = new GUIStyle();
 
-        private static readonly Color mDefaultText = 
-            (EditorGUIUtility.isProSkin) ? 
+        private static readonly Color mDefaultText =
+            (EditorGUIUtility.isProSkin) ?
             new Color(46, 46, 46) :  // #2E2E2E
             new Color(0, 0, 0);
 
@@ -214,8 +214,6 @@ namespace Mx
                         mCommandsFilteredCount == 0)
                     {
                         EditorGUI.FocusTextInControl(FIND_SEARCH_FIELD_CTRL_NAME);
-
-                        CheckScrollToSelected();
                     }
                 }
                 EditorGUILayout.EndHorizontal();
@@ -225,6 +223,8 @@ namespace Mx
             {
                 this.RecreateFilteredList();
                 mSelected = Mathf.Clamp(mSelected, 0, mCommandsFilteredCount - 1);
+
+                CheckScrollToSelected();
             }
         }
 
@@ -376,10 +376,8 @@ namespace Mx
             {
                 case InputType.None:
                     {
-                        if (!IsFocused())
-                            return;
-
-                        InvokeHover();
+                        if (IsFocused() && IsCompletingRead())
+                            InvokeHover();
                     }
                     break;
 
