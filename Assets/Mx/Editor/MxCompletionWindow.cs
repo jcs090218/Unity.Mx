@@ -214,6 +214,8 @@ namespace Mx
                         mCommandsFilteredCount == 0)
                     {
                         EditorGUI.FocusTextInControl(FIND_SEARCH_FIELD_CTRL_NAME);
+
+                        CheckScrollToSelected();
                     }
                 }
                 EditorGUILayout.EndHorizontal();
