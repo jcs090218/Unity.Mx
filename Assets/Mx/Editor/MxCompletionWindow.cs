@@ -8,10 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using FlxCs;
+using UnityEditorInternal;
 
 namespace Mx
 {
@@ -150,6 +150,14 @@ namespace Mx
             this.mMethods = GetMethods();
 
             RecreateCommandList();
+        }
+
+        /// <summary>
+        /// Return ture when this editor window is focused.
+        /// </summary>
+        public bool IsFocused()
+        {
+            return focusedWindow == this;
         }
 
         /// <summary>
@@ -367,7 +375,7 @@ namespace Mx
             {
                 case InputType.None:
                     {
-                        if (!this.IsFocused())
+                        if (!IsFocused())
                             return;
 
                         InvokeHover();
