@@ -13,6 +13,7 @@ using Codice.CM.SEIDInfo;
 using NUnit.Framework;
 using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEditor;
+using UnityEditor.Presets;
 
 namespace Mx
 {
@@ -106,9 +107,11 @@ namespace Mx
         }
 
         [Interactive(Summary: "List the EditorPref key & value; then copy the key to clipboard")]
-        public static void GetEditorPref()
+        public static void EditorPrefGetKey()
         {
-            Dictionary<string, string> prefss = Prefs.GetPrefsString(PrefType.Editor);
+            const PrefType type = PrefType.Editor;
+
+            Dictionary<string, string> prefss = Prefs.GetPrefsString(type);
 
             CompletingRead("Get EditorPref key: ", prefss, (key, _) =>
             { 
@@ -118,9 +121,11 @@ namespace Mx
         }
 
         [Interactive(Summary: "List the PlayerPref key & value; then copy the key to clipboard")]
-        public static void GetPlayerPref()
+        public static void PlayerPrefGetKey()
         {
-            Dictionary<string, string> prefss = Prefs.GetPrefsString(PrefType.Player);
+            const PrefType type = PrefType.Player;
+
+            Dictionary<string, string> prefss = Prefs.GetPrefsString(type);
 
             CompletingRead("Get PlayerPref key: ", prefss, (key, _) =>
             { 
@@ -131,7 +136,7 @@ namespace Mx
 
         private static string GetPrefPrefix(PrefType type)
         {
-            return (type == PrefType.Editor) ? "[EditorPref]" : "[PlayerPref]";
+            return (type == PrefType.Editor) ? "[EditorPrefs] " : "[PlayerPrefs] ";
         }
 
         private static void CreatePref(PrefType type, string key)
@@ -145,7 +150,7 @@ namespace Mx
             },
             (createType, _) =>
             {
-                ReadString(GetPrefPrefix(type) + " Create `" + key + "` with value", (input, _) =>
+                ReadString(GetPrefPrefix(type) + "Create `" + key + "` with value", (input, _) =>
                 {
                     switch (createType)
                     {
@@ -166,19 +171,19 @@ namespace Mx
             });
         }
 
-        [Interactive(Summary: "Create or update EditorPref")]
-        public static void SetEditorPref()
+        [Interactive(Summary: "Create or update EditorPrefs")]
+        public static void EditorPrefSetKey()
         {
-            PrefType type = PrefType.Editor;
+            const PrefType type = PrefType.Editor;
 
             Dictionary<string, string> prefss = Prefs.GetPrefsString(type);
             Dictionary<string, Type> prefst = Prefs.GetPrefsType(type);
 
-            CompletingRead(GetPrefPrefix(type) + " Set value: ", prefss, (key, _) =>
+            CompletingRead(GetPrefPrefix(type) + "Set value: ", prefss, (key, _) =>
             {
                 if (prefst.ContainsKey(key))
                 {
-                    ReadString("Update `" + key + "`'s value to ", (input, _) =>
+                    ReadString(GetPrefPrefix(type) + "Update `" + key + "`'s value to ", (input, _) =>
                     { Prefs.Set(type, prefst, key, input); });
 
                     return;
@@ -189,19 +194,19 @@ namespace Mx
             requiredMatch: false);
         }
 
-        [Interactive(Summary: "Create or update PlayerPref")]
-        public static void SetPlayerPref()
+        [Interactive(Summary: "Create or update PlayerPrefs")]
+        public static void PlayerPrefSetKey()
         {
-            PrefType type = PrefType.Player;
+            const PrefType type = PrefType.Player;
 
             Dictionary<string, string> prefss = Prefs.GetPrefsString(type);
             Dictionary<string, Type> prefst = Prefs.GetPrefsType(type);
 
-            CompletingRead(GetPrefPrefix(type) + " Set value: ", prefss, (key, _) =>
+            CompletingRead(GetPrefPrefix(type) + "Set value: ", prefss, (key, _) =>
             {
                 if (prefst.ContainsKey(key))
                 {
-                    ReadString("Update `" + key + "`'s value to ", (input, _) =>
+                    ReadString(GetPrefPrefix(type) + "Update `" + key + "`'s value to ", (input, _) =>
                     { Prefs.Set(type, prefst, key, input); });
 
                     return;
@@ -210,6 +215,50 @@ namespace Mx
                 CreatePref(type, key);
             },
             requiredMatch: false);
+        }
+
+        [Interactive(Summary: "Delete key in EditorPrefs")]
+        public static void EditorPrefDeleteKey()
+        {
+            const PrefType type = PrefType.Editor;
+
+            Dictionary<string, string> prefss = Prefs.GetPrefsString(type);
+
+            CompletingRead(GetPrefPrefix(type) + "Delet key: ", prefss, (key, _) =>
+            { Prefs.DeleteKey(type, key); });
+        }
+
+        [Interactive(Summary: "Delete key in PlayerPrefs")]
+        public static void PlayerPrefDeleteKey()
+        {
+            const PrefType type = PrefType.Player;
+
+            Dictionary<string, string> prefss = Prefs.GetPrefsString(type);
+
+            CompletingRead(GetPrefPrefix(type) + "Delet key: ", prefss, (key, _) =>
+            { Prefs.DeleteKey(type, key); });
+        }
+
+        [Interactive(Summary: "Delete all keys in EditorPrefs")]
+        public static void EditorPrefDeleteAll()
+        {
+            const PrefType type = PrefType.Editor;
+
+            YesOrNo(GetPrefPrefix(type) + "Delet all keys: ", (yes, _) =>
+            {
+                if (yes == "Yes") Prefs.DeleteAll(type);
+            });
+        }
+
+        [Interactive(Summary: "Delete all keys in PlayerPrefs")]
+        public static void PlayerPrefDeleteAll()
+        {
+            const PrefType type = PrefType.Player;
+
+            YesOrNo(GetPrefPrefix(type) + "Delet all keys: ", (yes, _) =>
+            {
+                if (yes == "Yes") Prefs.DeleteAll(type);
+            });
         }
     }
 }
