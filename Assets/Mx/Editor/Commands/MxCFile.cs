@@ -5,7 +5,6 @@
  * jcs090218@gmail.com
  */
 using System.Collections.Generic;
-using System.Linq;
 using UnityEditorInternal;
 using UnityEngine;
 
@@ -20,9 +19,7 @@ namespace Mx
         /* Functions */
 
         public override bool Enable() { return true; }
-
         
-
         [Interactive(Summary: "Find file")]
         public static void FindFile()
         {

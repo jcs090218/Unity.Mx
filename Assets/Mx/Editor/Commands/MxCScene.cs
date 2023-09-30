@@ -26,8 +26,8 @@ namespace Mx
             CompletingRead("Switch to scene: ", MxEditorUtil.GetFiles("*.unity"),
                 (answer, summary) =>
                 {
-                    EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
-                    EditorSceneManager.OpenScene(answer);
+                    if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
+                        EditorSceneManager.OpenScene(answer);
                 });
         }
     }
