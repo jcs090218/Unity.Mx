@@ -4,6 +4,7 @@
  * 
  * jcs090218@gmail.com
  */
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -99,6 +100,17 @@ namespace Mx
         {
             return GetFiles(pat)
                 .Where(name => !name.EndsWith(".meta"))
+                .ToList();
+        }
+
+        /// <summary>
+        /// Return a list of default components.
+        /// </summary>
+        public static List<Type> DefaultComponents()
+        {
+            return AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(assembly => assembly.GetTypes())
+                .Where(type => type.IsSubclassOf(typeof(UnityEngine.Component)))
                 .ToList();
         }
 

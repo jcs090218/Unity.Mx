@@ -24,7 +24,6 @@ namespace Mx
 
         public virtual bool Enable() { return true; }
 
-
         public static void CompletingRead(
             string prompt,
             Dictionary<string, string> collection,

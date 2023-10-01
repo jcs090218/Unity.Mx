@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using Mx;
+using UnityEngine;
 
 public class TestCommands : Mx.Mx
 {
@@ -27,23 +28,29 @@ public class TestCommands : Mx.Mx
     [Interactive]
     public static void ListComponents()
     {
-        List<Type> lst = AppDomain.CurrentDomain.GetAssemblies()
-            .SelectMany(assembly => assembly.GetTypes())
-            .Where(type => type.IsSubclassOf(typeof(UnityEngine.Object)))
-            .ToList();
-
-        var strs = MxUtil.ToListString<Type>(lst);
-
-        CompletingRead("Components: ", strs, null);
+        CompletingRead("Components: ", MxEditorUtil.DefaultComponents(), null);
     }
 
     [Interactive]
     public static void ToggleConsoleCollapse()
     {
         var assembly = Assembly.GetAssembly(typeof(Editor));
-        var type = assembly.GetType("UnityEditor.LogEntries");
+        var type = assembly.GetType("UnityEditor.ConsoleWindow");
         var method = type.GetMethod("Collapse");
-        method.Invoke(new object(), null);
+        method.Invoke(null, null);
+    }
+
+    [Interactive]
+    public static void _MyTest()
+    {
+        Type type = typeof(Light);
+
+        var find = UnityEngine.Object.FindObjectsByType(type, FindObjectsSortMode.None).ToList();
+
+        foreach (var item in find)
+        {
+            Debug.Log(item.name);
+        }
     }
 }
 #endif
