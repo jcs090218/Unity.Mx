@@ -27,6 +27,7 @@ namespace Mx
         private SortType mInitialSortingOrder = SortType.Alphabetic;
         private bool mCycle = true;
         private bool mHistory = true;
+        private bool mAutoPreview = true;
 
         private int mMinWindowWidthRatio = 50;
         private int mMinWindowHeightRatio = 25;
@@ -37,6 +38,7 @@ namespace Mx
         public SortType InitialSortingOrder { get { return mInitialSortingOrder; } }
         public bool Cycle { get { return mCycle; } }
         public bool History { get { return mHistory; } }
+        public bool AutoPreview { get { return mAutoPreview; } }
         public int MinWindowWidthRatio { get { return mMinWindowWidthRatio; } }
         public int MinWindowHeightRatio { get { return mMinWindowHeightRatio; } }
 
@@ -53,6 +55,7 @@ namespace Mx
             mInitialSortingOrder = (SortType)EditorPrefs.GetInt(FormKey("mInitialSortingOrder"), (int)mInitialSortingOrder);
             mCycle = EditorPrefs.GetBool(FormKey("mCycle"), mCycle);
             mHistory = EditorPrefs.GetBool(FormKey("mHistory"), mHistory);
+            mAutoPreview = EditorPrefs.GetBool(FormKey("mAutoPreview"), mAutoPreview);
             mMinWindowWidthRatio = EditorPrefs.GetInt(FormKey("mMinWindowWidthRatio"), mMinWindowWidthRatio);
             mMinWindowHeightRatio = EditorPrefs.GetInt(FormKey("mMinWindowHeightRatio"), mMinWindowHeightRatio);
         }
@@ -103,6 +106,16 @@ namespace Mx
                 GUILayout.FlexibleSpace();
             });
 
+            MxEditorUtil.BeginHorizontal(() =>
+            {
+                EditorGUILayout.LabelField("Auto Preview", options);
+                mAutoPreview = EditorGUILayout.Toggle(mAutoPreview);
+                EditorGUILayout.LabelField("", GUILayout.MaxWidth(138));
+
+                MxEditorUtil.ResetButton(() => mAutoPreview = true);
+                GUILayout.FlexibleSpace();
+            });
+
             EditorGUILayout.LabelField("Window", EditorStyles.boldLabel);
 
             MxEditorUtil.Indent(() =>
@@ -133,6 +146,7 @@ namespace Mx
             EditorPrefs.SetInt(FormKey("mInitialSortingOrder"), (int)mInitialSortingOrder);
             EditorPrefs.SetBool(FormKey("mCycle"), mCycle);
             EditorPrefs.SetBool(FormKey("mHistory"), mHistory);
+            EditorPrefs.SetBool(FormKey("mAutoPreview"), mAutoPreview);
             EditorPrefs.SetInt(FormKey("mMinWindowWidthRatio"), mMinWindowWidthRatio);
             EditorPrefs.SetInt(FormKey("mMinWindowHeightRatio"), mMinWindowHeightRatio);
         }

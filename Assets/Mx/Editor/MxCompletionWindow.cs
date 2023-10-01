@@ -501,6 +501,9 @@ namespace Mx
 
         private void InvokeHover()
         {
+            if (!MxSettings.data.AutoPreview)
+                return;
+
             if (mCommandsFilteredCount <= 0)
                 return;
 
