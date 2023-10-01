@@ -33,6 +33,7 @@ namespace Mx
                 { "Discussions", "https://discussions.unity.com/" },
                 { "Feedback", "https://unity.com/roadmap/unity-platform" },
                 { "Assets Store", "https://assetstore.unity.com/" },
+                { "Issue Tracker", "https://issuetracker.unity3d.com/" },
                 { "OpenUPM", "https://openupm.com/" },
             },
             (name, url) =>
