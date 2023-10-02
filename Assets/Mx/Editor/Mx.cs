@@ -26,12 +26,24 @@ namespace Mx
 
         public static void CompletingRead(
             string prompt,
-            Dictionary<string, string> collection,
+            Dictionary<string, MxItem> collection,
             CompletingReadCallback callback,
             CompletingReadCallback hover = null,
             bool requiredMatch = true)
         {
             MxCompletionWindow.OverrideIt(prompt, collection, callback, hover, requiredMatch);
+        }
+
+        public static void CompletingRead(
+            string prompt,
+            Dictionary<string, string> collection,
+            CompletingReadCallback callback,
+            CompletingReadCallback hover = null,
+            bool requiredMatch = true)
+        {
+            var newCollection = collection.ToDictionary(x => x.Key, x => new MxItem(Summary: x.Value));
+
+            MxCompletionWindow.OverrideIt(prompt, newCollection, callback, hover, requiredMatch);
         }
 
         private static void CompletingRead(

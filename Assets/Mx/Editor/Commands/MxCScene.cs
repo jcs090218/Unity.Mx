@@ -105,16 +105,17 @@ namespace Mx
                 });
         }
 
-        [Interactive]
+        [Interactive(Summary: "Find GameObject in sceen by type")]
         public static void FindGameObjectsByType()
         {
-            List<Type> types = MxEditorUtil.DefaultComponents();
+            var tuple = MxEditorUtil.CompletionComponents();
 
-            List<string> typess = MxUtil.ToListString(types);
+            var dic1 = tuple.Item1;
+            var dic2 = tuple.Item2;
 
-            CompletingRead("Enter component name: ", types, (compnent, _) =>
+            CompletingRead("Enter component name: ", dic2, (name, _) =>
             {
-                Type type = types[typess.IndexOf(compnent)];
+                Type type = dic1[name];
 
                 var objs = FindObjectsByType(type);
 

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
@@ -106,12 +107,29 @@ namespace Mx
         /// <summary>
         /// Return a list of default components.
         /// </summary>
-        public static List<Type> DefaultComponents()
+        private static List<Type> DefaultComponents()
         {
             return AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(assembly => assembly.GetTypes())
                 .Where(type => type.IsSubclassOf(typeof(UnityEngine.Component)))
                 .ToList();
+        }
+
+        /// <summary>
+        /// Return completion data for components.
+        /// </summary>
+        public static (Dictionary<string, Type>, Dictionary<string, MxItem>) CompletionComponents()
+        {
+            List<Type> components = DefaultComponents();
+
+            return 
+                // Item 1 is used to callback.
+                (components.ToDictionary(x => x.ToString(), x => x),
+                // Item 2 is the display data.
+                components
+                .ToDictionary(x => x.ToString(), x => new MxItem(
+                    Summary: x.Summary(),
+                    Icon: MxUtil.FindTexture(x))));
         }
 
         #region EditorPrefs

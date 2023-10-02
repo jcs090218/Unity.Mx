@@ -45,12 +45,25 @@ namespace Mx
         }
 
         /// <summary>
-        /// Get a texture from its source filename.
+        /// Get the texture from its source filename.
         /// </summary>
-        public static Texture FindTexture(string texName)
+        public static Texture FindTexture(string name)
         {
-            Texture tex = (texName == "") ? null : EditorGUIUtility.FindTexture(texName);
+            Texture tex = (name == "") ? null : EditorGUIUtility.FindTexture(name);
             return tex;
+        }
+
+        /// <summary>
+        /// Get the texture by type.
+        /// </summary>
+        public static Texture FindTexture(UnityEngine.Object comp, Type t)
+        {
+            var image = EditorGUIUtility.ObjectContent(comp, t).image;
+            return image;
+        }
+        public static Texture FindTexture(Type t)
+        {
+            return FindTexture(null, t);
         }
 
         /// <summary>

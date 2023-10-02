@@ -37,7 +37,7 @@ namespace Mx
         private const string FIND_SEARCH_FIELD_CTRL_NAME = "FindEditorToolsSearchField";
 
         public static string OVERRIDE_PROMPT = null;
-        public static Dictionary<string, string> OVERRIDE_COLLECTION = null;
+        public static Dictionary<string, MxItem> OVERRIDE_COLLECTION = null;
         public static CompletingReadCallback OVERRIDE_EXECUTE = null;
         public static CompletingReadCallback OVERRIDE_HOVER = null;
         public static bool REQUIRED_MATCH = true;
@@ -195,6 +195,12 @@ namespace Mx
                 {
                     string prompt = OVERRIDE_PROMPT ?? DEFAULT_PROMPT;
 
+                    if (MxSettings.data.ShowCommandCount)
+                    {
+                        int selected = mSelected + 1;
+                        prompt = "[" + selected + "/" + mCommandsFilteredCount + "] " + prompt;
+                    }
+
                     MxEditorUtil.LabelField(prompt);
 
                     GUI.SetNextControlName(FIND_SEARCH_FIELD_CTRL_NAME);
@@ -288,15 +294,21 @@ namespace Mx
 
                 if (IsCompletingRead())
                 {
+                    MxItem item = GetItem(name);
+
+                    if (item == null)
+                        continue;
+
                     EditorGUI.LabelField(rMain, name, style);
 
-                    // Draw tooltip
+                    // Draw icon and insert tooltip
                     var rIcon = new Rect(0.0f, mButtonStartPosition + j * mButtonHeight, mIconWidth, mButtonHeight - 1.0f);
                     EditorGUI.DrawRect(rIcon, selected ? mHover : mDefault);
+                    EditorGUI.LabelField(rIcon, new GUIContent(item.texture, item.tooltip));
 
                     // Draw summary
                     var rSummary = new Rect(summaryStart, y, tooltipDisplayWidth, height);
-                    EditorGUI.LabelField(rSummary, OVERRIDE_COLLECTION[name]);
+                    EditorGUI.LabelField(rSummary, item.summary);
                 }
                 else
                 {
@@ -307,7 +319,7 @@ namespace Mx
 
                     EditorGUI.LabelField(rMain, new GUIContent(name, null, attr.tooltip), style);
 
-                    // Draw tooltip
+                    // Draw icon and insert tooltip
                     var rIcon = new Rect(0.0f, mButtonStartPosition + j * mButtonHeight, mIconWidth, mButtonHeight - 1.0f);
                     EditorGUI.DrawRect(rIcon, selected ? mHover : mDefault);
                     EditorGUI.LabelField(rIcon, new GUIContent(attr.texture, attr.tooltip));
@@ -563,10 +575,18 @@ namespace Mx
                 this.Close();
         }
 
-        private string GetSummary(string name)
+        private MxItem GetItem(string name)
         {
             if (OVERRIDE_COLLECTION.ContainsKey(name))
                 return OVERRIDE_COLLECTION[name];
+            return null;
+        }
+
+        private string GetSummary(string name)
+        {
+            var item = GetItem(name);
+            if (item != null)
+                return item.summary;
             return "";
         }
 
@@ -724,7 +744,7 @@ namespace Mx
 
         public static void OverrideIt(
             string prompt,
-            Dictionary<string, string> collection,
+            Dictionary<string, MxItem> collection,
             CompletingReadCallback callback,
             CompletingReadCallback hover,
             bool requiredMatch = true)

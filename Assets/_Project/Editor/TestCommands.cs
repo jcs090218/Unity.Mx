@@ -28,7 +28,10 @@ public class TestCommands : Mx.Mx
     [Interactive]
     public static void ListComponents()
     {
-        CompletingRead("Components: ", MxEditorUtil.DefaultComponents(), null);
+        CompletingRead("Components: ", MxEditorUtil.CompletionComponents().Item2, (name, _) =>
+        {
+            MxEditorUtil.CopyToClipboard(name);
+        });
     }
 
     [Interactive]
@@ -43,14 +46,11 @@ public class TestCommands : Mx.Mx
     [Interactive]
     public static void _MyTest()
     {
-        Type type = typeof(Light);
+        //Type type = Type.GetType("UnityEngine.Light");
 
-        var find = UnityEngine.Object.FindObjectsByType(type, FindObjectsSortMode.None).ToList();
+        //Texture tex = MxUtil.FindTexture(type);
 
-        foreach (var item in find)
-        {
-            Debug.Log(item.name);
-        }
+        //Debug.Log(tex);
     }
 }
 #endif
