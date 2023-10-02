@@ -16,3 +16,6 @@ PackageExporter
 
 # Ignore test project
 _Project
+
+# Ignore OpenUPM
+*.json
