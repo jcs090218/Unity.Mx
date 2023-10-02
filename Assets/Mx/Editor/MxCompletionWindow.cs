@@ -198,6 +198,8 @@ namespace Mx
                     if (MxSettings.data.ShowCommandCount)
                     {
                         int selected = mSelected + 1;
+                        selected = Mathf.Min(selected, mCommandsFilteredCount);
+
                         prompt = "[" + selected + "/" + mCommandsFilteredCount + "] " + prompt;
                     }
 
