@@ -56,14 +56,18 @@ namespace Mx
         /// <summary>
         /// Get the texture by type.
         /// </summary>
-        public static Texture FindTexture(UnityEngine.Object comp, Type t)
+        public static Texture FindTexture(UnityEngine.Object obj, Type t)
         {
-            var image = EditorGUIUtility.ObjectContent(comp, t).image;
+            var image = EditorGUIUtility.ObjectContent(obj, t).image;
             return image;
         }
         public static Texture FindTexture(Type t)
         {
             return FindTexture(null, t);
+        }
+        public static Texture FindTexture(UnityEngine.Object obj)
+        {
+            return FindTexture(obj, obj.GetType());
         }
 
         /// <summary>

@@ -51,28 +51,33 @@ namespace Mx
                 .ToList();
         }
 
-        public static List<string> ConcatInstanceID(List<GameObject> objs)
+        public static (Dictionary<string, GameObject>, Dictionary<string, MxItem>)
+            CompletionGameObjects(List<GameObject> objs)
         {
-            var objss = MxUtil.ToListString(objs);
+            Dictionary<string, GameObject> dic1 = new();
+            Dictionary<string, MxItem> dic2 = new();
 
-            for (int index = 0; index < objss.Count; ++index)
-                objss[index] = "(" + objs[index].GetInstanceID() + ") " + objss[index];
+            for (int index = 0; index < objs.Count; ++index)
+            {
+                GameObject obj = objs[index];
+                string name = "(" + objs[index].GetInstanceID() + ") " + obj.name;
 
-            // XXX: Remove duplicate is probably not a good idea.
-            objss = objss.Distinct().ToList();
+                if (dic1.ContainsKey(name))
+                    continue;
 
-            return objss;
+                dic1.Add(name, obj);
+                dic2.Add(name, new MxItem(Icon: MxUtil.FindTexture(obj)));
+            }
+
+            return (dic1, dic2);
         }
 
         /// <summary>
         /// Execution when hovering a GameObject in the scene.
         /// </summary>
-        private static void OnFind(List<GameObject> objs, List<string> objss, string answer)
+        private static void OnFind(Dictionary<string, GameObject> objs, string name)
         {
-            int index = objss.IndexOf(answer);
-
-            var obj = objs[index];
-
+            GameObject obj = objs[name];
             MxEditorUtil.FocusInSceneView(obj);
         }
 
@@ -81,11 +86,15 @@ namespace Mx
         {
             var objs = FindObjectsByType<GameObject>();
 
-            var objss = ConcatInstanceID(objs);
+            var tuple2 = CompletionGameObjects(objs);
 
-            CompletingRead("Find GameObject in scene: ", objss,
-                (answer, _) => { OnFind(objs, objss, answer); },
-                (answer, _) => { OnFind(objs, objss, answer); });
+            var dic21 = tuple2.Item1;
+            var dic22 = tuple2.Item2;
+
+            CompletingRead("Find GameObject in scene: ",
+                dic22,
+                (name, _) => { OnFind(dic21, name); },
+                (name, _) => { OnFind(dic21, name); });
         }
 
         [Interactive(Summary: "Find GameObject in scene by tag")]
@@ -96,12 +105,15 @@ namespace Mx
                 {
                     var objs = GameObject.FindGameObjectsWithTag(tag).ToList();
 
-                    var objss = ConcatInstanceID(objs);
+                    var tuple2 = CompletionGameObjects(objs);
+
+                    var dic21 = tuple2.Item1;
+                    var dic22 = tuple2.Item2;
 
                     CompletingRead("Find GameObject with tag: (" + tag + ") ",
-                        objss,
-                        (answer, summary) => { OnFind(objs, objss, answer); },
-                        (answer, summary) => { OnFind(objs, objss, answer); });
+                        dic22,
+                        (name, _) => { OnFind(dic21, name); },
+                        (name, _) => { OnFind(dic21, name); });
                 });
         }
 
@@ -119,11 +131,14 @@ namespace Mx
 
                 var objs = FindObjectsByType(type);
 
-                var objss = ConcatInstanceID(objs);
+                var tuple2 = CompletionGameObjects(objs);
 
-                CompletingRead("Find " + type + " in scene: ", objss,
-                    (answer, _) => { OnFind(objs, objss, answer); },
-                    (answer, _) => { OnFind(objs, objss, answer); });
+                var dic21 = tuple2.Item1;
+                var dic22 = tuple2.Item2;
+
+                CompletingRead("Find " + type + " in scene: ", dic22,
+                    (name, _) => { OnFind(dic21, name); },
+                    (name, _) => { OnFind(dic21, name); });
             });
         }
     }
