@@ -15,6 +15,11 @@
 <a href="https://docs.unity3d.com/2018.3/Documentation/Manual/ScriptingRuntimeUpgrade.html"><img src="https://img.shields.io/badge/.NET-2.0-blueviolet.svg" alt=".NET"></a></p>
 </p>
 
+<p align="center">
+<a href="https://openupm.com/packages/com.jcs090218.mx/"><img src="https://img.shields.io/npm/v/com.jcs090218.mx?label=openupm&amp;registry_uri=https://package.openupm.com" alt="openupm"></a>
+<a href="https://openupm.com/packages/com.jcs090218.mx/"><img src="https://img.shields.io/badge/dynamic/json?color=brightgreen&amp;label=downloads&amp;query=%24.downloads&amp;suffix=%2Fmonth&amp;url=https%3A%2F%2Fpackage.openupm.com%2Fdownloads%2Fpoint%2Flast-month%2Fcom.jcs090218.mx" alt="openupm"></a>
+</p>
+
 > M-x for Unity
 
 Mx (or Meta-X) is a command-based completion framework. It allows you to execute all kinds of tasks
