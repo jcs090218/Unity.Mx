@@ -37,41 +37,6 @@ namespace Mx
                 });
         }
 
-        public static List<GameObject> FindObjectsByType<T>(FindObjectsSortMode sortMode = FindObjectsSortMode.None)
-            where T : UnityEngine.Object
-        {
-            return UnityEngine.Object.FindObjectsByType<T>(sortMode)
-                .Select(x => x.GetComponent<Transform>().gameObject)
-                .ToList();
-        }
-        public static List<GameObject> FindObjectsByType(Type type, FindObjectsSortMode sortMode = FindObjectsSortMode.None)
-        {
-            return UnityEngine.Object.FindObjectsByType(type, sortMode)
-                .Select(x => x.GetComponent<Transform>().gameObject)
-                .ToList();
-        }
-
-        public static (Dictionary<string, GameObject>, Dictionary<string, MxItem>)
-            CompletionGameObjects(List<GameObject> objs)
-        {
-            Dictionary<string, GameObject> dic1 = new();
-            Dictionary<string, MxItem> dic2 = new();
-
-            for (int index = 0; index < objs.Count; ++index)
-            {
-                GameObject obj = objs[index];
-                string name = "(" + objs[index].GetInstanceID() + ") " + obj.name;
-
-                if (dic1.ContainsKey(name))
-                    continue;
-
-                dic1.Add(name, obj);
-                dic2.Add(name, new MxItem(Icon: MxUtil.FindTexture(obj)));
-            }
-
-            return (dic1, dic2);
-        }
-
         /// <summary>
         /// Execution when hovering a GameObject in the scene.
         /// </summary>
@@ -84,9 +49,9 @@ namespace Mx
         [Interactive(Summary: "Find GameObject in scene")]
         public static void FindGameObjectInScene()
         {
-            var objs = FindObjectsByType<GameObject>();
+            var objs = MxEditorUtil.FindObjectsByType<GameObject>();
 
-            var tuple2 = CompletionGameObjects(objs);
+            var tuple2 = MxEditorUtil.CompletionGameObjects(objs);
 
             var dic21 = tuple2.Item1;
             var dic22 = tuple2.Item2;
@@ -105,7 +70,7 @@ namespace Mx
                 {
                     var objs = GameObject.FindGameObjectsWithTag(tag).ToList();
 
-                    var tuple2 = CompletionGameObjects(objs);
+                    var tuple2 = MxEditorUtil.CompletionGameObjects(objs);
 
                     var dic21 = tuple2.Item1;
                     var dic22 = tuple2.Item2;
@@ -129,9 +94,9 @@ namespace Mx
             {
                 Type type = dic1[name];
 
-                var objs = FindObjectsByType(type);
+                var objs = MxEditorUtil.FindObjectsByType(type);
 
-                var tuple2 = CompletionGameObjects(objs);
+                var tuple2 = MxEditorUtil.CompletionGameObjects(objs);
 
                 var dic21 = tuple2.Item1;
                 var dic22 = tuple2.Item2;

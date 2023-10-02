@@ -118,7 +118,8 @@ namespace Mx
         /// <summary>
         /// Return completion data for components.
         /// </summary>
-        public static (Dictionary<string, Type>, Dictionary<string, MxItem>) CompletionComponents()
+        public static (Dictionary<string, Type>, Dictionary<string, MxItem>) 
+            CompletionComponents()
         {
             List<Type> components = DefaultComponents();
 
@@ -130,6 +131,47 @@ namespace Mx
                 .ToDictionary(x => x.ToString(), x => new MxItem(
                     Summary: x.Summary(),
                     Icon: MxUtil.FindTexture(x))));
+        }
+
+        /// <summary>
+        /// Find object by type.
+        /// </summary>
+        public static List<GameObject> FindObjectsByType<T>(FindObjectsSortMode sortMode = FindObjectsSortMode.None)
+            where T : UnityEngine.Object
+        {
+            return UnityEngine.Object.FindObjectsByType<T>(sortMode)
+                .Select(x => x.GetComponent<Transform>().gameObject)
+                .ToList();
+        }
+        public static List<GameObject> FindObjectsByType(Type type, FindObjectsSortMode sortMode = FindObjectsSortMode.None)
+        {
+            return UnityEngine.Object.FindObjectsByType(type, sortMode)
+                .Select(x => x.GetComponent<Transform>().gameObject)
+                .ToList();
+        }
+
+        /// <summary>
+        /// Return completion data for GameObjects.
+        /// </summary>
+        public static (Dictionary<string, GameObject>, Dictionary<string, MxItem>)
+            CompletionGameObjects(List<GameObject> objs)
+        {
+            Dictionary<string, GameObject> dic1 = new();
+            Dictionary<string, MxItem> dic2 = new();
+
+            for (int index = 0; index < objs.Count; ++index)
+            {
+                GameObject obj = objs[index];
+                string name = "(" + objs[index].GetInstanceID() + ") " + obj.name;
+
+                if (dic1.ContainsKey(name))
+                    continue;
+
+                dic1.Add(name, obj);
+                dic2.Add(name, new MxItem(Icon: MxUtil.FindTexture(obj)));
+            }
+
+            return (dic1, dic2);
         }
 
         #region EditorPrefs
