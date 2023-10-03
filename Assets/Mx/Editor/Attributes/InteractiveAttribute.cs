@@ -1,4 +1,3 @@
-#if UNITY_EDITOR
 /**
  * Copyright (c) Jen-Chieh Shen. All rights reserved.
  * 
@@ -59,4 +58,3 @@ namespace Mx
         }
     }
 }
-#endif
