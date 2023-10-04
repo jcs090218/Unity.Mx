@@ -108,23 +108,23 @@ attribute.
 
 <!-- TODO: Put a explain image here. -->
 
-#### 🧪 Summary (`string`)
+#### 🧪 summary (`string`)
 
 A brief description of your command. It will appear on the right of your
 command name.
 
-#### 🧪 Icon (`string`)
+#### 🧪 icon (`string`)
 
 The name of the icon.
 
 See the full list of icons in [unity-editor-icons][].
 
-#### 🧪 Tooltip (`string`)
+#### 🧪 tooltip (`string`)
 
 The full description of your command. It will appear in the popup window when
 you hover with your mouse.
 
-#### 🧪 Enabled (`boolean`)
+#### 🧪 enabled (`boolean`)
 
 Enable/Disable your command. If the value is `false`, it will not be shown
 inside the completion window.
