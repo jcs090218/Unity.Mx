@@ -1,7 +1,7 @@
 <br/><br/>
 
 <p align="center">
-<img alt="Logo" src="./etc/logo.png" width="30%"/>
+<img alt="Logo" src="./docs/logo.png" width="30%"/>
 </p>
 
 <p align="center">
@@ -106,7 +106,7 @@ You can see all more advanced examples in our source code, under
 This part of the document explains all properties inside the `Interactive`
 attribute.
 
-<!-- TODO: Put a explain image here. -->
+<img alt="attribute" src="./docs/attribute.png"/>
 
 #### 🧪 summary (`string`)
 
