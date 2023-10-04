@@ -158,16 +158,26 @@ namespace Mx
             Dictionary<string, GameObject> dic1 = new();
             Dictionary<string, MxItem> dic2 = new();
 
+            Dictionary<string, int> repeated = new();
+
             for (int index = 0; index < objs.Count; ++index)
             {
                 GameObject obj = objs[index];
                 string name = "(" + objs[index].GetInstanceID() + ") " + obj.name;
 
                 if (dic1.ContainsKey(name))
-                    continue;
+                {
+                    ++repeated[name];  // Add count!
+                    dic2[name].summary = repeated[name].ToString();
 
+                    continue;
+                }
+
+                repeated.Add(name, 1);
                 dic1.Add(name, obj);
-                dic2.Add(name, new MxItem(Icon: MxUtil.FindTexture(obj)));
+                dic2.Add(name, new MxItem(
+                    Summary: repeated[name].ToString(),  // Summary is the repeated count!
+                    Icon:    MxUtil.FindTexture(obj)));
             }
 
             return (dic1, dic2);

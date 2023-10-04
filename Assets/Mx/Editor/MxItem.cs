@@ -12,21 +12,16 @@ namespace Mx
     {
         /* Variables */
 
-        public static string DEFAULT_ICON = null;
-
         private Texture mIcon = null;
 
-        private string mSummary = null;
-        private string mTooltip = null;
+        public string summary = null;
+        public string tooltip = null;
 
-        private bool mEnabled = true;
+        public bool enabled = true;
 
         /* Setter & Getter */
 
-        public string summary { get { return this.mSummary; } }
-        public string tooltip { get { return mTooltip; } }
         public Texture texture { get { return this.mIcon; } }
-        public bool Enabled { get { return this.mEnabled; } }
 
         /* Functions */
 
@@ -36,10 +31,10 @@ namespace Mx
             Texture Icon = null,
             bool Enabled = true)
         {
-            this.mSummary = Summary;
-            this.mTooltip = Tooltip;
+            this.summary = Summary;
+            this.tooltip = Tooltip;
             this.mIcon = Icon;
-            this.mEnabled = Enabled;
+            this.enabled = Enabled;
         }
     }
 }
