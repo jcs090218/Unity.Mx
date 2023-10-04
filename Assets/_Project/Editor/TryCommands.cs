@@ -17,12 +17,12 @@ public class TryCommands : Mx.Mx
 
     public override bool Enable() { return false; }
 
-    [Interactive(Summary: "Test command with same name", Enabled: false)]
+    [Interactive(summary: "Test command with same name", enabled: false)]
     public static void MxVersion() { }
 
     [Interactive(
-        Icon: "d_PreMatCube",
-        Summary: "Try completing read!")]
+        icon: "d_PreMatCube",
+        summary: "Try completing read!")]
     public static void _TryCompletingRead()
     {
         CompletingRead("Try compleing read: ", new List<string>()
@@ -38,8 +38,8 @@ public class TryCommands : Mx.Mx
     }
 
     [Interactive(
-        Icon: "d_PreMatCube",
-        Summary: "Try read string!")]
+        icon: "d_PreMatCube",
+        summary: "Try read string!")]
     public static void _TryReadString()
     {
         ReadString("Try read string: ", (answer, summary) =>
@@ -49,8 +49,8 @@ public class TryCommands : Mx.Mx
     }
 
     [Interactive(
-        Icon: "d_PreMatCube",
-        Summary: "Try read number!")]
+        icon: "d_PreMatCube",
+        summary: "Try read number!")]
     public static void _TryReadNumber()
     {
         ReadNumber("Try read number: ", (answer, summary) =>
@@ -60,8 +60,8 @@ public class TryCommands : Mx.Mx
     }
 
     [Interactive(
-       Icon: "d_PreMatCube",
-       Summary: "Try yes or no!")]
+       icon: "d_PreMatCube",
+       summary: "Try yes or no!")]
     public static void _TryYesOrNo()
     {
         YesOrNo("Try yes or no: ", (answer, summary) =>
@@ -71,8 +71,8 @@ public class TryCommands : Mx.Mx
     }
 
     [Interactive(
-       Icon: "d_PreMatCube",
-       Summary: "Try nested completing!")]
+       icon: "d_PreMatCube",
+       summary: "Try nested completing!")]
     public static void _TryNestedCompleting()
     {
         YesOrNo("Try yes or no: ", (answer, summary) =>

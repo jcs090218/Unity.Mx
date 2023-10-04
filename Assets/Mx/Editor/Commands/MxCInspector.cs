@@ -24,8 +24,8 @@ namespace Mx
         public override bool Enable() { return true; }
 
         [Interactive(
-            Icon: "InspectorLock",
-            Summary: "Toggle Inspector lock")]
+            icon: "InspectorLock",
+            summary: "Toggle Inspector lock")]
         public static void ToggleInspectorLock()
         {
             Type inspectorWindowType = Assembly.GetAssembly(typeof(Editor)).GetType("UnityEditor.InspectorWindow");
@@ -71,13 +71,13 @@ namespace Mx
             EditorWindow.focusedWindow.Repaint();
         }
 
-        [Interactive(Summary: "Collapse all components in the inspector")]
+        [Interactive(summary: "Collapse all components in the inspector")]
         public static void CollapseComponents()
         {
             ExpandComponents(Selection.activeTransform, false);
         }
 
-        [Interactive(Summary: "Expand all components in the inspector")]
+        [Interactive(summary: "Expand all components in the inspector")]
         public static void ExpandComponents()
         {
             ExpandComponents(Selection.activeTransform, true);

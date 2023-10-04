@@ -91,7 +91,7 @@ namespace Mx
             return commands;
         }
 
-        [Interactive(Summary: "Invokes the menu item in the specified path")]
+        [Interactive(summary: "Invokes the menu item in the specified path")]
         public static void ExecutMenuItem()
         {
             CompletingRead("Menu Item: ", MenuItemLists(), (command, _) =>
@@ -100,7 +100,7 @@ namespace Mx
             });
         }
 
-        [Interactive(Summary: "List the EditorPref key & value; then copy the key to clipboard")]
+        [Interactive(summary: "List the EditorPref key & value; then copy the key to clipboard")]
         public static void EditorPrefGetKey()
         {
             const Prefs.PrefType type = Prefs.PrefType.Editor;
@@ -114,7 +114,7 @@ namespace Mx
             });
         }
 
-        [Interactive(Summary: "List the PlayerPref key & value; then copy the key to clipboard")]
+        [Interactive(summary: "List the PlayerPref key & value; then copy the key to clipboard")]
         public static void PlayerPrefGetKey()
         {
             const Prefs.PrefType type = Prefs.PrefType.Player;
@@ -165,7 +165,7 @@ namespace Mx
             });
         }
 
-        [Interactive(Summary: "Create or update EditorPrefs")]
+        [Interactive(summary: "Create or update EditorPrefs")]
         public static void EditorPrefSetKey()
         {
             const Prefs.PrefType type = Prefs.PrefType.Editor;
@@ -188,7 +188,7 @@ namespace Mx
             requiredMatch: false);
         }
 
-        [Interactive(Summary: "Create or update PlayerPrefs")]
+        [Interactive(summary: "Create or update PlayerPrefs")]
         public static void PlayerPrefSetKey()
         {
             const Prefs.PrefType type = Prefs.PrefType.Player;
@@ -211,7 +211,7 @@ namespace Mx
             requiredMatch: false);
         }
 
-        [Interactive(Summary: "Delete key in EditorPrefs")]
+        [Interactive(summary: "Delete key in EditorPrefs")]
         public static void EditorPrefDeleteKey()
         {
             const Prefs.PrefType type = Prefs.PrefType.Editor;
@@ -222,7 +222,7 @@ namespace Mx
             { Prefs.Prefs.DeleteKey(type, key); });
         }
 
-        [Interactive(Summary: "Delete key in PlayerPrefs")]
+        [Interactive(summary: "Delete key in PlayerPrefs")]
         public static void PlayerPrefDeleteKey()
         {
             const Prefs.PrefType type = Prefs.PrefType.Player;
@@ -233,7 +233,7 @@ namespace Mx
             { Prefs.Prefs.DeleteKey(type, key); });
         }
 
-        [Interactive(Summary: "Delete all keys in EditorPrefs")]
+        [Interactive(summary: "Delete all keys in EditorPrefs")]
         public static void EditorPrefDeleteAll()
         {
             const Prefs.PrefType type = Prefs.PrefType.Editor;
@@ -244,7 +244,7 @@ namespace Mx
             });
         }
 
-        [Interactive(Summary: "Delete all keys in PlayerPrefs")]
+        [Interactive(summary: "Delete all keys in PlayerPrefs")]
         public static void PlayerPrefDeleteAll()
         {
             const Prefs.PrefType type = Prefs.PrefType.Player;

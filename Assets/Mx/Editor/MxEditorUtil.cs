@@ -128,8 +128,8 @@ namespace Mx
                 // Item 2 is the display data.
                 components
                 .ToDictionary(x => x.ToString(), x => new MxItem(
-                    Summary: x.Summary(),
-                    Icon: MxUtil.FindTexture(x))));
+                    summary: x.Summary(),
+                    icon: MxUtil.FindTexture(x))));
         }
 
         /// <summary>
@@ -176,8 +176,8 @@ namespace Mx
                 repeated.Add(name, 1);
                 dic1.Add(name, obj);
                 dic2.Add(name, new MxItem(
-                    Summary: repeated[name].ToString(),  // Summary is the repeated count!
-                    Icon:    MxUtil.FindTexture(obj)));
+                    summary: repeated[name].ToString(),  // Summary is the repeated count!
+                    icon:    MxUtil.FindTexture(obj)));
             }
 
             return (dic1, dic2);

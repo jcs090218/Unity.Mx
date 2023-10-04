@@ -21,7 +21,7 @@ public class TestCommands : Mx.Mx
 
     public override bool Enable() { return true; }
 
-    [Interactive(Enabled: false)]
+    [Interactive(enabled: false)]
     public static void MxVersion() { }
 
     [Interactive]

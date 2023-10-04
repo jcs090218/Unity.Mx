@@ -21,14 +21,14 @@ namespace Mx
         public override bool Enable() { return true; }
 
         [Interactive(
-            Icon: "d_FolderEmpty Icon",
-            Summary: "Show project path in the file browser")]
+            icon: "d_FolderEmpty Icon",
+            summary: "Show project path in the file browser")]
         public static void OpenProjectPath()
         {
             EditorUtility.RevealInFinder(Application.dataPath);
         }
 
-        [Interactive(Summary: "Collapse folders in Project Browser")]
+        [Interactive(summary: "Collapse folders in Project Browser")]
         public static void CollapseFolders()
         {
             EditorWindow projectWindow = typeof(EditorWindow).Assembly.GetType("UnityEditor.ProjectBrowser").GetField("s_LastInteractedProjectBrowser", MxEditorUtil.STATIC_FLAGS).GetValue(null) as EditorWindow;

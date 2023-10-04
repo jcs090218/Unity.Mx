@@ -19,7 +19,7 @@ namespace Mx
 
         public override bool Enable() { return true; }
         
-        [Interactive(Summary: "Find file")]
+        [Interactive(summary: "Find file")]
         public static void FindFile()
         {
             CompletingRead("Find file: ", MxEditorUtil.DefaultFiles(),
@@ -29,7 +29,7 @@ namespace Mx
                 { MxEditorUtil.HighlightAsset(path); });
         }
 
-        [Interactive(Summary: "Find the file and open it externally")]
+        [Interactive(summary: "Find the file and open it externally")]
         public static void FindFileExternal()
         {
             CompletingRead("Find file externally: ", MxEditorUtil.DefaultFiles(),
@@ -38,7 +38,7 @@ namespace Mx
                 { MxEditorUtil.HighlightAsset(path); });
         }
 
-        [Interactive(Summary: "Find file by type of the file")]
+        [Interactive(summary: "Find file by type of the file")]
         public static void FindFileByType()
         {
             CompletingRead("Find file by type: ", new Dictionary<string, string>()
@@ -66,7 +66,7 @@ namespace Mx
             });
         }
 
-        [Interactive(Summary: "Find file by wildcard pattern")]
+        [Interactive(summary: "Find file by wildcard pattern")]
         public static void FindFileByWildcard()
         {
             ReadString("Wildcard pattern: ", (pattern, _) =>

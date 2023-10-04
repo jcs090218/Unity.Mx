@@ -20,7 +20,7 @@ namespace Mx
 
         public override bool Enable() { return true; }
 
-        [Interactive(Summary: "Collapse GmaeObjects in hierarchy view")]
+        [Interactive(summary: "Collapse GmaeObjects in hierarchy view")]
         public static void CollapseGameObjects()
         {
             EditorWindow hierarchyWindow = typeof(EditorWindow).Assembly.GetType("UnityEditor.SceneHierarchyWindow").GetField("s_LastInteractedHierarchy", MxEditorUtil.STATIC_FLAGS).GetValue(null) as EditorWindow;

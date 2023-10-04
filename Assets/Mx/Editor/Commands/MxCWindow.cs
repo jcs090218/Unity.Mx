@@ -19,7 +19,7 @@ namespace Mx
 
         public override bool Enable() { return true; }
 
-        [Interactive(Summary: "Find and make focus on the targeted window")]
+        [Interactive(summary: "Find and make focus on the targeted window")]
         public static void SwitchToWindow()
         {
             var windows = Resources.FindObjectsOfTypeAll<EditorWindow>().ToList();

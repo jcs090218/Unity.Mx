@@ -23,8 +23,8 @@ namespace Mx
         public override bool Enable() { return true; }
 
         [Interactive(
-            Icon: "UnityLogo",
-            Summary: "Switch to scene")]
+            icon: "UnityLogo",
+            summary: "Switch to scene")]
         public static void SwitchToScene()
         {
             CompletingRead("Switch to scene: ", MxEditorUtil.GetFiles("*.unity"),
@@ -44,7 +44,7 @@ namespace Mx
             MxEditorUtil.FocusInSceneView(obj);
         }
 
-        [Interactive(Summary: "Find GameObject in scene")]
+        [Interactive(summary: "Find GameObject in scene")]
         public static void FindGameObjectInScene()
         {
             var objs = MxEditorUtil.FindObjectsByType<GameObject>();
@@ -60,7 +60,7 @@ namespace Mx
                 (name, _) => { OnFind(dic21, name); });
         }
 
-        [Interactive(Summary: "Find GameObject in scene by tag")]
+        [Interactive(summary: "Find GameObject in scene by tag")]
         public static void FindGameObjectWithTag()
         {
             CompletingRead("Enter tag name: ", InternalEditorUtility.tags.ToList(),
@@ -80,7 +80,7 @@ namespace Mx
                 });
         }
 
-        [Interactive(Summary: "Find GameObject in sceen by type")]
+        [Interactive(summary: "Find GameObject in sceen by type")]
         public static void FindGameObjectsByType()
         {
             var tuple = MxEditorUtil.CompletionComponents();

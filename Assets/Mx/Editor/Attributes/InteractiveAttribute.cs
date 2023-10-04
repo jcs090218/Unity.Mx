@@ -46,15 +46,15 @@ namespace Mx
         /* Functions */
 
         public InteractiveAttribute(
-            string Summary = null,
-            string Tooltip = null,
-            string Icon = null,
-            bool Enabled = true)
+            string summary = null,
+            string tooltip = null,
+            string icon = null,
+            bool enabled = true)
         {
-            this.mSummary = Summary;
-            this.mTooltip = Tooltip;
-            this.mIcon = Icon;
-            this.mEnabled = Enabled;
+            this.mSummary = summary;
+            this.mTooltip = tooltip;
+            this.mIcon = icon;
+            this.mEnabled = enabled;
         }
     }
 }

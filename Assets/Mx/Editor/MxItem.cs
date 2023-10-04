@@ -26,15 +26,15 @@ namespace Mx
         /* Functions */
 
         public MxItem(
-            string Summary = null,
-            string Tooltip = null,
-            Texture Icon = null,
-            bool Enabled = true)
+            string summary = null,
+            string tooltip = null,
+            Texture icon = null,
+            bool enabled = true)
         {
-            this.summary = Summary;
-            this.tooltip = Tooltip;
-            this.mIcon = Icon;
-            this.enabled = Enabled;
+            this.summary = summary;
+            this.tooltip = tooltip;
+            this.mIcon = icon;
+            this.enabled = enabled;
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Mx
 
         public override bool Enable() { return true; }
 
-        [Interactive(Summary: "Navigate to Uniyt related sites")]
+        [Interactive(summary: "Navigate to Uniyt related sites")]
         public static void HelpSites()
         {
             CompletingRead("Unity site: ", new Dictionary<string, string>()

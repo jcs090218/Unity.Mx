@@ -21,8 +21,8 @@ namespace Mx
         public override bool Enable() { return true; }
 
         [Interactive(
-            Icon: "d_console.erroricon.inactive.sml",
-            Summary: "Clear console logs")]
+            icon: "d_console.erroricon.inactive.sml",
+            summary: "Clear console logs")]
         public static void ClearConsole()
         {
             var assembly = Assembly.GetAssembly(typeof(Editor));
@@ -31,7 +31,7 @@ namespace Mx
             method.Invoke(new object(), null);
         }
 
-        [Interactive(Summary: "Toggle the play mode on/off")]
+        [Interactive(summary: "Toggle the play mode on/off")]
         public static void TogglePlay()
         {
             if (Application.isPlaying)
@@ -40,21 +40,21 @@ namespace Mx
                 EditorApplication.EnterPlaymode();
         }
 
-        [Interactive(Summary: "Toggle pausing on/off in the editor application")]
+        [Interactive(summary: "Toggle pausing on/off in the editor application")]
         public static void TogglePause()
         {
             EditorApplication.isPaused = !EditorApplication.isPaused;
         }
 
-        [Interactive(Summary: "Perform a single frame step")]
+        [Interactive(summary: "Perform a single frame step")]
         public static void StepFrame()
         {
             EditorApplication.Step();
         }
 
         [Interactive(
-            Icon: "d_FolderEmpty Icon",
-            Summary: "Show data path in file browser")]
+            icon: "d_FolderEmpty Icon",
+            summary: "Show data path in file browser")]
         public static void FindDataPath()
         {
             CompletingRead("Data path: ", new Dictionary<string, string>()

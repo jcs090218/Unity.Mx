@@ -40,7 +40,7 @@ namespace Mx
             CompletingReadCallback hover = null,
             bool requiredMatch = true)
         {
-            var newCollection = collection.ToDictionary(x => x.Key, x => new MxItem(Summary: x.Value));
+            var newCollection = collection.ToDictionary(x => x.Key, x => new MxItem(summary: x.Value));
 
             MxCompletionWindow.OverrideIt(prompt, newCollection, callback, hover, requiredMatch);
         }
