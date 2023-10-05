@@ -13,7 +13,13 @@ namespace Mx
 {
     public class MxCEditor : Mx
     {
+        /* Variables */
+
         private static readonly List<string> mSkipRoots = new List<string> { "CONTEXT", "&File", "&Help", "Help", "Component", "&Window" };
+
+        /* Setter & Getter */
+
+        /* Functions */
 
         private static string CreateCommandString(string _command, List<string> _list)
         {
