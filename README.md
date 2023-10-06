@@ -88,7 +88,7 @@ Hit <kbd>Alt</kbd>+<kbd>x</kbd>!
 Here is a simple example that prints out `"Hello World!~"` with `Debug.Log`.
 
 ```cs
-[Interactive(Summary: "Print Hello World!")]
+[Interactive(summary: "Print Hello World!")]
 private static void PrintHelloWorld()
 {
     Debug.Log("Hello World!~");
