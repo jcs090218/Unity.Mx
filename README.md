@@ -40,7 +40,7 @@ option to choose and explore unnoticed commands.
     - [🧪 icon (`string`)](#🧪-icon-string)
     - [🧪 tooltip (`string`)](#🧪-tooltip-string)
     - [🧪 enabled (`boolean`)](#🧪-enabled-boolean)
-- [`Mx` class interaction helpers!](#mx-class-interaction-helpers)
+- [🧰 `Mx` class interaction helpers!](#🧰-mx-class-interaction-helpers)
 - [📌 Credits](#📌-credits)
 - [🔍 See Also](#🔍-see-also)
 - [License](#license)
@@ -140,7 +140,7 @@ you hover with your mouse.
 Enable/Disable your command. If the value is `false`, it will not be shown
 inside the completion window.
 
-## `Mx` class interaction helpers!
+## 🧰 `Mx` class interaction helpers!
 
 WIP
 
