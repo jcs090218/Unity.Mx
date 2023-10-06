@@ -40,6 +40,7 @@ option to choose and explore unnoticed commands.
     - [🧪 icon (`string`)](#🧪-icon-string)
     - [🧪 tooltip (`string`)](#🧪-tooltip-string)
     - [🧪 enabled (`boolean`)](#🧪-enabled-boolean)
+- [`Mx` class interaction helpers!](#mx-class-interaction-helpers)
 - [📌 Credits](#📌-credits)
 - [🔍 See Also](#🔍-see-also)
 - [License](#license)
@@ -61,7 +62,13 @@ and more!
 
 ## 🖼️ Gallery
 
-WIP
+| Find file | Find GameObject |
+|-----------|-----------------|
+|           |                 |
+
+| Execute Menu Item | Get/Set `EditorPrefs` or `PlayerPrefs` |
+|-------------------|----------------------------------------|
+|                   |                                        |
 
 ## 💾 Installation
 
@@ -93,6 +100,7 @@ private static void PrintHelloWorld()
 But you need to define under a class inherit `Mx`!
 
 ```cs
+using UnityEngine;
 using Mx;  // For InteractiveAttribute.cs
 
 public class DummyCommands : Mx.Mx
@@ -131,6 +139,10 @@ you hover with your mouse.
 
 Enable/Disable your command. If the value is `false`, it will not be shown
 inside the completion window.
+
+## `Mx` class interaction helpers!
+
+WIP
 
 ## 📌 Credits
 
