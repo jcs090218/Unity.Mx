@@ -32,15 +32,14 @@ option to choose and explore unnoticed commands.
 
 - [🏆 Features](#🏆-features)
 - [🖼️ Gallery](#🖼️-gallery)
-- [📇 Commands](#📇-commands)
 - [💾 Installation](#💾-installation)
 - [🔨 Usage](#🔨-usage)
   - [❓ How to define your own command?](#❓-how-to-define-your-own-command)
   - [⚛ `Interactive` Attribute's Properties](#⚛-interactive-attributes-properties)
-    - [🧪 Summary (`string`)](#🧪-summary-string)
-    - [🧪 Icon (`string`)](#🧪-icon-string)
-    - [🧪 Tooltip (`string`)](#🧪-tooltip-string)
-    - [🧪 Enabled (`boolean`)](#🧪-enabled-boolean)
+    - [🧪 summary (`string`)](#🧪-summary-string)
+    - [🧪 icon (`string`)](#🧪-icon-string)
+    - [🧪 tooltip (`string`)](#🧪-tooltip-string)
+    - [🧪 enabled (`boolean`)](#🧪-enabled-boolean)
 - [📌 Credits](#📌-credits)
 - [🔍 See Also](#🔍-see-also)
 - [License](#license)
@@ -61,10 +60,6 @@ This part of the document explains what Mx is trying to aim for!
 and more!
 
 ## 🖼️ Gallery
-
-WIP
-
-## 📇 Commands
 
 WIP
 
