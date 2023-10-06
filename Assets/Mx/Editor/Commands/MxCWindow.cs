@@ -19,6 +19,12 @@ namespace Mx
 
         public override bool Enable() { return true; }
 
+        [Interactive(summary: "Exit the Unity editor application")]
+        public static void KillUnity()
+        {
+            EditorApplication.Exit(0);
+        }
+
         [Interactive(summary: "Find and make focus on the targeted window")]
         public static void SwitchToWindow()
         {
