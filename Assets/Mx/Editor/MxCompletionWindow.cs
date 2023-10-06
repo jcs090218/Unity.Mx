@@ -13,7 +13,7 @@ using FlxCs;
 
 namespace Mx
 {
-    public delegate void CompletingReadCallback(string answer, string summary = null);
+    public delegate void CompletingReadCallback(string answer, MxItem item);
 
     public class MxCompletionWindow : EditorWindow
     {
@@ -523,7 +523,7 @@ namespace Mx
             string name = mCommandsFiltered[mSelected];
 
             if (OVERRIDE_HOVER != null)
-                OVERRIDE_HOVER(name, GetSummary(name));
+                OVERRIDE_HOVER(name, GetItem(name));
         }
 
         /// <summary>
@@ -570,7 +570,7 @@ namespace Mx
         private void ExecCommand_Completing(string name)
         {
             if (OVERRIDE_EXECUTE != null)
-                OVERRIDE_EXECUTE.Invoke(name, GetSummary(name));
+                OVERRIDE_EXECUTE.Invoke(name, GetItem(name));
 
             if (!INHIBIT_CLOSE)
                 this.Close();
@@ -581,14 +581,6 @@ namespace Mx
             if (OVERRIDE_COLLECTION.ContainsKey(name))
                 return OVERRIDE_COLLECTION[name];
             return null;
-        }
-
-        private string GetSummary(string name)
-        {
-            var item = GetItem(name);
-            if (item != null)
-                return item.summary;
-            return "";
         }
 
         private string FormName(MethodInfo info, bool full = false)

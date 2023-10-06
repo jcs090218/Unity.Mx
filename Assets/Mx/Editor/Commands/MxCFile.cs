@@ -53,8 +53,9 @@ namespace Mx
                 { "Text"     , "*.txt" },
                 { "Font"     , "*.ttf" },
             },
-            (type, pattern) =>
+            (type, item) =>
             {
+                string pattern = item.summary;
                 string[] patterns = pattern.Split('|');
 
                 CompletingRead("Find file by type: (" + type + ") ",

@@ -10,6 +10,7 @@ using System.Reflection;
 using UnityEditor;
 using Mx;
 using UnityEngine;
+using UnityEditor.TestTools.TestRunner.Api;
 
 public class TestCommands : Mx.Mx
 {
@@ -45,10 +46,6 @@ public class TestCommands : Mx.Mx
     [Interactive]
     public static void _MyTest()
     {
-        //Type type = Type.GetType("UnityEngine.Light");
 
-        //Texture tex = MxUtil.FindTexture(type);
-
-        //Debug.Log(tex);
     }
 }

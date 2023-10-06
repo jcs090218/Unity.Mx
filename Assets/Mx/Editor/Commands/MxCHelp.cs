@@ -35,8 +35,9 @@ namespace Mx
                 { "Issue Tracker", "https://issuetracker.unity3d.com/" },
                 { "OpenUPM", "https://openupm.com/" },
             },
-            (name, url) =>
+            (name, item) =>
             {
+                string url = item.summary;
                 Application.OpenURL(url);
             });
         }
