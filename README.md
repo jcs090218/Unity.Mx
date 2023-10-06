@@ -68,8 +68,7 @@ WIP
 ## 💾 Installation
 
 Go to our [release page](https://github.com/jcs090218/Unity.Mx/releases) and download the latest `.unitypackage`.
-
-Simply import it to your project! Done!
+Then simply import it to your project!
 
 Or install it through [OpenUPM](https://openupm.com/packages/com.jcs090218.mx/):
 
