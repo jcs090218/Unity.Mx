@@ -71,6 +71,12 @@ Go to our [release page](https://github.com/jcs090218/Unity.Mx/releases) and dow
 
 Simply import it to your project! Done!
 
+Or install it through [OpenUPM](https://openupm.com/packages/com.jcs090218.mx/):
+
+```sh
+$ openupm add com.jcs090218.mx
+```
+
 ## 🔨 Usage
 
 Hit <kbd>Alt</kbd>+<kbd>x</kbd>!
