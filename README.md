@@ -22,9 +22,10 @@
 
 > M-x for Unity
 
-Mx (or Meta-X) is a command-based completion framework. It allows you to execute all kinds of tasks
-based on your design. Mx is an alternate to attribute `MenuItem`; by contrast, it allows you to do
-multiple tasks. It gives you the option to choose and explore unnoticed commands.
+Mx (or Meta-X) is a command-based completion framework. It allows you to execute
+all kinds of tasks based on your design. Mx is an alternate to attribute
+`MenuItem`; by contrast, doing multiple tasks is possible. It gives you the
+option to choose and explore unnoticed commands.
 
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 **Table of Contents**
@@ -56,6 +57,8 @@ This part of the document explains what Mx is trying to aim for!
 - Configurable & Extensible
 - Visually see things in action
 - Aim for the best UX
+
+and more!
 
 ## 🖼️ Gallery
 

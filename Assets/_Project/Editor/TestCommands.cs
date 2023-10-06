@@ -25,7 +25,7 @@ public class TestCommands : Mx.Mx
     [Interactive(enabled: false)]
     public static void MxVersion() { }
 
-    [Interactive]
+    [Interactive(enabled: false)]
     public static void ListComponents()
     {
         CompletingRead("Components: ", MxEditorUtil.CompletionComponents().Item2, (name, _) =>
@@ -34,7 +34,7 @@ public class TestCommands : Mx.Mx
         });
     }
 
-    [Interactive]
+    [Interactive(enabled: false)]
     public static void ToggleConsoleCollapse()
     {
         var assembly = Assembly.GetAssembly(typeof(Editor));
@@ -43,7 +43,7 @@ public class TestCommands : Mx.Mx
         method.Invoke(null, null);
     }
 
-    [Interactive]
+    [Interactive(summary: "Just a test command")]
     public static void _MyTest()
     {
 
