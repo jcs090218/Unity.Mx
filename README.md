@@ -85,8 +85,8 @@ Or install it through [OpenUPM](https://openupm.com/packages/com.jcs090218.mx/):
 $ openupm add com.jcs090218.mx
 ```
 
-‼️ [ATTENTION] ‼️ This package requires the `Visual Scripting` package to be
-installed. Make sure you have it installed!
+This package requires the `Visual Scripting` package to be installed.
+Make sure you have it installed!
 
 <img src="./docs/installation/deps.png" />
 
