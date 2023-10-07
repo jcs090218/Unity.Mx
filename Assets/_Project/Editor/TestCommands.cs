@@ -47,11 +47,10 @@ public class TestCommands : Mx.Mx
     [Interactive(summary: "Just a test command")]
     public static void _MyTest()
     {
-        CompletingRead("What's your favorite animal: ", 
-            new List<string>() { "Cat", "Dog" }, 
+        ReadNumber("What is your age? ", 
             (answer, _) =>
             {
-                Debug.Log("My favorite animal is " + answer);
+                Debug.Log(answer);
             });
     }
 }

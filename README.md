@@ -161,17 +161,52 @@ CompletingRead("What's your favorite animal: ",
     });
 ```
 
+This is the most commonly used function since you can accomplish any task with
+it.
+
 ### ⚙ ReadString (`prompt`, `callback`)
 
-WIP
+A function allows users to input an arbitrary string.
+
+```cs
+ReadString("What is your name? ", 
+    (answer, _) =>
+    {
+        Debug.Log("My name is " + answer);
+    });
+```
 
 ### ⚙ ReadNumber (`prompt`, `callback`)
 
-WIP
+A function allows users to input an arbitrary number.
+
+```cs
+ReadNumber("What is your age? ", 
+    (answer, _) =>
+    {
+        Debug.Log("My age is " + answer);
+    });
+```
 
 ### ⚙ YesOrNo (`prompt`, `callback`)
 
-WIP
+The simplest function that only accepts `Yes` or `No`.
+
+```cs
+YesOrNo("Do you like Cat? ", 
+    (answer, _) =>
+    {
+        switch (answer)
+        {
+            case "Yes":
+                Debug.Log("Great! I like it too!");
+                break;
+            case "No":
+                // Do something else
+                break;
+        }
+    });
+```
 
 ## 📌 Credits
 
