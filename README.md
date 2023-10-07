@@ -27,11 +27,15 @@ all kinds of tasks based on your design. Mx is an alternate to attribute
 `MenuItem`; by contrast, doing multiple tasks is possible. It gives you the
 option to choose and explore unnoticed commands.
 
+<p align="center">
+<img src="./docs/gallery/demo.gif"/>
+</p>
+
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 **Table of Contents**
 
 - [🏆 Features](#🏆-features)
-- [🖼️ Gallery](#🖼️-gallery)
+- [📇 Commands](#📇-commands)
 - [💾 Installation](#💾-installation)
 - [🔨 Usage](#🔨-usage)
   - [❓ How to define your own command?](#❓-how-to-define-your-own-command)
@@ -64,15 +68,13 @@ This part of the document explains what Mx is trying to aim for!
 
 and more!
 
-## 🖼️ Gallery
+## 📇 Commands
 
-| Find file | Find GameObject |
-|-----------|-----------------|
-|           |                 |
-
-| Execute Menu Item | Get/Set `EditorPrefs` or `PlayerPrefs` |
-|-------------------|----------------------------------------|
-|                   |                                        |
+| Name             | Description                   |
+|------------------|-------------------------------|
+| `FindFile`       | Find file                     |
+| `FindFileByType` | Find file by type of the file |
+|                  |                               |
 
 ## 💾 Installation
 
