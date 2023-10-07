@@ -47,11 +47,11 @@ public class TestCommands : Mx.Mx
     [Interactive(summary: "Just a test command")]
     public static void _MyTest()
     {
-        ReadNumber("What is your age? ", 
-            (answer, _) =>
-            {
-                int.Parse(answer);
-                Debug.Log(answer);
-            });
+        var files = MxEditorUtil.DefaultFiles();
+
+        UnityEngine.Object asset = AssetDatabase.LoadAssetAtPath(files[0], null);
+
+        Debug.Log(asset);
+        //Debug.Log(MxUtil.FindTexture(asset));
     }
 }

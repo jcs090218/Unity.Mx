@@ -65,6 +65,7 @@ namespace Mx
         }
         public static Texture FindTexture(UnityEngine.Object obj)
         {
+            if (obj == null) return null;
             return FindTexture(obj, obj.GetType());
         }
 
