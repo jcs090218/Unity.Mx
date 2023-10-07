@@ -59,22 +59,13 @@ option to choose and explore unnoticed commands.
 
 This part of the document explains what Mx is trying to aim for!
 
-- Out of the box & Easy to use
-- Beginner Friendly & Easy to work with a team
-- Performant & Lightweight
+- Search Assets
+- Search GameObjects by various way (`Type`, `tag`, `name`, etc)
+- Execute Menu
+- Visually see things in action (hover event)
 - Configurable & Extensible
-- Visually see things in action
-- Aim for the best UX
 
 and more!
-
-## 📇 Commands
-
-| Name             | Description                   |
-|------------------|-------------------------------|
-| `FindFile`       | Find file                     |
-| `FindFileByType` | Find file by type of the file |
-|                  |                               |
 
 ## 💾 Installation
 
