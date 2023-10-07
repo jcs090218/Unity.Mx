@@ -41,17 +41,17 @@ namespace Mx
         [Interactive(summary: "Find file by type of the file")]
         public static void FindFileByType()
         {
-            CompletingRead("Find file by type: ", new Dictionary<string, string>()
+            CompletingRead("Find file by type: ", new Dictionary<string, MxItem>()
             {
-                { "All"      , "*.*" },
-                { "Scene"    , "*.unity" },
-                { "Prefab"   , "*.prefab" },
-                { "Texture"  , "*.png" },
-                { "Material" , "*.mat" },
-                { "Mesh"     , "*.mesh" },
-                { "C# script", "*.cs" },
-                { "Text"     , "*.txt" },
-                { "Font"     , "*.ttf" },
+                { "All"       , new MxItem(summary: "*.*"     , icon: "") },
+                { "Scene"     , new MxItem(summary: "*.unity" , icon: "UnityLogo") },
+                { "Prefab"    , new MxItem(summary: "*.prefab", icon: "d_Prefab Icon") },
+                { "Texture"   , new MxItem(summary: "*.png"   , icon: typeof(Texture)) },
+                { "Material"  , new MxItem(summary: "*.mat"   , icon: typeof(Material)) },
+                { "Mesh"      , new MxItem(summary: "*.mesh"  , icon: typeof(Mesh)) },
+                { "C# script" , new MxItem(summary: "*.cs"    , icon: "cs Script Icon") },
+                { "Text"      , new MxItem(summary: "*.txt"   , icon: typeof(TextAsset)) },
+                { "Font"      , new MxItem(summary: "*.ttf"   , icon: typeof(Font)) },
             },
             (type, item) =>
             {
