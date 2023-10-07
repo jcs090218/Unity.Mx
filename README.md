@@ -64,6 +64,7 @@ This part of the document explains what Mx is trying to aim for!
 - Search Assets
 - Search GameObjects by various way (`Type`, `tag`, `name`, etc)
 - Execute Menu
+- Get/Set `EditorPrefs` and `PlayerPrefs`
 - Visually see things in action (hover event)
 - Configurable & Extensible
 
