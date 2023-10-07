@@ -41,7 +41,7 @@ option to choose and explore unnoticed commands.
     - [🧪 tooltip (`string`)](#🧪-tooltip-string)
     - [🧪 enabled (`boolean`)](#🧪-enabled-boolean)
 - [🧰 Advanced Usage](#🧰-advanced-usage)
-  - [-](#-)
+  - [⚙ CompletingRead (`prompt`, `collection`, `callback`, `hover`, `requiredMatch`)](#⚙-completingread-prompt-collection-callback-hover-requiredmatch)
   - [⚙ ReadString (`prompt`, `callback`)](#⚙-readstring-prompt-callback)
   - [⚙ ReadNumber (`prompt`, `callback`)](#⚙-readnumber-prompt-callback)
   - [⚙ YesOrNo (`prompt`, `callback`)](#⚙-yesorno-prompt-callback)
@@ -148,7 +148,7 @@ inside the completion window.
 
 Mx provides some functions to accomplish more complex tasks.
 
-#### ⚙ CompletingRead (`prompt`, `collection`, `callback`, `hover`, `requiredMatch`)
+### ⚙ CompletingRead (`prompt`, `collection`, `callback`, `hover`, `requiredMatch`)
 
 Allows you to receive input from the user but limits their answer to the prompt.
 
@@ -161,15 +161,15 @@ CompletingRead("What's your favorite animal: ",
     });
 ```
 
-#### ⚙ ReadString (`prompt`, `callback`)
+### ⚙ ReadString (`prompt`, `callback`)
 
 WIP
 
-#### ⚙ ReadNumber (`prompt`, `callback`)
+### ⚙ ReadNumber (`prompt`, `callback`)
 
 WIP
 
-#### ⚙ YesOrNo (`prompt`, `callback`)
+### ⚙ YesOrNo (`prompt`, `callback`)
 
 WIP
 
