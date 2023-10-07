@@ -50,6 +50,7 @@ public class TestCommands : Mx.Mx
         ReadNumber("What is your age? ", 
             (answer, _) =>
             {
+                int.Parse(answer);
                 Debug.Log(answer);
             });
     }

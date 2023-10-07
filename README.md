@@ -188,6 +188,8 @@ ReadNumber("What is your age? ",
     });
 ```
 
+The result is a string, but you can parse it with `int.Parse` or `float.Parse`.
+
 ### ⚙ YesOrNo (`prompt`, `callback`)
 
 The simplest function that only accepts `Yes` or `No`.
