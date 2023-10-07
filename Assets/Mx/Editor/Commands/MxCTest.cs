@@ -49,6 +49,9 @@ namespace Mx
                     case "PlayMode":
                         RunTests(TestMode.PlayMode);
                         break;
+                    default:
+                        Debug.LogError("Unknown test mode: " + mode);
+                        break;
                 }
             });
         }

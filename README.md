@@ -40,7 +40,11 @@ option to choose and explore unnoticed commands.
     - [🧪 icon (`string`)](#🧪-icon-string)
     - [🧪 tooltip (`string`)](#🧪-tooltip-string)
     - [🧪 enabled (`boolean`)](#🧪-enabled-boolean)
-- [🧰 `Mx` class interaction helpers!](#🧰-mx-class-interaction-helpers)
+- [🧰 Advanced Usage](#🧰-advanced-usage)
+  - [-](#-)
+  - [⚙ ReadString (`prompt`, `callback`)](#⚙-readstring-prompt-callback)
+  - [⚙ ReadNumber (`prompt`, `callback`)](#⚙-readnumber-prompt-callback)
+  - [⚙ YesOrNo (`prompt`, `callback`)](#⚙-yesorno-prompt-callback)
 - [📌 Credits](#📌-credits)
 - [🔍 See Also](#🔍-see-also)
 - [License](#license)
@@ -140,7 +144,32 @@ you hover with your mouse.
 Enable/Disable your command. If the value is `false`, it will not be shown
 inside the completion window.
 
-## 🧰 `Mx` class interaction helpers!
+## 🧰 Advanced Usage
+
+Mx provides some functions to accomplish more complex tasks.
+
+#### ⚙ CompletingRead (`prompt`, `collection`, `callback`, `hover`, `requiredMatch`)
+
+Allows you to receive input from the user but limits their answer to the prompt.
+
+```cs
+CompletingRead("What's your favorite animal: ", 
+    new List<string>() { "Cat", "Dog" }, 
+    (answer, _) =>
+    {
+        Debug.Log("My favorite animal is " + answer);
+    });
+```
+
+#### ⚙ ReadString (`prompt`, `callback`)
+
+WIP
+
+#### ⚙ ReadNumber (`prompt`, `callback`)
+
+WIP
+
+#### ⚙ YesOrNo (`prompt`, `callback`)
 
 WIP
 
