@@ -28,7 +28,9 @@ all kinds of tasks based on your design. Mx is an alternate to attribute
 option to choose and explore unnoticed commands.
 
 <p align="center">
+<a href="https://www.youtube.com/watch?v=26LAAAwo9Ao">
 <img src="./docs/gallery/demo.gif"/>
+</a>
 </p>
 
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
