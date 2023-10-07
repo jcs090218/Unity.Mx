@@ -28,7 +28,7 @@ all kinds of tasks based on your design. Mx is an alternate to attribute
 option to choose and explore unnoticed commands.
 
 <p align="center">
-<a href="https://www.youtube.com/watch?v=26LAAAwo9Ao">
+<a href="https://www.youtube.com/watch?v=26LAAAwo9Ao" target="_blank">
 <img src="./docs/gallery/demo.gif"/>
 </a>
 </p>
