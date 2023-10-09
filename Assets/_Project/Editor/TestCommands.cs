@@ -44,14 +44,13 @@ public class TestCommands : Mx.Mx
         method.Invoke(null, null);
     }
 
-    [Interactive(summary: "Just a test command")]
+    [Interactive(
+        icon: "Asset Store",
+        summary: "Just a test command",
+        tooltip: "This is a tooltip for longer description to teach other users to use my test command!!! :D",
+        enabled: true)]  // Set it to `false` to hide it!
     public static void _MyTest()
     {
-        var files = MxEditorUtil.DefaultFiles();
-
-        UnityEngine.Object asset = AssetDatabase.LoadAssetAtPath(files[0], null);
-
-        Debug.Log(asset);
-        //Debug.Log(MxUtil.FindTexture(asset));
+        // ..
     }
 }
