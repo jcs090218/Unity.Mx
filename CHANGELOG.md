@@ -8,7 +8,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ## 0.1.1 (Unreleased)
 > Released N/A
 
-* N/A
+* feat: Add external script editor command (2812166fe927a1b900b5cd716e7fbd45018b5cd5)
+* feat: Supply icons (dea9c6c09176e7dcaedcdbcb009d6f825224e8c9)
 
 ## 0.1.0
 > Released Oct 07, 2023
