@@ -31,7 +31,9 @@ namespace Mx
             method.Invoke(new object(), null);
         }
 
-        [Interactive(summary: "Toggle the play mode on/off")]
+        [Interactive(
+            icon: "d_PlayButton", 
+            summary: "Toggle the play mode on/off")]
         public static void TogglePlay()
         {
             if (Application.isPlaying)
@@ -40,13 +42,17 @@ namespace Mx
                 EditorApplication.EnterPlaymode();
         }
 
-        [Interactive(summary: "Toggle pausing on/off in the editor application")]
+        [Interactive(
+            icon: "d_PauseButton", 
+            summary: "Toggle pausing on/off in the editor application")]
         public static void TogglePause()
         {
             EditorApplication.isPaused = !EditorApplication.isPaused;
         }
 
-        [Interactive(summary: "Perform a single frame step")]
+        [Interactive(
+            icon: "d_StepButton", 
+            summary: "Perform a single frame step")]
         public static void StepFrame()
         {
             EditorApplication.Step();
@@ -66,6 +72,18 @@ namespace Mx
             },
             (answer, summary) =>
             { EditorUtility.RevealInFinder(answer); });
+        }
+
+        [Interactive(
+            icon: "d_cs Script Icon",
+            summary: "Launch the external script edtior")]
+        public static void ExternalScriptEditor()
+        {
+            const string path = "Assets/Mx/Editor/Mx.cs";
+
+            var asset = AssetDatabase.LoadMainAssetAtPath(path);
+
+            AssetDatabase.OpenAsset(asset);
         }
     }
 }
