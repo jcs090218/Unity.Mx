@@ -34,7 +34,7 @@ namespace Mx
             // TODO: Switch tab to corresponding test mode!
         }
 
-        [Interactive(summary: "Run all tests")]
+        [Interactive(icon: "TestPassed", summary: "Run all tests")]
         public static void RunAllTests()
         {
             var modes = MxUtil.EnumTuple(typeof(TestMode));

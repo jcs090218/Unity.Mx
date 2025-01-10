@@ -44,7 +44,9 @@ namespace Mx
             MxEditorUtil.FocusInSceneView(obj);
         }
 
-        [Interactive(summary: "Find GameObject in scene")]
+        [Interactive(
+            icon: "d_Search Icon", 
+            summary: "Find GameObject in scene")]
         public static void FindGameObjectInScene()
         {
             var objs = MxEditorUtil.FindObjectsByType<GameObject>();
@@ -60,7 +62,9 @@ namespace Mx
                 (name, _) => { OnFind(dic21, name); });
         }
 
-        [Interactive(summary: "Find GameObject in scene by tag")]
+        [Interactive(
+            icon: "d_Search Icon", 
+            summary: "Find GameObject in scene by tag")]
         public static void FindGameObjectWithTag()
         {
             CompletingRead("Enter tag name: ", InternalEditorUtility.tags.ToList(),
@@ -80,7 +84,9 @@ namespace Mx
                 });
         }
 
-        [Interactive(summary: "Find GameObject in sceen by type")]
+        [Interactive(
+            icon: "d_Search Icon", 
+            summary: "Find GameObject in sceen by type")]
         public static void FindGameObjectsByType()
         {
             var tuple = MxEditorUtil.CompletionComponents();

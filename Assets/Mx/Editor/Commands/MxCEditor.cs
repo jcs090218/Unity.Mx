@@ -97,7 +97,9 @@ namespace Mx
             return commands;
         }
 
-        [Interactive(summary: "Invokes the menu item in the specified path")]
+        [Interactive(
+            icon: "_Menu@2x",
+            summary: "Invokes the menu item in the specified path")]
         public static void ExecutMenuItem()
         {
             CompletingRead("Menu Item: ", MenuItemLists(), (command, _) =>

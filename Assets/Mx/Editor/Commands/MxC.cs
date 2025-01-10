@@ -18,13 +18,17 @@ namespace Mx
 
         public override bool Enable() { return true; }
 
-        [Interactive(summary: "Log Mx version")]
+        [Interactive(
+            icon: "d_UnityEditor.DebugInspectorWindow", 
+            summary: "Log Mx version")]
         public static void MxVersion()
         {
             Debug.Log("Mx " + VERSION);
         }
 
-        [Interactive(summary: "Open Mx project's homepage")]
+        [Interactive(
+            icon: "d_UnityEditor.FindDependencies", 
+            summary: "Open Mx project's homepage")]
         public static void MxHome()
         {
             Application.OpenURL("https://github.com/jcs090218/Unity.Mx");

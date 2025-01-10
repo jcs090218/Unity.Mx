@@ -19,7 +19,9 @@ namespace Mx
         public override bool Enable() { return true; }
 
 
-        [Interactive(summary: "List out key code for exploration")]
+        [Interactive(
+            icon: "UnityEditor.SceneHierarchyWindow@2x",
+            summary: "List out key code for exploration")]
         public static void ListKeyCode()
         {
             var result = MxUtil.EnumTuple(typeof(KeyCode));
