@@ -34,6 +34,8 @@ namespace Mx
         {
             var windows = Resources.FindObjectsOfTypeAll<EditorWindow>().ToList();
 
+            windows.RemoveAt(0);  // Remove the Mx completion window.
+
             var windowss = MxUtil.ToListString(windows);
 
             CompletingRead("Switch to window: ", windowss,
@@ -44,6 +46,19 @@ namespace Mx
                     EditorWindow window = windows[index];
                     window.Focus();
                 });
+        }
+
+        [Interactive(
+            icon: "winbtn_win_restore_a@2x", 
+            summary: "Maximize the scene view")]
+        public static void ToggleSceneViewMaximized()
+        {
+            SceneView[] views = Resources.FindObjectsOfTypeAll<SceneView>();
+
+            if (views.Length == 0)
+                return;
+
+            views[0].maximized = !views[0].maximized;
         }
     }
 }
