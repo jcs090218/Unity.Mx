@@ -3,7 +3,6 @@
  * 
  * jcs090218@gmail.com
  */
-using UnityEditor;
 using UnityEngine;
 
 namespace Mx
@@ -28,9 +27,12 @@ namespace Mx
             CompletingRead("Key code: ", result, null);
         }
 
-        public static void SwitchTheme()
+        //[Interactive(
+        //    icon: "",
+        //    summary: "Toggle the editor dark/light theme")]
+        public static void ToggleEditorTheme()
         {
-            
+            //EditorGUIUtility.isProSkin;
         }
     }
 }
