@@ -233,7 +233,7 @@ Any other supported projects:
 
 Copyright (c) Jen-Chieh Shen. All rights reserved.
 
-See [LICENSE](./LICENSE) for details.
+See [`LICENSE`](./LICENSE) for details.
 
 
 [Assets/Mx/Editor/Commands]: https://github.com/jcs090218/Unity.Mx/tree/master/Assets/Mx/Editor/Commands
