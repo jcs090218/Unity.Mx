@@ -10,6 +10,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 * feat: Add external script editor command (2812166fe927a1b900b5cd716e7fbd45018b5cd5)
 * feat: Supply icons (dea9c6c09176e7dcaedcdbcb009d6f825224e8c9)
+* fix: Remove `Mx` completion window (b008e3826c36ea614171389004ff7dcde7ba8efa)
+* feat: Add command to toggle maximized for scene view (61f724a79c2d714bfc28e9e38498226c891f1037)
 
 ## 0.1.0
 > Released Oct 07, 2023
