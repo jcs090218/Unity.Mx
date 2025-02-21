@@ -116,7 +116,7 @@ namespace Mx
             Dictionary<string, string> prefss = Prefs.Prefs.GetPrefsString(type);
 
             CompletingRead("Get EditorPref key: ", prefss, (key, _) =>
-            { 
+            {
                 key.CopyToClipboard();
                 UnityEngine.Debug.Log("Copied EditorPref key: " + key);
             });
@@ -130,7 +130,7 @@ namespace Mx
             Dictionary<string, string> prefss = Prefs.Prefs.GetPrefsString(type);
 
             CompletingRead("Get PlayerPref key: ", prefss, (key, _) =>
-            { 
+            {
                 key.CopyToClipboard();
                 UnityEngine.Debug.Log("Copied PlayerPref key: " + key);
             });
@@ -192,7 +192,7 @@ namespace Mx
                 }
 
                 CreatePref(type, key);
-            }, 
+            },
             requiredMatch: false);
         }
 
@@ -261,6 +261,31 @@ namespace Mx
             {
                 if (yes == "Yes") Prefs.Prefs.DeleteAll(type);
             });
+        }
+
+        [Interactive(
+            icon: "AssemblyLock",
+            summary: "Prevents loading of assemblies when it is inconvenient.")]
+        public static void LockReloadAssemblies()
+        {
+            EditorApplication.LockReloadAssemblies();
+        }
+
+        [Interactive(
+            icon: "Assembly Icon",
+            summary: "Must be called after LockReloadAssemblies, to reenable loading of assemblies.")]
+        public static void UnlockReloadAssemblies()
+        {
+            EditorApplication.UnlockReloadAssemblies();
+            EditorUtility.RequestScriptReload();
+        }
+
+        [Interactive(
+            icon: "cs Script Icon",
+            summary: "The Unity Editor reloads script assemblies asynchronously on the next frame.")]
+        public static void RequestScriptReload()
+        {
+            EditorUtility.RequestScriptReload();
         }
     }
 }
