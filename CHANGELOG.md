@@ -8,7 +8,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ## 0.1.2 (Unreleased)
 > Released N/A
 
-* N/A
+* feat: Add remove missing scripts command (834b066da4787d5cad1ecdb34c2155ee54669051)
 
 ## 0.1.1
 > Released Feb 21, 2025
