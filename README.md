@@ -53,7 +53,7 @@ option to choose and explore unnoticed commands.
   - [⚙ YesOrNo (`prompt`, `callback`)](#⚙-yesorno-prompt-callback)
 - [📌 Credits](#📌-credits)
 - [🔍 See Also](#🔍-see-also)
-- [License](#license)
+- [⚜️ License](#⚜️-license)
 
 <!-- markdown-toc end -->
 
@@ -229,12 +229,14 @@ Any other supported projects:
 - [ReUniter][] - Better Search For Unity
 - [QuickSearch][] - A Command Palette for Unity
 
-## License
+## ⚜️ License
 
 Copyright (c) Jen-Chieh Shen. All rights reserved.
 
 See [`LICENSE`](./LICENSE) for details.
 
+
+<!-- Links -->
 
 [Assets/Mx/Editor/Commands]: https://github.com/jcs090218/Unity.Mx/tree/master/Assets/Mx/Editor/Commands
 [unity-editor-icons]: https://github.com/halak/unity-editor-icons
