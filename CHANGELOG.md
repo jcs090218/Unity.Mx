@@ -14,7 +14,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 > Released Sep 10, 2025
 
 * feat: Add remove missing scripts command ([`834b066`](../../commit/834b066da4787d5cad1ecdb34c2155ee54669051))
-* fix: TreeView's compatible to Unity 6.2 ([`01d6cfe`](../../commit/01d6cfed5acc58299c4a9f312d15efe56007c01a))
+* fix: `TreeView`'s compatible to Unity 6.2 ([`01d6cfe`](../../commit/01d6cfed5acc58299c4a9f312d15efe56007c01a))
 
 ## 0.1.1
 > Released Feb 21, 2025
