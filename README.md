@@ -10,7 +10,7 @@
 
 <p align="center">
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT"></a>
-<a href="https://unity3d.com/get-unity/download/archive"><img src="https://img.shields.io/badge/unity-6000.2.4f1-black.svg?style=flat&amp;logo=unity" alt="Unity Engine"></a>
+<a href="https://unity3d.com/get-unity/download/archive"><img src="https://img.shields.io/badge/unity-6000.2.6f2-black.svg?style=flat&amp;logo=unity" alt="Unity Engine"></a>
 <a href="https://docs.unity3d.com/2018.3/Documentation/Manual/ScriptingRuntimeUpgrade.html"><img src="https://img.shields.io/badge/.NET-2.0-blueviolet.svg" alt=".NET"></a>
 <a href="https://github.com/jcs090218/Unity.Mx/releases/latest"><img src="https://img.shields.io/github/tag/jcs090218/Unity.Mx.svg?label=release&logo=github" alt="Release Tag"></a>
 </p>
