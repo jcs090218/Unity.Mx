@@ -1,21 +1,16 @@
 # ignore the these directories
-/.git
-/.vs
-/Temp
-/Build
-/Library
-/Logs
-/obj
-/Publish
-/UserSettings
+.git/
+.vs/
+Temp/
+Build/
+Library/
+Logs/
+obj/
+Publish/
+UserSettings/
 
 # ignore build info
-/Assets/StreamingAssets/build_info
-/Assets/StreamingAssets/build_info.*
-
-# ignore webcam images
-/Assets/JCS_GameData/WebcamShot
-/Assets/JCS_GameData/WebcamShot.*
+/Assets/StreamingAssets/build_info*
 
 # ignore the following extension file
 *.svd
