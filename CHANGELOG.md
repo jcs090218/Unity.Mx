@@ -5,10 +5,15 @@ All notable changes to this project will be documented in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
 
-## 0.1.3 (Unreleased)
+## 0.1.4 (Unreleased)
 > Released N/A
 
 * N/A
+
+## 0.1.3
+> Released Nov 29, 2025
+
+* feat: bottom line offset to 0 ([`43a89cb`](../../commit/43a89cb5012fb9f4870d71477712d94bbdc8c822))
 
 ## 0.1.2
 > Released Sep 10, 2025
