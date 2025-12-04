@@ -49,7 +49,7 @@ namespace Mx
 
                     // Preserve Assets and Packages folders' expanded states because they aren't automatically preserved inside ProjectBrowserColumnOneTreeViewDataSource.SetExpandedIDs
                     // https://github.com/Unity-Technologies/UnityCsReference/blob/e740821767d2290238ea7954457333f06e952bad/Editor/Mono/ProjectBrowserColumnOne.cs#L408-L420
-                    InternalEditorUtility.expandedProjectWindowItems = (int[])treeViewDataSource.GetType().GetMethod("GetExpandedIDs", MxEditorUtil.INSTANCE_FLAGS).Invoke(treeViewDataSource, null);
+                    InternalEditorUtility.expandedProjectWindowItemIds = (EntityId[])treeViewDataSource.GetType().GetMethod("GetExpandedIDs", MxEditorUtil.INSTANCE_FLAGS).Invoke(treeViewDataSource, null);
 
                     TreeViewItem<int> rootItem = (TreeViewItem<int>)treeViewDataSource.GetType().GetField("m_RootItem", MxEditorUtil.INSTANCE_FLAGS).GetValue(treeViewDataSource);
                     if (rootItem.hasChildren)
