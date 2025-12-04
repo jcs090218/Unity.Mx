@@ -5,10 +5,15 @@ All notable changes to this project will be documented in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
 
-## 0.1.4 (Unreleased)
+## 0.1.5 (Unreleased)
 > Released N/A
 
 * N/A
+
+## 0.1.4
+> Released Dec 05, 2025
+
+* fix: compile error for Unity 6.3 ([`9822202`](../../commit/9822202ffd5d4cb3caa38e1c1c9b6b086c6f8ad1))
 
 ## 0.1.3
 > Released Nov 29, 2025
