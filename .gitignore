@@ -1,6 +1,7 @@
 # ignore the these directories
 .git/
 .vs/
+.vscode/
 Temp/
 Build/
 Library/
@@ -10,7 +11,12 @@ Publish/
 UserSettings/
 
 # ignore build info
-/Assets/StreamingAssets/build_info*
+/Assets/StreamingAssets/build_info
+/Assets/StreamingAssets/build_info.*
+
+# Backups
+/_Recovery/
+/_Recovery.*
 
 # ignore the following extension file
 *.svd

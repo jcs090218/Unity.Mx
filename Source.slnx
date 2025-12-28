@@ -1,0 +1,7 @@
+﻿<Solution>
+  <Project Path="asset-store-tools-editor.csproj" />
+  <Project Path="Assembly-CSharp-Editor.csproj" />
+  <Project Path="PlayMode.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="Tests.csproj" />
+</Solution>
