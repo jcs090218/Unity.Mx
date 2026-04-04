@@ -34,7 +34,7 @@ namespace Mx
                 object hierarchyTree = hierarchyTreeOwner.GetType().GetField("m_TreeView", MxEditorUtil.INSTANCE_FLAGS).GetValue(hierarchyTreeOwner);
                 if (hierarchyTree != null)
                 {
-                    List<int> expandedSceneIDs = new List<int>(4);
+                    var expandedSceneIDs = new List<int>(4);
                     foreach (string expandedSceneName in (IEnumerable<string>)hierarchyTreeOwner.GetType().GetMethod("GetExpandedSceneNames", MxEditorUtil.INSTANCE_FLAGS).Invoke(hierarchyTreeOwner, null))
                     {
                         Scene scene = SceneManager.GetSceneByName(expandedSceneName);

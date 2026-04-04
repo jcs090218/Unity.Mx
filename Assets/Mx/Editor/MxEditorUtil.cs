@@ -135,16 +135,16 @@ namespace Mx
         /// <summary>
         /// Find object by type.
         /// </summary>
-        public static List<GameObject> FindObjectsByType<T>(FindObjectsSortMode sortMode = FindObjectsSortMode.None)
+        public static List<GameObject> FindObjectsByType<T>()
             where T : UnityEngine.Object
         {
-            return UnityEngine.Object.FindObjectsByType<T>(sortMode)
+            return UnityEngine.Object.FindObjectsByType<T>()
                 .Select(x => x.GetComponent<Transform>().gameObject)
                 .ToList();
         }
-        public static List<GameObject> FindObjectsByType(Type type, FindObjectsSortMode sortMode = FindObjectsSortMode.None)
+        public static List<GameObject> FindObjectsByType(Type type)
         {
-            return UnityEngine.Object.FindObjectsByType(type, sortMode)
+            return UnityEngine.Object.FindObjectsByType(type)
                 .Select(x => x.GetComponent<Transform>().gameObject)
                 .ToList();
         }
@@ -163,7 +163,7 @@ namespace Mx
             for (int index = 0; index < objs.Count; ++index)
             {
                 GameObject obj = objs[index];
-                string name = "(" + objs[index].GetInstanceID() + ") " + obj.name;
+                string name = "(" + objs[index].GetEntityId() + ") " + obj.name;
 
                 if (dic1.ContainsKey(name))
                 {

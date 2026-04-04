@@ -131,17 +131,17 @@ namespace Mx
         /// <summary>
         /// Convert list GameObjects to its instance ID.
         /// </summary>
-        public static List<int> GetInstanceIDs(List<GameObject> objs)
+        public static List<EntityId> GetInstanceIDs(List<GameObject> objs)
         {
-            return objs.Select(i => i.GetInstanceID()).ToList();
+            return objs.Select(i => i.GetEntityId()).ToList();
         }
 
         /// <summary>
         /// Convert list EditorWindow to its instance ID.
         /// </summary>
-        public static List<int> GetInstanceIDs(List<EditorWindow> objs)
+        public static List<EntityId> GetInstanceIDs(List<EditorWindow> objs)
         {
-            return objs.Select(i => i.GetInstanceID()).ToList();
+            return objs.Select(i => i.GetEntityId()).ToList();
         }
     }
 }
